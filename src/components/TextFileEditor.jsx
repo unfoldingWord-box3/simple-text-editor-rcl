@@ -5,7 +5,7 @@ import OpenFile from './OpenFile';
 import SaveFile from './SaveFile';
 import TextEditor from './TextEditor';
 
-export default function TextFileEditor ({file, onFile}) {
+export default function TextFileEditor ({file, onFile, editable}) {
   const initialState = file || {
     name: undefined, content: undefined, lastModified: undefined
   };
@@ -20,7 +20,7 @@ export default function TextFileEditor ({file, onFile}) {
   }, [state.name, state.lastModified]);
 
   const textEditor = useMemo(() => {
-    return <TextEditor text={state.content} onEdit={onEdit} />
+    return <TextEditor text={state.content} onEdit={onEdit} editable={editable} />
   }, [state.content, onEdit]);
 
   const saveFile = useMemo(() => {
@@ -47,6 +47,8 @@ TextFileEditor.propTypes = {
   file: PropTypes.object,
   /** Function triggered on file open */
   onFile: PropTypes.func,
+  /** Editable? */
+  editable: PropTypes.bool,
 };
 
 TextFileEditor.defaultProps = {

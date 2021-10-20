@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import fileDownload from 'js-file-download';
 
 export default function SaveFile ({file}) {
+  const disabled = (!file.name || !file.content);
 
   const save = () => {
     fileDownload(file.content, file.name);
   };
 
   return (
-    <button onClick={save}>Save File</button>
+    <button disabled={disabled} onClick={save}>Save File</button>
   );
 };
 

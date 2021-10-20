@@ -21,22 +21,16 @@ export default function TextFileEditor ({file, onFile, editable}) {
 
   const textEditor = useMemo(() => {
     return <TextEditor text={state.content} onEdit={onEdit} editable={editable} />
-  }, [state.content, onEdit]);
-
-  const saveFile = useMemo(() => {
-    let component = <></>;
-    if (state.name && state.content) {
-      const _file = { name: state.name, content: state.content, lastModified: state.lastModified };
-      component = <SaveFile file={_file} />;
-    }
-    return component;
-  }, [state.name, state.content, state.lastModified]);
+  }, [state.content, onEdit, editable]);
 
   return (
     <>
-      <OpenFile onFile={setState} />
-      <h2>{state.name}</h2>
-      {saveFile}
+      
+      <h2 style={{textAlign: 'center'}}>
+        <OpenFile onFile={setState} />
+        <span style={{margin: '0 2em'}}>{state.name}</span>
+        <SaveFile file={state} />
+      </h2>
       {textEditor}
     </>
   );

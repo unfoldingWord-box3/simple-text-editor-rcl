@@ -4,7 +4,7 @@ export const isRtl = function(text) {
   let mostlyRtl = false;
   if (text && text.length) {
     const rtlMatches = text.match(rtlDirCheckRegex);
-    const rtlChars = rtlMatches.length;
+    const rtlChars = rtlMatches?.length;
     const textChars = text.length;
     const rtlRatio = rtlChars / textChars;
     if (rtlRatio > 0.5) mostlyRtl = true;

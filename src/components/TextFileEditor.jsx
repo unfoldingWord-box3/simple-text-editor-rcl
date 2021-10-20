@@ -31,6 +31,7 @@ export default function TextFileEditor ({file, onFile, editable}) {
         <span style={{margin: '0 2em'}}>{state.name}</span>
         <SaveFile file={state} />
       </h2>
+      <hr />
       {textEditor}
     </>
   );

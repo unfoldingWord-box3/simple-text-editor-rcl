@@ -23,13 +23,10 @@ export default function OpenFile ({onFile}) {
 };
 
 OpenFile.propTypes = {
-  /** Preload file content if need to file open bypass */
-  file: PropTypes.string,
   /** Function triggered on file open */
   onFile: PropTypes.func,
 };
 
 OpenFile.defaultProps = {
-  file: '',
   component: (file) => {},
 };

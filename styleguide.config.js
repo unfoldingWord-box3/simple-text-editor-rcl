@@ -5,7 +5,7 @@ module.exports = {
   exampleMode: 'expand',
   moduleAliases: { 'worlds-dumbest-usfm-editor': path.resolve(__dirname, 'src') },
   getComponentPathLine: componentPath => {
-    const name = path.basename(componentPath, '.js');
+    const name = path.basename(componentPath, '.jsx');
     return `import { ${name} } from 'worlds-dumbest-usfm-editor';`;
   },
 };

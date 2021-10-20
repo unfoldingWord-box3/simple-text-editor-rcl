@@ -51,5 +51,5 @@ TextFileEditor.propTypes = {
 
 TextFileEditor.defaultProps = {
   file: {},
-  component: (file) => {},
+  onFile: (file) => {},
 };

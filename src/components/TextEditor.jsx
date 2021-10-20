@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { isRtl } from '../helpers/detectRTL';
+
 export default function TextEditor ({text, style, onEdit, editable, component}) {
+
+  let dir = 'auto';
+  if (isRtl(text)) dir = 'rtl';
 
   const editorProps = {
     contentEditable: editable,
     style: { whiteSpace: 'pre', padding: '1em', ...style},
     onBlur: (e) => {onEdit(e.target.innerText)},
-    dir: 'auto',
+    dir,
     dangerouslySetInnerHTML: { __html: text },
   };
 

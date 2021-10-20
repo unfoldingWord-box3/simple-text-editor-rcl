@@ -1,13 +1,13 @@
 {
-  "name": "simple-text-editor",
-  "description": "A collection of React components for simple text editing.",
+  "name": "simple-text-editor-rcl",
+  "description": "A React Component Library for simple text editing.",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://simple-text-editor.netlify.app/",
+  "homepage": "https://simple-text-editor-rcl.netlify.app/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unfoldingWord/simple-text-editor.git"
+    "url": "https://github.com/unfoldingWord/simple-text-editor-rcl.git"
   },
   "dependencies": {
     "js-file-download": "^0.4.12",

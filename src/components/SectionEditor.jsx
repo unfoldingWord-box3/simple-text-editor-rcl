@@ -91,5 +91,6 @@ SectionEditor.defaultProps = {
   blockParser: (text) => (text.split('\n')),
   onShow: () => { console.warn('SectionEditor.onShow() not provided.'); },
   show: true,
+  text: '',
 };
 

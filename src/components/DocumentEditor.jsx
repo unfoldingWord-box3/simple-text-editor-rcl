@@ -99,5 +99,6 @@ DocumentEditor.defaultProps = {
   sectionable: true,
   sectionJoiner: '\n\n',
   sectionParser: (text) => (text.split('\n\n')),
+  text: '',
 };
 

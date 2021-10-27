@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDeepCompareEffect } from 'use-deep-compare';
 
 import BlockEditor from './BlockEditor';
+import { isRtl } from '../helpers/detectRTL';
 
 export default function SectionEditor ({
   text,
@@ -47,10 +48,13 @@ export default function SectionEditor ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   };
+
+  let dir = 'auto';
+  if (isRtl(text)) dir = 'rtl';
   
   return (
     <>
-      {headingComponent({ style: headingStyle, onClick: onShow, text: blocks[0] })}
+      {headingComponent({ dir, style: headingStyle, onClick: onShow, text: blocks[0] })}
       {blockComponents}
     </>
   )

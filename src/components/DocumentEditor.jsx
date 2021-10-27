@@ -88,7 +88,8 @@ DocumentEditor.propTypes = {
 
 DocumentEditor.defaultProps = {
   editable: true,
-  headingComponent: (props) => (<h2 {...props}> {props.text}</h2>),
+  titleComponent: (props) => (<h1 {...props}>{props?.text}</h1>),
+  headingComponent: (props) => (<h2 {...props}>{props.text}</h2>),
   blockComponent: (props) => (
     <div {...props} style={{ padding: '0 0.2em' }}></div>
   ),

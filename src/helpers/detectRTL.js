@@ -7,7 +7,7 @@ export const isRtl = function(text) {
     const rtlChars = rtlMatches?.length;
     const textChars = text.length;
     const rtlRatio = rtlChars / textChars;
-    if (rtlRatio > 0.5) mostlyRtl = true;
+    if (rtlRatio > 0.3) mostlyRtl = true;
   };
   console.log('isRtl: ', mostlyRtl);
   return mostlyRtl;

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
-export default function TextEditor ({text, style, onEdit, editable, component}) {
+export default function BlockEditor ({text, style, onEdit, editable, component}) {
 
   let dir = 'auto';
   if (isRtl(text)) dir = 'rtl';
 
   const editorProps = {
     contentEditable: editable,
-    style: { whiteSpace: 'pre', padding: '1em', ...style},
+    style,
     onBlur: (e) => {onEdit(e.target.innerText)},
     dir,
     dangerouslySetInnerHTML: { __html: text },
@@ -21,7 +21,7 @@ export default function TextEditor ({text, style, onEdit, editable, component}) 
   return (<>{editorComponent}</>);
 };
 
-TextEditor.propTypes = {
+BlockEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   text: PropTypes.string.isRequired,
   /** Function triggered on edit */
@@ -34,10 +34,10 @@ TextEditor.propTypes = {
   style: PropTypes.object,
 };
 
-TextEditor.defaultProps = {
+BlockEditor.defaultProps = {
   text: '',
-  onEdit: (text) => { console.warn('TextEditor.onEdit() not provided:\n\n', text); },
+  onEdit: (text) => { console.warn('BlockEditor.onEdit() not provided:\n\n', text); },
   editable: true,
-  style: {},
+  style: {whiteSpace: 'pre', padding: '1em'},
   component: (props) => ( <div {...props} /> ),
 };

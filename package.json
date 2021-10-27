@@ -1,7 +1,7 @@
 {
   "name": "simple-text-editor-rcl",
   "description": "A React Component Library for simple text editing.",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "private": false,
   "homepage": "https://simple-text-editor-rcl.netlify.app/",
   "license": "MIT",
@@ -10,11 +10,10 @@
     "url": "https://github.com/unfoldingWord/simple-text-editor-rcl.git"
   },
   "dependencies": {
-    "js-file-download": "^0.4.12",
-    "use-file-picker": "^1.4.0"
+    "use-deep-compare": "^1.1.0"
   },
   "scripts": {
-    "dev": "styleguidist server",
+    "start": "styleguidist server",
     "build-dev": "styleguidist build",
     "build": "./node_modules/.bin/babel src --out-dir build",
     "test": "react-scripts test",

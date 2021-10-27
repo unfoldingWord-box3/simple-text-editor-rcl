@@ -1,11 +1,9 @@
-import OpenFile from "./components/OpenFile";
-import SaveFile from "./components/SaveFile";
-import TextEditor from "./components/TextEditor";
-import TextFileEditor from "./components/TextFileEditor";
+import BlockEditor from "./components/BlockEditor";
+import SectionEditor from "./components/SectionEditor";
+import DocumentEditor from "./components/DocumentEditor";
 
 export {
-  OpenFile,
-  SaveFile,
-  TextEditor,
-  TextFileEditor,
+  BlockEditor,
+  SectionEditor,
+  DocumentEditor,
 };

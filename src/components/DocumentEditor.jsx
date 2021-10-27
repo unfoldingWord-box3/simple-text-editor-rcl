@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareEffect } from 'use-deep-compare';
 
@@ -27,6 +27,11 @@ export default function DocumentEditor ({
     __sections[index] = section;
     setSections(__sections);
   };
+
+  useEffect(() => {
+    const __sections = sectionable ? sectionParser(text) : [text];
+    setSections(__sections);
+  }, [text, sectionParser, sectionable]);
 
   useDeepCompareEffect(() => {
     onEdit(sections.join(sectionJoiner));
@@ -65,6 +70,8 @@ DocumentEditor.propTypes = {
   onEdit: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
+  /** Component to render the title of the document */
+  titleComponent: PropTypes.func,
   /** Component to wrap the first line of a section */
   headingComponent: PropTypes.func,
   /** Component to be the block editor */

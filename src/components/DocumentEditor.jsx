@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareEffect } from 'use-deep-compare';
+import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
 import SectionEditor from './SectionEditor';
 
 export default function DocumentEditor ({
   text,
-  onEdit,
+  onText,
   editable,
   titleComponent,
   headingComponent,
@@ -18,42 +18,48 @@ export default function DocumentEditor ({
   blockParser,
   blockJoiner,
 }) {
-  const _sections = sectionable ? sectionParser(text) : [text];
-  const [sections, setSections] = useState(_sections);
   const [showIndex, setShowIndex] = useState(0);
 
-  const onSectionEdit = (section, index) => {
-    let __sections = [...sections];
-    __sections[index] = section;
-    setSections(__sections);
-  };
+  const sections = useMemo(() => (
+    sectionable ? sectionParser(text) : [text]
+  ), [sectionable, sectionParser, text]);
 
-  useEffect(() => {
-    const __sections = sectionable ? sectionParser(text) : [text];
-    setSections(__sections);
-  }, [text, sectionParser, sectionable]);
+  const onSectionEdit = useDeepCompareCallback((section, index) => {
+    let _sections = [...sections];
+    _sections[index] = section;
+    const _text = _sections.join(sectionJoiner);
+    onText(_text);
+  }, [onText, sections]);
 
-  useDeepCompareEffect(() => {
-    onEdit(sections.join(sectionJoiner));
-  }, [sections]);
-
-  let sectionComponents = <></>;
-  sectionComponents = sections.map((section, index) => {
-    const sectionProps = {
-      text: section,
-      // component: sectionComponent,
-      onEdit: (_section) => { onSectionEdit(_section, index); },
-      show: (index === showIndex),
-      onShow: () => { setShowIndex(index); },
-      headingComponent,
-      blockComponent,
-      blockable,
-      blockParser,
-      blockJoiner,
-      editable,
-    };
-    return <SectionEditor key={ section + index } {...sectionProps} />;
-  });
+  const sectionComponents = useDeepCompareMemo(()=> (
+    sections.map((section, index) => {
+      const sectionProps = {
+        text: section,
+        // component: sectionComponent,
+        onText: (_section) => { onSectionEdit(_section, index); },
+        show: (index === showIndex),
+        onShow: () => { setShowIndex(index); },
+        headingComponent,
+        blockComponent,
+        blockable,
+        blockParser,
+        blockJoiner,
+        editable,
+      };
+      return <SectionEditor key={ section + index } {...sectionProps} />;
+    })
+  ), [
+    sections,
+    onSectionEdit,
+    showIndex,
+    setShowIndex,
+    headingComponent,
+    blockComponent,
+    blockable,
+    blockParser,
+    blockJoiner,
+    editable,
+  ]);
   
   return (
     <>
@@ -67,7 +73,7 @@ DocumentEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   text: PropTypes.string.isRequired,
   /** Function triggered on edit */
-  onEdit: PropTypes.func,
+  onText: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
   /** Component to render the title of the document */
@@ -100,7 +106,7 @@ DocumentEditor.defaultProps = {
   blockComponent: (props) => (
     <div {...props} style={{ padding: '0 0.2em' }}></div>
   ),
-  onEdit: (text) => { console.warn('DocumentEditor.onEdit() not provided:\n\n', text); },
+  onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',
   blockParser: (text) => (text.split('\n')),

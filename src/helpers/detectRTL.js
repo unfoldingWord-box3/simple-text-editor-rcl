@@ -9,6 +9,6 @@ export const isRtl = function(text) {
     const rtlRatio = rtlChars / textChars;
     if (rtlRatio > 0.3) mostlyRtl = true;
   };
-  console.log('isRtl: ', mostlyRtl);
+  // console.log('isRtl: ', mostlyRtl);
   return mostlyRtl;
 };

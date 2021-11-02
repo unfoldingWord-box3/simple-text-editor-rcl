@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareEffect } from 'use-deep-compare';
+import { useDeepCompareCallback } from 'use-deep-compare';
 
 import BlockEditor from './BlockEditor';
 import { isRtl } from '../helpers/detectRTL';
 
 export default function SectionEditor ({
   text,
-  onEdit,
+  onText,
   editable,
   headingComponent,
   blockComponent,
@@ -17,31 +17,34 @@ export default function SectionEditor ({
   onShow,
   show,
 }) {
-  const _blocks = blockable ? blockParser(text) : [text];
-  const [blocks, setBlocks] = useState(_blocks);
+  const blocks = useMemo(() => (
+    blockable ? blockParser(text) : [text]
+  ), [blockable, blockParser, text]);
 
-  const onBlockEdit = (block, index) => {
-    let __blocks = [...blocks];
-    __blocks[index] = block;
-    setBlocks(__blocks);
-  };
+  const onBlockEdit = useDeepCompareCallback((block, index) => {
+    let _blocks = [...blocks];
+    _blocks[index] = block;
+    const _text = _blocks.join(blockJoiner);
+    onText(_text);
+  }, [blocks, blockJoiner, onText]);
 
-  useDeepCompareEffect(() => {
-    onEdit(blocks.join(blockJoiner));
-  }, [blocks]);
 
-  let blockComponents = <></>;
-  if (show) {
-    blockComponents = blocks.map((block, index) => {
-      const blockProps = {
-        text: block,
-        component: blockComponent,
-        onEdit: (_block) => { onBlockEdit(_block, index); },
-        editable,
-      };
-      return <BlockEditor key={ block + index } {...blockProps} />;
-    });
-  };
+  const blockComponents = useMemo(() => {
+    let _blockComponents = <></>;
+    if (show) {
+      _blockComponents = blocks.map((block, index) => {
+        const blockProps = {
+          text: block,
+          component: blockComponent,
+          onText: (_block) => { onBlockEdit(_block, index); },
+          editable,
+        };
+        return <BlockEditor key={ block + index } {...blockProps} />;
+      });
+    };
+    return _blockComponents;
+  }, [blockComponent, blocks, editable, onBlockEdit, show]);
+
 
   const headingStyle = {
     whiteSpace: 'nowrap',
@@ -64,7 +67,7 @@ SectionEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   text: PropTypes.string.isRequired,
   /** Function triggered on edit */
-  onEdit: PropTypes.func,
+  onText: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
   /** Component to wrap the first line of a section */
@@ -89,7 +92,7 @@ SectionEditor.defaultProps = {
   blockComponent: (props) => (
     <div {...props} style={{ padding: '0 0.2em' }}></div>
   ),
-  onEdit: (text) => { console.warn('SectionEditor.onEdit() not provided:\n\n', text); },
+  onText: (text) => { console.warn('SectionEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',
   blockParser: (text) => (text.split('\n')),

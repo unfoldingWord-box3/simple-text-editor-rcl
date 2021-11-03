@@ -11,9 +11,9 @@ export default function BlockEditor ({text, style, onText, editable, component})
   const editorProps = {
     contentEditable: editable,
     style,
-    onBlur: (e) => {onText(e.target.innerText)},
+    onBlur: (e) => { onText(e.target.innerText.replace(/&lt;/g, '<')) },
     dir,
-    dangerouslySetInnerHTML: { __html: text },
+    dangerouslySetInnerHTML: { __html: text.replace(/</g, '&lt;') },
   };
 
   const editorComponent = component(editorProps);

@@ -12,7 +12,7 @@ const [text, setText] = useState(_text);
 console.log('DocumentEditor.md:\n\n', text);
 
 const titleComponent = (props) => (<h2>{title}</h2>);
-const headingComponent = (props) => (<h3 {...props}>{props.text}</h3>);
+const headingComponent = (props) => (<h3 {...props}>{props.text.split('\n')[0]}</h3>);
 const blockComponent = (props) => (<p {...props} style={{ padding: '0 0.2em', whiteSpace: 'pre-wrap' }}></p>);
 
 <DocumentEditor

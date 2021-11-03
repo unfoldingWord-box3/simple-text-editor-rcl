@@ -14,7 +14,7 @@ console.log('SectionEditor.md:\n\n', text);
 const [ show, setShow ] = useState(true);
 
 const onShow = () => { setShow(!show); };
-const headingComponent = (props) => (<h4 {...props}> {props.text}</h4>);
+const headingComponent = (props) => (<h4 {...props}>{props.text.split('\n')[0]}</h4>);
 
 <SectionEditor text={text} onText={setText} show={show} onShow={onShow} headingComponent={headingComponent} />;
 ```

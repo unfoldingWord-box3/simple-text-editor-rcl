@@ -57,7 +57,7 @@ export default function SectionEditor ({
   
   return (
     <>
-      {headingComponent({ dir, style: headingStyle, onClick: onShow, text: blocks[0] })}
+      {headingComponent({ dir, style: headingStyle, onClick: onShow, text })}
       {blockComponents}
     </>
   )
@@ -88,7 +88,7 @@ SectionEditor.propTypes = {
 
 SectionEditor.defaultProps = {
   editable: true,
-  headingComponent: (props) => (<h2 {...props}> {props.text}</h2>),
+  headingComponent: (props) => (<h2 {...props}> {props.text.split('\n')[0]}</h2>),
   blockComponent: (props) => (
     <div {...props} style={{ padding: '0 0.2em' }}></div>
   ),

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
@@ -14,12 +14,12 @@ export default function DocumentEditor ({
   sectionable,
   sectionParser,
   sectionJoiner,
+  sectionIndex,
+  onSectionIndex,
   blockable,
   blockParser,
   blockJoiner,
 }) {
-  const [showIndex, setShowIndex] = useState(0);
-
   const sections = useMemo(() => (
     sectionable ? sectionParser(text) : [text]
   ), [sectionable, sectionParser, text]);
@@ -37,8 +37,8 @@ export default function DocumentEditor ({
         text: section,
         // component: sectionComponent,
         onText: (_section) => { onSectionEdit(_section, index); },
-        show: (index === showIndex),
-        onShow: () => { setShowIndex(index); },
+        show: (index === sectionIndex),
+        onShow: () => { onSectionIndex(index); },
         headingComponent,
         blockComponent,
         blockable,
@@ -51,8 +51,8 @@ export default function DocumentEditor ({
   ), [
     sections,
     onSectionEdit,
-    showIndex,
-    setShowIndex,
+    sectionIndex,
+    onSectionIndex,
     headingComponent,
     blockComponent,
     blockable,
@@ -96,10 +96,14 @@ DocumentEditor.propTypes = {
   sectionable: PropTypes.bool,
   /** String to join the sections to text */
   sectionJoiner: PropTypes.string,
-  /** Function triggered on Heading click */
+  /** Function triggered on Section Heading click, for app to manage state. */
+  onSectionIndex: PropTypes.func.isRequired,
+  /** Index of section to be show, for app to manage state. */
+  sectionIndex: PropTypes.number,
 };
 
 DocumentEditor.defaultProps = {
+  text: '',
   editable: true,
   titleComponent: (props) => (<h1 {...props}>{props?.text}</h1>),
   headingComponent: (props) => (<h2 {...props}>{props.text}</h2>),
@@ -113,6 +117,7 @@ DocumentEditor.defaultProps = {
   sectionable: true,
   sectionJoiner: '\n\n',
   sectionParser: (text) => (text.split('\n\n')),
-  text: '',
+  onSectionIndex: (text) => { console.warn('DocumentEditor.onSectionIndex() not provided:\n\n', text); },
+  sectionIndex: 0,
 };
 

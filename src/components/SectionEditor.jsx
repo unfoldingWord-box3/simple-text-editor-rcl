@@ -52,14 +52,14 @@ export default function SectionEditor ({
     textOverflow: 'ellipsis',
   };
 
-  let dir = 'auto';
+  let dir = '';
   if (isRtl(text)) dir = 'rtl';
   
   return (
-    <>
+    <div dir={dir}>
       {headingComponent({ dir, style: headingStyle, onClick: onShow, text })}
       {blockComponents}
-    </>
+    </div>
   )
 };
 

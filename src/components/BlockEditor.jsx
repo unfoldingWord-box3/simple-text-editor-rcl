@@ -5,7 +5,7 @@ import { isRtl } from '../helpers/detectRTL';
 
 export default function BlockEditor ({text, style, onText, editable, component}) {
 
-  let dir = 'auto';
+  let dir = '';
   if (isRtl(text)) dir = 'rtl';
 
   const editorProps = {

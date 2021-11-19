@@ -9,11 +9,13 @@ export default function SectionEditor ({
   text,
   onText,
   editable,
+  sectionComponent,
   headingComponent,
   blockComponent,
   blockable,
   blockParser,
   blockJoiner,
+  onBlockClick,
   onShow,
   show,
 }) {
@@ -28,7 +30,6 @@ export default function SectionEditor ({
     onText(_text);
   }, [blocks, blockJoiner, onText]);
 
-
   const blockComponents = useMemo(() => {
     let _blockComponents = <></>;
     if (show) {
@@ -38,13 +39,13 @@ export default function SectionEditor ({
           component: blockComponent,
           onText: (_block) => { onBlockEdit(_block, index); },
           editable,
+          onClick: () => { onBlockClick({text: block, index}); },
         };
         return <BlockEditor key={ block + index } {...blockProps} />;
       });
     };
     return _blockComponents;
-  }, [blockComponent, blocks, editable, onBlockEdit, show]);
-
+  }, [blockComponent, blocks, onBlockClick, editable, onBlockEdit, show]);
 
   const headingStyle = {
     whiteSpace: 'nowrap',
@@ -54,13 +55,15 @@ export default function SectionEditor ({
 
   let dir = '';
   if (isRtl(text)) dir = 'rtl';
+
+  const children = (<>
+    {headingComponent({ dir, style: headingStyle, onClick: onShow, text })}
+    {blockComponents}
+  </>);
   
-  return (
-    <div dir={dir}>
-      {headingComponent({ dir, style: headingStyle, onClick: onShow, text })}
-      {blockComponents}
-    </div>
-  )
+  return (<>
+    {sectionComponent({dir, children})}
+  </>);
 };
 
 SectionEditor.propTypes = {
@@ -70,6 +73,8 @@ SectionEditor.propTypes = {
   onText: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
+  /** Component to be the section wrapper */
+  sectionComponent: PropTypes.func,
   /** Component to wrap the first line of a section */
   headingComponent: PropTypes.func,
   /** Component to be the block editor */
@@ -80,6 +85,8 @@ SectionEditor.propTypes = {
   blockable: PropTypes.bool,
   /** String to join the blocks to text */
   blockJoiner: PropTypes.string,
+  /** Callback triggered on Block click, provides block text and index. */
+  onBlockClick: PropTypes.func.isRequired,
   /** Function triggered on Heading click */
   onShow: PropTypes.func,
   /** Show this section */
@@ -88,14 +95,13 @@ SectionEditor.propTypes = {
 
 SectionEditor.defaultProps = {
   editable: true,
-  headingComponent: (props) => (<h2 {...props}> {props.text.split('\n')[0]}</h2>),
-  blockComponent: (props) => (
-    <div {...props} style={{ padding: '0 0.2em' }}></div>
-  ),
+  sectionComponent: ({children, ...props}) => (<div class='section' {...props}>{children}</div>),
+  headingComponent: (props) => (<h2 class='heading' {...props}>{props.text}</h2>),
   onText: (text) => { console.warn('SectionEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',
   blockParser: (text) => (text.split('\n')),
+  onBlockClick: ({text, index}) => { console.warn('SectionEditor.onBlockClick({text, index}) not provided.\n\n', index); },
   onShow: () => { console.warn('SectionEditor.onShow() not provided.'); },
   show: true,
   text: '',

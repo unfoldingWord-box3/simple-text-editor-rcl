@@ -8,17 +8,20 @@ export default function DocumentEditor ({
   text,
   onText,
   editable,
-  titleComponent,
+  documentComponent,
+  sectionComponent,
   headingComponent,
   blockComponent,
   sectionable,
   sectionParser,
   sectionJoiner,
   sectionIndex,
-  onSectionIndex,
+  onSectionClick,
   blockable,
   blockParser,
   blockJoiner,
+  onBlockClick,
+  ...props
 }) {
   const sections = useMemo(() => (
     sectionable ? sectionParser(text) : [text]
@@ -38,13 +41,16 @@ export default function DocumentEditor ({
         // component: sectionComponent,
         onText: (_section) => { onSectionEdit(_section, index); },
         show: (index === sectionIndex),
-        onShow: () => { onSectionIndex(index); },
+        onShow: () => { onSectionClick({text, index}); },
+        sectionComponent,
         headingComponent,
         blockComponent,
         blockable,
         blockParser,
         blockJoiner,
         editable,
+        onSectionClick,
+        onBlockClick,
       };
       return <SectionEditor key={ section + index } {...sectionProps} />;
     })
@@ -52,21 +58,21 @@ export default function DocumentEditor ({
     sections,
     onSectionEdit,
     sectionIndex,
-    onSectionIndex,
+    onSectionClick,
     headingComponent,
     blockComponent,
     blockable,
     blockParser,
     blockJoiner,
+    onBlockClick,
     editable,
   ]);
   
   return (
     <>
-      {titleComponent()}
-      {sectionComponents}
+      {documentComponent({...props, children: sectionComponents})}
     </>
-  )
+  );
 };
 
 DocumentEditor.propTypes = {
@@ -76,8 +82,8 @@ DocumentEditor.propTypes = {
   onText: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
-  /** Component to render the title of the document */
-  titleComponent: PropTypes.func,
+  /** Component to wrap all sections of the document */
+  documentComponent: PropTypes.func,
   /** Component to wrap the first line of a section */
   headingComponent: PropTypes.func,
   /** Component to be the block editor */
@@ -88,6 +94,8 @@ DocumentEditor.propTypes = {
   blockable: PropTypes.bool,
   /** String to join the blocks to text */
   blockJoiner: PropTypes.string,
+  /** Callback triggered on Block click, provides block text and index. */
+  onBlockClick: PropTypes.func.isRequired,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
   /** Function to parse the text into sections */
@@ -96,8 +104,8 @@ DocumentEditor.propTypes = {
   sectionable: PropTypes.bool,
   /** String to join the sections to text */
   sectionJoiner: PropTypes.string,
-  /** Function triggered on Section Heading click, for app to manage state. */
-  onSectionIndex: PropTypes.func.isRequired,
+  /** Callback triggered on Section Heading click, provides section text and index. */
+  onSectionClick: PropTypes.func.isRequired,
   /** Index of section to be show, for app to manage state. */
   sectionIndex: PropTypes.number,
 };
@@ -105,19 +113,16 @@ DocumentEditor.propTypes = {
 DocumentEditor.defaultProps = {
   text: '',
   editable: true,
-  titleComponent: (props) => (<h1 {...props}>{props?.text}</h1>),
-  headingComponent: (props) => (<h2 {...props}>{props.text}</h2>),
-  blockComponent: (props) => (
-    <div {...props} style={{ padding: '0 0.2em' }}></div>
-  ),
+  documentComponent: ({children, ...props}) => (<div class='document' {...props}>{children}</div>),
   onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',
   blockParser: (text) => (text.split('\n')),
+  onBlockClick: ({text, index}) => { console.warn('DocumentEditor.onBlockClick({text, index}) not provided.\n\n', index); },
   sectionable: true,
   sectionJoiner: '\n\n',
   sectionParser: (text) => (text.split('\n\n')),
-  onSectionIndex: (text) => { console.warn('DocumentEditor.onSectionIndex() not provided:\n\n', text); },
+  onSectionClick: ({text, index}) => { console.warn('DocumentEditor.onSectionClick({text, index}) not provided:\n\n', index); },
   sectionIndex: 0,
 };
 

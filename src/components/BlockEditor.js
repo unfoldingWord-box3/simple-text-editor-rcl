@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
-export default function BlockEditor ({text, style, onText, editable, component}) {
+export default function BlockEditor ({text, style, onText, onClick, editable, component}) {
 
   let dir = '';
   if (isRtl(text)) dir = 'rtl';
@@ -11,8 +11,10 @@ export default function BlockEditor ({text, style, onText, editable, component})
   const editorProps = {
     contentEditable: editable,
     style,
+    onClick,
     onBlur: (e) => { onText(e.target.innerText.replace(/&lt;/g, '<')) },
     dir,
+    suppressContentEditableWarning: true,
     dangerouslySetInnerHTML: { __html: text.replace(/</g, '&lt;') },
     text,
   };
@@ -25,6 +27,8 @@ export default function BlockEditor ({text, style, onText, editable, component})
 BlockEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   text: PropTypes.string.isRequired,
+  /** Callback triggered on Block click, provides block text and index. */
+  onClick: PropTypes.func,
   /** Function triggered on edit */
   onText: PropTypes.func,
   /** Editable? */

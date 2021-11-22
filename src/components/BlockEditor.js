@@ -3,10 +3,18 @@ import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
-export default function BlockEditor ({text, style, onText, onClick, editable, component}) {
+export default function BlockEditor ({text, decorators, style, onText, onClick, editable, component, props}) {
 
   let dir = '';
   if (isRtl(text)) dir = 'rtl';
+
+  let __html = text;
+  if (Object.keys(decorators).length > 0) {
+    Object.keys(decorators).forEach( (name) => {
+      const [regex, replacer] = decorators[name];
+      __html = __html.replace(regex, replacer);
+    });
+  };
 
   const editorProps = {
     contentEditable: editable,
@@ -15,13 +23,12 @@ export default function BlockEditor ({text, style, onText, onClick, editable, co
     onBlur: (e) => { onText(e.target.innerText.replace(/&lt;/g, '<')) },
     dir,
     suppressContentEditableWarning: true,
-    dangerouslySetInnerHTML: { __html: text.replace(/</g, '&lt;') },
+    dangerouslySetInnerHTML: { __html },
     text,
+    ...props,
   };
 
-  const editorComponent = component(editorProps);
-
-  return (<>{editorComponent}</>);
+  return (<>{component(editorProps)}</>);
 };
 
 BlockEditor.propTypes = {
@@ -37,6 +44,8 @@ BlockEditor.propTypes = {
   component: PropTypes.func,
   /** css styles for the editable component */
   style: PropTypes.object,
+  /** Object of replacers for html/css decoration of text */
+  decorators: PropTypes.object,
 };
 
 BlockEditor.defaultProps = {
@@ -45,4 +54,7 @@ BlockEditor.defaultProps = {
   editable: true,
   style: {whiteSpace: 'pre', padding: '1em'},
   component: (props) => ( <div {...props} /> ),
+  decorators: {
+    embededHtml: [ /</g, "&lt;"],
+  },
 };

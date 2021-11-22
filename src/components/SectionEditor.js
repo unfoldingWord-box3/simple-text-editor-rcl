@@ -18,6 +18,7 @@ export default function SectionEditor ({
   onBlockClick,
   onShow,
   show,
+  decorators,
 }) {
   const blocks = useMemo(() => (
     blockable ? blockParser(text) : [text]
@@ -30,22 +31,20 @@ export default function SectionEditor ({
     onText(_text);
   }, [blocks, blockJoiner, onText]);
 
-  const blockComponents = useMemo(() => {
-    let _blockComponents = <></>;
-    if (show) {
-      _blockComponents = blocks.map((block, index) => {
-        const blockProps = {
-          text: block,
-          component: blockComponent,
-          onText: (_block) => { onBlockEdit(_block, index); },
-          editable,
-          onClick: () => { onBlockClick({text: block, index}); },
-        };
-        return <BlockEditor key={ block + index } {...blockProps} />;
-      });
-    };
-    return _blockComponents;
-  }, [blockComponent, blocks, onBlockClick, editable, onBlockEdit, show]);
+  let blockComponents = <></>;
+  if (show) {
+    blockComponents = blocks.map((block, index) => {
+      const blockProps = {
+        text: block,
+        component: blockComponent,
+        onText: (_block) => { onBlockEdit(_block, index); },
+        editable,
+        onClick: () => { onBlockClick({text: block, index}); },
+        decorators,
+      };
+      return <BlockEditor key={ block + index } {...blockProps} />;
+    });
+  };
 
   const headingStyle = {
     whiteSpace: 'nowrap',
@@ -91,6 +90,8 @@ SectionEditor.propTypes = {
   onShow: PropTypes.func,
   /** Show this section */
   show: PropTypes.bool,
+  /** Object of replacers for html/css decoration of text, done at block level */
+  decorators: PropTypes.object,
 };
 
 SectionEditor.defaultProps = {

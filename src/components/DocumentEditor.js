@@ -21,6 +21,7 @@ export default function DocumentEditor ({
   blockParser,
   blockJoiner,
   onBlockClick,
+  decorators,
   ...props
 }) {
   const sections = useMemo(() => (
@@ -51,6 +52,7 @@ export default function DocumentEditor ({
         editable,
         onSectionClick,
         onBlockClick,
+        decorators,
       };
       return <SectionEditor key={ section + index } {...sectionProps} />;
     })
@@ -66,6 +68,7 @@ export default function DocumentEditor ({
     blockJoiner,
     onBlockClick,
     editable,
+    decorators,
   ]);
   
   return (
@@ -108,6 +111,8 @@ DocumentEditor.propTypes = {
   onSectionClick: PropTypes.func.isRequired,
   /** Index of section to be show, for app to manage state. */
   sectionIndex: PropTypes.number,
+  /** Object of replacers for html/css decoration of text, done at block level */
+  decorators: PropTypes.object,
 };
 
 DocumentEditor.defaultProps = {

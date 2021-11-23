@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
+import { useDeepCompareCallback } from 'use-deep-compare';
 
 import SectionEditor from './SectionEditor';
 
@@ -35,41 +35,26 @@ export default function DocumentEditor ({
     onText(_text);
   }, [onText, sections]);
 
-  const sectionComponents = useDeepCompareMemo(()=> (
-    sections.map((section, index) => {
-      const sectionProps = {
-        text: section,
-        // component: sectionComponent,
-        onText: (_section) => { onSectionEdit(_section, index); },
-        show: (index === sectionIndex),
-        onShow: () => { onSectionClick({text: section, index}); },
-        sectionComponent,
-        headingComponent,
-        blockComponent,
-        blockable,
-        blockParser,
-        blockJoiner,
-        editable,
-        onSectionClick,
-        onBlockClick,
-        decorators,
-      };
-      return <SectionEditor key={ section + index } {...sectionProps} />;
-    })
-  ), [
-    sections,
-    onSectionEdit,
-    sectionIndex,
-    onSectionClick,
-    headingComponent,
-    blockComponent,
-    blockable,
-    blockParser,
-    blockJoiner,
-    onBlockClick,
-    editable,
-    decorators,
-  ]);
+  const sectionComponents = sections.map((section, index) => {
+    const sectionProps = {
+      text: section,
+      // component: sectionComponent,
+      onText: (_section) => { onSectionEdit(_section, index); },
+      show: (index === sectionIndex),
+      onShow: () => { onSectionClick({text: section, index}); },
+      sectionComponent,
+      headingComponent,
+      blockComponent,
+      blockable,
+      blockParser,
+      blockJoiner,
+      editable,
+      onSectionClick,
+      onBlockClick,
+      decorators,
+    };
+    return <SectionEditor key={ section + index } {...sectionProps} />;
+  });
   
   return (
     <>

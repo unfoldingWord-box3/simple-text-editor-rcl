@@ -3,13 +3,13 @@ import React from 'react';
 import DocumentEditor from './DocumentEditor';
 import { segmenter } from '../helpers/segmenter';
 
-export default function UsfmDocumentEditor (props) {
+export default function UsfmEditor (props) {
   return <DocumentEditor {...props} />;
 };
 
-UsfmDocumentEditor.propTypes = DocumentEditor.propTypes;
+UsfmEditor.propTypes = DocumentEditor.propTypes;
 
-UsfmDocumentEditor.defaultProps = {
+UsfmEditor.defaultProps = {
   headingComponent: ({ text, ...props }) => (
     <div class='heading' {...props}>
       <span class='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>

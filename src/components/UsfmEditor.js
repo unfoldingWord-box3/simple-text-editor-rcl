@@ -29,6 +29,7 @@ UsfmEditor.defaultProps = {
   decorators: {
     embededHtml: [ /</g, "&lt;"], // same as default but overrideable
     psuedoBlock: [ /(\\([cspv])(\n|.|$)+?)(?=(\\[cspv]|$))/g, "<span class='pseudo-block $2'>$1</span>" ],
+    footnotes: [ /(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>" ],
     markers: [
       /(\\([\w-]*)\** *)(\d*-?\d*)(?=[^:.])/g,
       "<span class='marker $2'>$1<span class='digit'>$3</span></span>"

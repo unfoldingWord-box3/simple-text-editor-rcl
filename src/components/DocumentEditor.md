@@ -16,15 +16,21 @@ const titleComponent = (props) => (<h2>{title}</h2>);
 const headingComponent = (props) => (<h3 {...props}>{props.text.split('\n')[0]}</h3>);
 const blockComponent = (props) => (<p {...props} style={{ padding: '0 0.2em', whiteSpace: 'pre-wrap' }}></p>);
 
-<DocumentEditor
-  text={text}
-  onText={setText}
-  titleComponent={titleComponent}
-  headingComponent={headingComponent}
-  blockComponent={blockComponent}
-  sectionable={true}
-  blockable={true}
-  sectionIndex={sectionIndex}
-  onSectionIndex={setSectionIndex}
-/>;
+const onSectionClick = ({text: _text, index}) => {
+  setSectionIndex(index);
+};
+
+const props = {
+  text,
+  onText: setText,
+  titleComponent,
+  headingComponent,
+  blockComponent,
+  sectionable: true,
+  blockable: true,
+  sectionIndex,
+  onSectionClick,
+};
+
+<DocumentEditor {...props} />;
 ```

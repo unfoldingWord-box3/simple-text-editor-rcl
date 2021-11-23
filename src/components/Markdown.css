@@ -1,0 +1,26 @@
+.document {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.section {
+  width: 100%;
+}
+
+.heading {
+  border-bottom: gray 1px solid;
+  padding: 0.5em;
+  width: 100%;
+}
+
+.heading .text {
+  display: inline-block;
+  border: 1px solid gray;
+  background-color: lightgray;
+  border-radius: 0.2em;
+  padding: 0.1em 0.2em 0.01em 0.2em;
+}
+
+.block {
+  border-bottom: gray 1px solid;
+  padding: 0.05em 0.2em;
+}

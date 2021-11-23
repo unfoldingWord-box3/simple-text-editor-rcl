@@ -24,3 +24,9 @@
   border-bottom: gray 1px solid;
   padding: 0.05em 0.2em;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  display: inline-block;
+  width: 100%;
+  margin: 0em;
+}

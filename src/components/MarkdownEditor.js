@@ -23,7 +23,7 @@ MarkdownEditor.defaultProps = {
   ),
   sectionJoiner: '',
   blockParser: (_text) => (
-    segmenter({ text: _text, regex: /(.+\n)+?(\n+|$)?(?=(\n.+|$))/g })
+    segmenter({ text: _text, regex: /(.+\n)+?(\n+|$)(?=(.+|$))/g })
   ),
   blockJoiner: '',
   decorators: {

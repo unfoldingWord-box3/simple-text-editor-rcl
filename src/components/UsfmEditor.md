@@ -53,5 +53,5 @@ const props = {
   onBlockClick,
 };
 
-<UsfmDocumentEditor {...props} />;
+<UsfmEditor {...props} />;
 ```

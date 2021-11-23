@@ -98,7 +98,7 @@ DocumentEditor.propTypes = {
   /** String to join the blocks to text */
   blockJoiner: PropTypes.string,
   /** Callback triggered on Block click, provides block text and index. */
-  onBlockClick: PropTypes.func.isRequired,
+  onBlockClick: PropTypes.func,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
   /** Function to parse the text into sections */

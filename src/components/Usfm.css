@@ -11,6 +11,7 @@
   padding: 0.5em;
   width: 100%;
 }
+
 .heading .text {
   display: inline-block;
   border: 1px solid gray;
@@ -52,14 +53,34 @@
   display: inline-block;
   padding: 0.05em 0.2em;
 }
+
 .marker.s {
   font-size: 0.75em;
   font-weight: bold;
 }
 
-.f, .fk, .ft, .fr {
+.marker.s5 {
+  color: red;
+}
+
+.footnote, .endnote {
+  font-weight: lighter;
+  font-size: small;
+  vertical-align: super;
+}
+
+.f {
   color: orange;
 }
+
+.fe {
+  color: coral;
+}
+
+.fk, .ft, .fr {
+  color: orangered;
+}
+
 
 .w, .zaln-s, .zaln-e {
   color: purple;
@@ -77,4 +98,8 @@
 .block {
   border-bottom: gray 1px solid;
   padding: 0.05em 0.2em;
+}
+
+.hide {
+  display: none;
 }

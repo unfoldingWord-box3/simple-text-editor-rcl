@@ -56,11 +56,6 @@
   padding: 0.05em 0.2em;
 }
 
-.marker.s {
-  font-size: 0.75em;
-  font-weight: bold;
-}
-
 .footnote, .endnote {
   font-weight: lighter;
   font-size: small;

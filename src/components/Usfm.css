@@ -33,15 +33,17 @@
 .marker.c, .marker.v {
   color: blue;
 }
+
 .marker.v {
   font-size: 0.9em;
   vertical-align: super
 }
+
 .marker.v .digit {
   color: initial;
 }
 
-.marker.p, .marker.s, .marker.s5, .marker.ts {
+.marker.p, .marker.s, .marker.s1, .marker.s2, .marker.s3, .marker.s4, .marker.s5, .marker.ts {
   color: green;
 }
 
@@ -57,10 +59,6 @@
 .marker.s {
   font-size: 0.75em;
   font-weight: bold;
-}
-
-.marker.s5 {
-  color: red;
 }
 
 .footnote, .endnote {
@@ -81,7 +79,6 @@
   color: orangered;
 }
 
-
 .w, .zaln-s, .zaln-e {
   color: purple;
 }
@@ -98,8 +95,4 @@
 .block {
   border-bottom: gray 1px solid;
   padding: 0.05em 0.2em;
-}
-
-.hide {
-  display: none;
 }

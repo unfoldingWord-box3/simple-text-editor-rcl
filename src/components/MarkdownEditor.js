@@ -3,6 +3,8 @@ import React from 'react';
 import DocumentEditor from './DocumentEditor';
 import { segmenter } from '../helpers/segmenter';
 
+import './Markdown.css';
+
 export default function MarkdownEditor (props) {
   return <DocumentEditor {...props} />;
 };

@@ -1,6 +1,5 @@
 ```js
 import {useState} from 'react';
-import './Usfm.css';
 
 const title = 'Lorem Ipsum';
 const _text = `\\h Titus

@@ -1,6 +1,5 @@
 ```js
 import {useState} from 'react';
-import './Markdown.css';
 
 const _text = `
 # h1 Heading 8-)

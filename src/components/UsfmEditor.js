@@ -3,6 +3,8 @@ import React from 'react';
 import DocumentEditor from './DocumentEditor';
 import { segmenter } from '../helpers/segmenter';
 
+import './Usfm.css';
+
 export default function UsfmEditor (props) {
   return <DocumentEditor {...props} />;
 };

@@ -74,6 +74,8 @@ DocumentEditor.propTypes = {
   onText: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
+  /** Preview? */
+  preview: PropTypes.bool,
   /** Component to wrap all sections of the document */
   documentComponent: PropTypes.func,
   /** Component to wrap the first line of a section */
@@ -107,6 +109,7 @@ DocumentEditor.propTypes = {
 DocumentEditor.defaultProps = {
   text: '',
   editable: true,
+  preview: false,
   documentComponent: ({children, ...props}) => (<div class='document' {...props}>{children}</div>),
   onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
   blockable: true,

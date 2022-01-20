@@ -17,7 +17,7 @@ UsfmEditor.defaultProps = {
       <span class='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>
     </div>
   ),
-  blockComponent: (_props) => (
+  blockComponent: ({ text, ..._props }) => (
     <><div class='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
   ),
   sectionParser: (_text) => (

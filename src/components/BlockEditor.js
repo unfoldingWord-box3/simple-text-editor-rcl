@@ -53,7 +53,7 @@ BlockEditor.defaultProps = {
   onText: (text) => { console.warn('BlockEditor.onText() not provided:\n\n', text); },
   editable: true,
   style: {whiteSpace: 'pre', padding: '1em'},
-  component: (props) => ( <div {...props} /> ),
+  component: ({ text, ...props}) => ( <div {...props} /> ),
   decorators: {
     embededHtml: [ /</g, "&lt;"],
   },

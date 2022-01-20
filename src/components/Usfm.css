@@ -92,6 +92,10 @@
   white-space: normal;
 }
 
+.preview .pseudo-block.p {
+  white-space: pre;
+}
+
 .tr, .tl {
   color: red;
 }

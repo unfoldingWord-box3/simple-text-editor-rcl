@@ -30,13 +30,12 @@
 }
 
 .c .number {
-  font-size: 2.3em;
+  font-size: 2.2em;
   color: initial;
 }
 
 .preview .c .number {
   float: left;
-  padding-bottom: 0.2em;
   padding-right: 0.2em;
 }
 
@@ -88,11 +87,17 @@
   color: purple;
 }
 
-.preview .pseudo-block {
-  white-space: normal;
+.pseudo-block {
+  display: block;
 }
 
-.preview .pseudo-block.p {
+.preview .pseudo-block {
+  white-space: normal;
+  display: inline;
+}
+
+.preview .pseudo-block.p, .preview .pseudo-block.s, .preview .pseudo-block.s1, .preview .pseudo-block.s2, .preview .pseudo-block.s3, .preview .pseudo-block.s4, .preview .pseudo-block.s5 {
+  display: block;
   white-space: pre;
 }
 

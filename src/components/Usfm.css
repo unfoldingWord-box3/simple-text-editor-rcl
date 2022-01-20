@@ -25,21 +25,25 @@
   font-size: 0.9em;
 }
 
-.marker.c .digit {
+.preview .marker {
+  display: none;
+}
+
+.markerWithNumber.c .number {
   font-size: 2em;
   color: initial;
 }
 
-.marker.c, .marker.v {
+.markerWithNumber.c, .markerWithNumber.v {
   color: blue;
 }
 
-.marker.v {
+.markerWithNumber.v {
   font-size: 0.9em;
   vertical-align: super
 }
 
-.marker.v .digit {
+.markerWithNumber.v .number {
   color: initial;
 }
 

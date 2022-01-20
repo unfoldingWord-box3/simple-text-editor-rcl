@@ -29,21 +29,21 @@
   display: none;
 }
 
-.markerWithNumber.c .number {
+.number.c {
   font-size: 2em;
   color: initial;
 }
 
-.markerWithNumber.c, .markerWithNumber.v {
+.marker.c, .marker.v {
   color: blue;
 }
 
-.markerWithNumber.v {
+.marker.v, .number.v {
   font-size: 0.9em;
   vertical-align: super
 }
 
-.markerWithNumber.v .number {
+.number.v {
   color: initial;
 }
 

@@ -33,11 +33,11 @@ UsfmEditor.defaultProps = {
     psuedoBlock: [ /(\\([cspv])(\n|.|$)+?)(?=(\\[cspv]|$))/g, "<span class='pseudo-block $2'>$1</span>" ],
     footnotes: [ /(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>" ],
     endnotes: [ /(\\fe (.|\n)+?(\\fe\*))/g, "<span class='endnote'>$1</span>" ],
-    markersWithNumbers: [
+    numberForMarkers: [
       /(\\([cv]*)\** +)(\d+-?\d*)(?=[^:.])/g,
-      "<span class='markerWithNumber $2'><span class='marker'>$1</span><span class='number'>$3</span></span>"
+      "$1<span class='number $2'>$3</span>"
     ],
-    markersWithoutNumbers: [
+    markers: [
       /(\\([\w-]*\d*)\**)(?=[^:.])/g,
       "<span class='marker $2'>$1</span>"
     ],

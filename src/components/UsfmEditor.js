@@ -30,7 +30,7 @@ UsfmEditor.defaultProps = {
   blockJoiner: '',
   decorators: {
     embededHtml: [ /</g, "&lt;"], // same as default but overrideable
-    psuedoBlock: [ /(\\([cspv])(\n|.|$)+?)(?=(\\[cspv]|$))/g, "<span class='pseudo-block $2'>$1</span>" ],
+    psuedoBlock: [ /(\\([cspv]\d?)(\n|.|$)+?)(?=(\\[cspv]|$))/g, "<span class='pseudo-block $2'>$1</span>" ],
     footnotes: [ /(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>" ],
     endnotes: [ /(\\fe (.|\n)+?(\\fe\*))/g, "<span class='endnote'>$1</span>" ],
     numberForMarkers: [ /(\\([\w]+)\** +)(\d+-?\d*)(?=[^:.])/g, "$1<span class='number'>$3</span>" ],

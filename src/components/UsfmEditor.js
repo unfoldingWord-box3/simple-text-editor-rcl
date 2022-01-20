@@ -34,7 +34,7 @@ UsfmEditor.defaultProps = {
     footnotes: [ /(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>" ],
     endnotes: [ /(\\fe (.|\n)+?(\\fe\*))/g, "<span class='endnote'>$1</span>" ],
     numberForMarkers: [ /(\\([\w]+)\** +)(\d+-?\d*)(?=[^:.])/g, "$1<span class='number'>$3</span>" ],
-    markers: [ /(\\([\w-]+\d*)\\?\*? *)(?=[^:.])/g, "<span class='marker $2'>$1</span>" ],
+    markers: [ /(\\([\w-]+\d*)\\?\** *)(?=[^:.])/g, "<span class='marker $2'>$1</span>" ],
     attributes: [ /(\|? ?x?-?[\w-]+=".*")/g, "<span class='attribute'>$1</span>" ],
   },
 };

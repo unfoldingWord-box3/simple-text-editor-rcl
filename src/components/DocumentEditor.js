@@ -8,6 +8,7 @@ export default function DocumentEditor ({
   text,
   onText,
   editable,
+  preview,
   documentComponent,
   sectionComponent,
   headingComponent,
@@ -55,10 +56,13 @@ export default function DocumentEditor ({
     };
     return <SectionEditor key={ section + index } {...sectionProps} />;
   });
+
+  let documentProps = { ...props };
+  if (preview) documentProps.className = 'preview';
   
   return (
     <>
-      {documentComponent({...props, children: sectionComponents})}
+      {documentComponent({...documentProps, children: sectionComponents})}
     </>
   );
 };

@@ -47,6 +47,7 @@ const props = {
   onText: setText,
   sectionable: true,
   blockable: true,
+  preview: false,
   sectionIndex,
   onSectionClick,
   onBlockClick,

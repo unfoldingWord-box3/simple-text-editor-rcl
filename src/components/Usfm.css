@@ -29,25 +29,25 @@
   display: none;
 }
 
-.number.c {
+.c .number {
   font-size: 2em;
   color: initial;
 }
 
-.marker.c, .marker.v {
+.c .marker, .v .marker {
   color: blue;
 }
 
-.marker.v, .number.v {
+.v .marker, .v .number {
   font-size: 0.9em;
   vertical-align: super
 }
 
-.number.v {
+.v .number {
   color: initial;
 }
 
-.marker.p, .marker.s, .marker.s1, .marker.s2, .marker.s3, .marker.s4, .marker.s5, .marker.ts {
+.p .marker, .s .marker, .s1 .marker, .s2 .marker, .s3 .marker, .s4 .marker, .s5 .marker, .ts .marker {
   color: green;
 }
 

@@ -25,26 +25,9 @@
   font-size: 0.9em;
 }
 
-.preview .marker, .preview .attribute {
-  display: none;
-}
-
 .c .number {
   font-size: 2.2em;
   color: initial;
-}
-
-.preview .pseudo-block.c {
-  margin: 2em 0.2em 0 0.2em;
-  display: block;
-}
-
-.preview .pseudo-block.c .number {
-  float: left;
-}
-
-.preview .rtl .pseudo-block.c .number  {
-  float: right;
 }
 
 .c .marker, .v .marker {
@@ -99,16 +82,6 @@
   display: block;
 }
 
-.preview .pseudo-block {
-  white-space: normal;
-  display: inline;
-}
-
-.preview .pseudo-block.p, .preview .pseudo-block.s {
-  display: block;
-  white-space: pre;
-}
-
 .tr, .tl {
   color: red;
 }
@@ -125,4 +98,31 @@
 
 .preview .block {
   border-bottom: none;
+}
+
+.preview .pseudo-block {
+  white-space: normal;
+  display: inline;
+}
+
+.preview .pseudo-block.p, .preview .pseudo-block.s, .preview .pseudo-block.s1, .preview .pseudo-block.s2 {
+  display: block;
+  white-space: pre;
+}
+
+.preview .pseudo-block.c {
+  margin: 2em 0.2em 0 0.2em;
+  display: block;
+}
+
+.preview .marker, .preview .attribute {
+  display: none;
+}
+
+.preview .pseudo-block.c .number {
+  float: left;
+}
+
+.preview .rtl .pseudo-block.c .number  {
+  float: right;
 }

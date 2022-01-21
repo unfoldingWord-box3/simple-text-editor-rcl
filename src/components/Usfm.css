@@ -35,13 +35,16 @@
 }
 
 .preview .pseudo-block.c {
-  float: left;
   padding: 0 0.2em;
+  display: block;
 }
 
-.preview .rtl .pseudo-block.c {
+.preview .pseudo-block.c .number {
+  float: left;
+}
+
+.preview .rtl .pseudo-block.c .number  {
   float: right;
-  padding: 0 0.2em;
 }
 
 .c .marker, .v .marker {

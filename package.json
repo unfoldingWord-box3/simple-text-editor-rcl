@@ -1,7 +1,7 @@
 {
   "name": "simple-text-editor-rcl",
   "description": "A React Component Library for simple text editing.",
-  "version": "3.3.18",
+  "version": "3.3.19",
   "private": false,
   "homepage": "https://simple-text-editor-rcl.netlify.app/",
   "license": "MIT",

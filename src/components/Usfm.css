@@ -100,27 +100,18 @@
   border-bottom: none;
 }
 
-.preview .pseudo-block {
+.preview .pseudo-block.v {
   white-space: normal;
   display: inline;
 }
 
-.preview .pseudo-block.p, .preview .pseudo-block.s, .preview .pseudo-block.s1, .preview .pseudo-block.s2 {
-  display: block;
-  white-space: pre;
-}
-
-.preview .pseudo-block.c {
+.preview .pseudo-block.c .number {
   margin: 2em 0.2em 0 0.2em;
-  display: block;
+  float: left;
 }
 
 .preview .marker, .preview .attribute {
   display: none;
-}
-
-.preview .pseudo-block.c .number {
-  float: left;
 }
 
 .preview .rtl .pseudo-block.c .number  {

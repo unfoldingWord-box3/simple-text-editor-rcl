@@ -17,7 +17,7 @@ const _text = `\\h Titus
 \\v 2 मतलब बुडडे मड़द, प्रहेज़ केरने बाले, ते समझ़दार ते संयमी भोंन, ते तैन केरो विशवास ते प्रेम, ते सबर पक्की भोए|`;
 
 const [text, setText] = useState(_text);
-const [sectionIndex, setSectionIndex] = useState(0);
+const [sectionIndex, setSectionIndex] = useState(1);
 
 const getSectionChapter = (_text) => {
   const match = /\\c *(\d+)/.exec(_text);

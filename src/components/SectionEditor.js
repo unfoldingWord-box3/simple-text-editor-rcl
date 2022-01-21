@@ -20,6 +20,9 @@ export default function SectionEditor ({
   show,
   decorators,
 }) {
+  let dir = '';
+  if (isRtl(text)) dir = 'rtl';
+
   const blocks = useMemo(() => (
     blockable ? blockParser(text) : [text]
   ), [blockable, blockParser, text]);
@@ -51,9 +54,6 @@ export default function SectionEditor ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   };
-
-  let dir = '';
-  if (isRtl(text)) dir = 'rtl';
 
   const children = (<>
     {headingComponent({ dir, style: headingStyle, onClick: onShow, text })}
@@ -96,7 +96,7 @@ SectionEditor.propTypes = {
 
 SectionEditor.defaultProps = {
   editable: true,
-  sectionComponent: ({children, ...props}) => (<div class='section' {...props}>{children}</div>),
+  sectionComponent: ({children, dir, ...props}) => (<div class={ 'section ' + dir } dir={dir} {...props}>{children}</div>),
   headingComponent: (props) => (<h2 class='heading' {...props}>{props.text}</h2>),
   onText: (text) => { console.warn('SectionEditor.onText() not provided:\n\n', text); },
   blockable: true,

@@ -34,9 +34,14 @@
   color: initial;
 }
 
-.preview .c .number {
+.preview .pseudo-block.c {
   float: left;
-  padding-right: 0.2em;
+  padding: 0 0.2em;
+}
+
+.preview .rtl .pseudo-block.c {
+  float: right;
+  padding: 0 0.2em;
 }
 
 .c .marker, .v .marker {
@@ -96,7 +101,7 @@
   display: inline;
 }
 
-.preview .pseudo-block.p, .preview .pseudo-block.s, .preview .pseudo-block.s1, .preview .pseudo-block.s2, .preview .pseudo-block.s3, .preview .pseudo-block.s4, .preview .pseudo-block.s5 {
+.preview .pseudo-block.p, .preview .pseudo-block.s {
   display: block;
   white-space: pre;
 }

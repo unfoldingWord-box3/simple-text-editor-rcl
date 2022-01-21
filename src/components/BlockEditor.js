@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
-export default function BlockEditor ({text, decorators, style, onText, onClick, editable, component, props}) {
+export default function BlockEditor ({text, decorators, style, onText, onClick, editable, component, ...props}) {
 
   let dir = '';
   if (isRtl(text)) dir = 'rtl';

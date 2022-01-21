@@ -36,7 +36,7 @@
 
 .preview .pseudo-block.c {
   margin: 2em 0.2em 0 0.2em;
-  display: block;
+  display: inline-block;
 }
 
 .preview .pseudo-block.c .number {
@@ -64,7 +64,7 @@
   color: green;
 }
 
-.pseudo-block.s {
+.pseudo-block.s, .pseudo-block.s1, .pseudo-block.s2 {
   font-size: 1.2em;
   font-weight: bolder;
   text-align: center;
@@ -96,7 +96,7 @@
 }
 
 .pseudo-block {
-  display: block;
+  display: inline-block;
 }
 
 .preview .pseudo-block {
@@ -105,7 +105,7 @@
 }
 
 .preview .pseudo-block.p, .preview .pseudo-block.s {
-  display: block;
+  display: inline-block;
   white-space: pre;
 }
 

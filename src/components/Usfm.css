@@ -36,7 +36,7 @@
 
 .preview .pseudo-block.c {
   margin: 2em 0.2em 0 0.2em;
-  display: inline-block;
+  display: block;
 }
 
 .preview .pseudo-block.c .number {
@@ -96,7 +96,7 @@
 }
 
 .pseudo-block {
-  display: inline-block;
+  display: block;
 }
 
 .preview .pseudo-block {
@@ -105,7 +105,7 @@
 }
 
 .preview .pseudo-block.p, .preview .pseudo-block.s {
-  display: inline-block;
+  display: block;
   white-space: pre;
 }
 

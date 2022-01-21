@@ -105,8 +105,12 @@
   display: inline;
 }
 
+.preview .pseudo-block.c {
+  margin-top: 2em;
+}
+
 .preview .pseudo-block.c .number {
-  margin: 2em 0.2em 0 0.2em;
+  margin: 0 0.2em;
   float: left;
 }
 

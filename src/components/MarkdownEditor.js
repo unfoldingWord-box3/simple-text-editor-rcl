@@ -1,12 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DocumentEditor from './DocumentEditor';
 import { segmenter } from '../helpers/segmenter';
+import DocumentEditor from './DocumentEditor';
 
 import './Markdown.css';
 
-export default function MarkdownEditor (props) {
+export default function MarkdownEditor(props) {
   return (
     <div className='markdown'>
       <DocumentEditor {...props} />
@@ -62,7 +65,7 @@ MarkdownEditor.defaultProps = {
     </div>
   ),
   blockComponent: (_props) => (
-    <><div className='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
+    <><div className='block' {..._props} style={{ width: '100%', whiteSpace: 'pre-wrap' }} /></>
   ),
   sectionParser: (_text) => (
     segmenter({ text: _text, regex: /(\n|.)+?(\n|$)(?=(#{1,4} +.+\n*|$))/g })
@@ -73,23 +76,23 @@ MarkdownEditor.defaultProps = {
   ),
   blockJoiner: '',
   decorators: {
-    embededHtml: [ /</g, "&lt;"], // same as default but overrideable
+    embededHtml: [/</g, "&lt;"], // same as default but overrideable
     // psuedoBlock: [ /(\n|.)+?(\n\n|$)/g, "<span class='pseudo-block $2'>$1</span>" ],
-    h6: [ /(^###### +.*)/gm, "<h6>$1</h6>" ],
-    h5: [ /(^##### +.*)/gm, "<h5>$1</h5>" ],
-    h4: [ /(^#### +.*)/gm, "<h4>$1</h4>" ],
-    h3: [ /(^### +.*)/gm, "<h3>$1</h3>" ],
-    h2: [ /(^## +.*)/gm, "<h2>$1</h2>" ],
-    h1: [ /(^# +.*)/gm, "<h1>$1</h1>" ],
-    blockquote: [ /(^ *>+ +.*$)/gm, "<blockquote>$1</blockquote>" ],
+    h6: [/(^###### +.*)/gm, "<h6>$1</h6>"],
+    h5: [/(^##### +.*)/gm, "<h5>$1</h5>"],
+    h4: [/(^#### +.*)/gm, "<h4>$1</h4>"],
+    h3: [/(^### +.*)/gm, "<h3>$1</h3>"],
+    h2: [/(^## +.*)/gm, "<h2>$1</h2>"],
+    h1: [/(^# +.*)/gm, "<h1>$1</h1>"],
+    blockquote: [/(^ *>+ +.*$)/gm, "<blockquote>$1</blockquote>"],
     // li3: [ /(^ {6,}[+\-*]+ +.*$)/gm, "<li><li><li>$1</li></li></li>" ],
     // li2: [ /(^ {4,5}[+\-*]+ +.*$)/gm, "<li><li>$1</li></li>" ],
     // li1: [ /(^ {2,3}[+\-*]+ +.*$)/gm, "<li>$1</li>" ],
-    li: [ /(^ *[+\-*]+ +.*$)/gm, "<ul><li>$1</li></ul>" ],
+    li: [/(^ *[+\-*]+ +.*$)/gm, "<ul><li>$1</li></ul>"],
     // ul: [ /((^<li>.*<\/li>$)+)/gm, "<ul>$1</ul>" ],
-    strong: [ /(\*\*.*\*\*|__.*__)/g, "<strong>$1</strong>" ],
-    link: [ /(\[.*?\]\((.*?)\))/g, "<a href='$2' target='blank'>$1</a>" ],
-    em: [ /(\*.*\*|_.*_)/g, "<em>$1</em>" ],
-    strike: [ /(~~.*~~)/g, "<strike>$1</strike>" ],
+    strong: [/(\*\*.*\*\*|__.*__)/g, "<strong>$1</strong>"],
+    link: [/(\[.*?\]\((.*?)\))/g, "<a href='$2' target='blank'>$1</a>"],
+    em: [/(\*.*\*|_.*_)/g, "<em>$1</em>"],
+    strike: [/(~~.*~~)/g, "<strike>$1</strike>"],
   },
 };

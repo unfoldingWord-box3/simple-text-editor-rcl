@@ -1,11 +1,14 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
-import BlockEditor from './BlockEditor';
 import { isRtl } from '../helpers/detectRTL';
+import BlockEditor from './BlockEditor';
 
-export default function SectionEditor ({
+export default function SectionEditor({
   text,
   onText,
   editable,
@@ -23,6 +26,7 @@ export default function SectionEditor ({
   decorators,
 }) {
   let dir = '';
+
   if (isRtl(text)) dir = 'rtl';
 
   const blocks = useMemo(() => (
@@ -37,6 +41,7 @@ export default function SectionEditor ({
   }, [blocks, blockJoiner, onText]);
 
   let blockComponents = <></>;
+
   if (show) {
     blockComponents = blocks.map((block, index) => {
       const blockProps = {
@@ -44,10 +49,10 @@ export default function SectionEditor ({
         component: blockComponent,
         onText: (_block) => { onBlockEdit(_block, index); },
         editable,
-        onClick: () => { onBlockClick({text: block, index}); },
+        onClick: () => { onBlockClick({ text: block, index }); },
         decorators,
       };
-      return <BlockEditor key={ block + index } {...blockProps} />;
+      return <BlockEditor key={block + index} {...blockProps} />;
     });
   };
 
@@ -58,12 +63,12 @@ export default function SectionEditor ({
   };
 
   const children = (<>
-    { headingComponent({ dir, style: headingStyle, onClick: onShow, text, index }) }
-    { sectionBodyComponent({ dir, children: blockComponents, index }) }
+    {headingComponent({ dir, style: headingStyle, onClick: onShow, text, index })}
+    {sectionBodyComponent({ dir, children: blockComponents, index })}
   </>);
-  
+
   return (<>
-    { sectionComponent({ dir, children, index }) }
+    {sectionComponent({ dir, children, index })}
   </>);
 };
 
@@ -100,14 +105,14 @@ SectionEditor.propTypes = {
 
 SectionEditor.defaultProps = {
   editable: true,
-  sectionComponent: ({children, dir, ...props}) => (<div className={ 'section ' + dir } dir={dir} {...props}>{children}</div>),
+  sectionComponent: ({ children, dir, ...props }) => (<div className={'section ' + dir} dir={dir} {...props}>{children}</div>),
   headingComponent: (props) => (<h2 className='heading' {...props}>{props.text}</h2>),
-  sectionBodyComponent: ({children, ...props}) => (<div className='body' {...props}>{children}</div>),
+  sectionBodyComponent: ({ children, ...props }) => (<div className='body' {...props}>{children}</div>),
   onText: (text) => { console.warn('SectionEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',
   blockParser: (text) => (text.split('\n')),
-  onBlockClick: ({text, index}) => { console.warn('SectionEditor.onBlockClick({text, index}) not provided.\n\n', index); },
+  onBlockClick: ({ text, index }) => { console.warn('SectionEditor.onBlockClick({text, index}) not provided.\n\n', index); },
   onShow: () => { console.warn('SectionEditor.onShow() not provided.'); },
   show: true,
   text: '',

@@ -1,12 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DocumentEditor from './DocumentEditor';
 import { segmenter } from '../helpers/segmenter';
+import DocumentEditor from './DocumentEditor';
 
 import './Usfm.css';
 
-export default function UsfmEditor (props) {
+export default function UsfmEditor(props) {
   return (
     <div className='usfm'>
       <DocumentEditor {...props} />
@@ -62,7 +65,7 @@ UsfmEditor.defaultProps = {
     </div>
   ),
   blockComponent: ({ text, ..._props }) => (
-    <><div className='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
+    <><div className='block' {..._props} style={{ width: '100%', whiteSpace: 'pre-wrap' }} /></>
   ),
   sectionParser: (_text) => (
     segmenter({ text: _text, regex: /(^|\\c +\d+)(\n|.)+?(\n|$)?(?=(\\c +\d+|$))/g })
@@ -73,13 +76,13 @@ UsfmEditor.defaultProps = {
   ),
   blockJoiner: '',
   decorators: {
-    embededHtml: [ /</g, "&lt;"], // same as default but overrideable
-    header: [ /(\\(id|ide|h|toc\d?|mt)(\n|.|$)+?)(?=(\\(id|ide|h|toc\d?|mt|[cspvr])|$))/g, "<span class='header $2'>$1</span>" ],
-    psuedoBlock: [ /(\\([cspvr]\d?)(\n|.|$)+?)(?=(\\[cspvr]|$))/g, "<span class='pseudo-block $2'>$1</span>" ],
-    footnotes: [ /(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>" ],
-    endnotes: [ /(\\fe (.|\n)+?(\\fe\*))/g, "<span class='endnote'>$1</span>" ],
-    numberForMarkers: [ /(\\([\w]+)\** +)(\d+-?\d*)(?=[^:.])/g, "$1<span class='number'>$3</span>" ],
-    markers: [ /(\\([\w-]+\d*)\\?\** *)(?=[^:.])/g, "<span class='marker $2'>$1</span>" ],
-    attributes: [ /(\|? ?x?-?[\w-]+=".*")/g, "<span class='attribute'>$1</span>" ],
+    embededHtml: [/</g, "&lt;"], // same as default but overrideable
+    header: [/(\\(id|ide|h|toc\d?|mt)(\n|.|$)+?)(?=(\\(id|ide|h|toc\d?|mt|[cspvr])|$))/g, "<span class='header $2'>$1</span>"],
+    psuedoBlock: [/(\\([cspvr]\d?)(\n|.|$)+?)(?=(\\[cspvr]|$))/g, "<span class='pseudo-block $2'>$1</span>"],
+    footnotes: [/(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>"],
+    endnotes: [/(\\fe (.|\n)+?(\\fe\*))/g, "<span class='endnote'>$1</span>"],
+    numberForMarkers: [/(\\([\w]+)\** +)(\d+-?\d*)(?=[^:.])/g, "$1<span class='number'>$3</span>"],
+    markers: [/(\\([\w-]+\d*)\\?\** *)(?=[^:.])/g, "<span class='marker $2'>$1</span>"],
+    attributes: [/(\|? ?x?-?[\w-]+=".*")/g, "<span class='attribute'>$1</span>"],
   },
 };

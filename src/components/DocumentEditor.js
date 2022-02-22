@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
 import SectionEditor from './SectionEditor';
 
-export default function DocumentEditor ({
+export default function DocumentEditor({
   text,
   onText,
   editable,
@@ -43,7 +46,7 @@ export default function DocumentEditor ({
       // component: sectionComponent,
       onText: (_section) => { onSectionEdit(_section, index); },
       show: (!sectionable || sectionIndex === -1 || index === sectionIndex),
-      onShow: () => { onSectionClick({text: section, index}); },
+      onShow: () => { onSectionClick({ text: section, index }); },
       index,
       sectionComponent,
       sectionBodyComponent,
@@ -57,15 +60,16 @@ export default function DocumentEditor ({
       onBlockClick,
       decorators,
     };
-    return <SectionEditor key={ section + index } {...sectionProps} />;
+    return <SectionEditor key={section + index} {...sectionProps} />;
   });
 
   let documentProps = { text, ...props };
+
   if (preview) documentProps.className = 'preview';
-  
+
   return (
     <>
-      {documentComponent({...documentProps, children: sectionComponents})}
+      {documentComponent({ ...documentProps, children: sectionComponents })}
     </>
   );
 };
@@ -115,16 +119,16 @@ DocumentEditor.defaultProps = {
   text: '',
   editable: true,
   preview: false,
-  documentComponent: ({children, text, ...props}) => (<div className='document' {...props}>{children}</div>),
+  documentComponent: ({ children, text, ...props }) => (<div className='document' {...props}>{children}</div>),
   onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',
   blockParser: (text) => (text.split('\n')),
-  onBlockClick: ({text, index}) => { console.warn('DocumentEditor.onBlockClick({text, index}) not provided.\n\n', index); },
+  onBlockClick: ({ text, index }) => { console.warn('DocumentEditor.onBlockClick({text, index}) not provided.\n\n', index); },
   sectionable: true,
   sectionJoiner: '\n\n',
   sectionParser: (text) => (text.split('\n\n')),
-  onSectionClick: ({text, index}) => { console.warn('DocumentEditor.onSectionClick({text, index}) not provided:\n\n', index); },
+  onSectionClick: ({ text, index }) => { console.warn('DocumentEditor.onSectionClick({text, index}) not provided:\n\n', index); },
   sectionIndex: 0,
 };
 

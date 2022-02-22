@@ -1,16 +1,21 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
-export default function BlockEditor ({text, decorators, style, onText, onClick, editable, component, ...props}) {
+export default function BlockEditor({ text, decorators, style, onText, onClick, editable, component, ...props }) {
 
   let dir = '';
+
   if (isRtl(text)) dir = 'rtl';
 
   let __html = text;
+
   if (Object.keys(decorators).length > 0) {
-    Object.keys(decorators).forEach( (name) => {
+    Object.keys(decorators).forEach((name) => {
       const [regex, replacer] = decorators[name];
       __html = __html.replace(regex, replacer);
     });
@@ -52,9 +57,9 @@ BlockEditor.defaultProps = {
   text: '',
   onText: (text) => { console.warn('BlockEditor.onText() not provided:\n\n', text); },
   editable: true,
-  style: {whiteSpace: 'pre-wrap', padding: '1em'},
-  component: ({ text, ...props}) => ( <div {...props} /> ),
+  style: { whiteSpace: 'pre-wrap', padding: '1em' },
+  component: ({ text, ...props }) => (<div {...props} />),
   decorators: {
-    embededHtml: [ /</g, "&lt;"],
+    embededHtml: [/</g, "&lt;"],
   },
 };

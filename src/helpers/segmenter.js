@@ -1,7 +1,8 @@
-export const segmenter = ({text, regex}) => {
+export const segmenter = ({ text, regex }) => {
   let segments = [text];
   segments = [];
   var match = regex.exec(text);
+
   while (match !== null) {
     // console.log(`match(${regex}): `, match[0]);
     const segment = match[0];

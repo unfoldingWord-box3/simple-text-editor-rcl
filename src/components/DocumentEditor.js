@@ -115,7 +115,7 @@ DocumentEditor.defaultProps = {
   text: '',
   editable: true,
   preview: false,
-  documentComponent: ({children, text, ...props}) => (<div class='document' {...props}>{children}</div>),
+  documentComponent: ({children, text, ...props}) => (<div className='document' {...props}>{children}</div>),
   onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',

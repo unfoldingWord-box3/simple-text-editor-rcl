@@ -8,7 +8,7 @@ import './Markdown.css';
 
 export default function MarkdownEditor (props) {
   return (
-    <div class='markdown'>
+    <div className='markdown'>
       <DocumentEditor {...props} />
     </div>
   );
@@ -57,12 +57,12 @@ MarkdownEditor.propTypes = {
 
 MarkdownEditor.defaultProps = {
   headingComponent: ({ text, ...props }) => (
-    <div class='heading' {...props}>
-      <span class='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>
+    <div className='heading' {...props}>
+      <span className='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>
     </div>
   ),
   blockComponent: (_props) => (
-    <><div class='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
+    <><div className='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
   ),
   sectionParser: (_text) => (
     segmenter({ text: _text, regex: /(\n|.)+?(\n|$)(?=(#{1,4} +.+\n*|$))/g })

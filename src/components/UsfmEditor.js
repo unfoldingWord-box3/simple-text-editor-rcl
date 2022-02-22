@@ -8,7 +8,7 @@ import './Usfm.css';
 
 export default function UsfmEditor (props) {
   return (
-    <div class='usfm'>
+    <div className='usfm'>
       <DocumentEditor {...props} />
     </div>
   );
@@ -57,12 +57,12 @@ UsfmEditor.propTypes = {
 
 UsfmEditor.defaultProps = {
   headingComponent: ({ text, ...props }) => (
-    <div class='heading' {...props}>
-      <span class='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>
+    <div className='heading' {...props}>
+      <span className='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>
     </div>
   ),
   blockComponent: ({ text, ..._props }) => (
-    <><div class='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
+    <><div className='block' {..._props} style={{width: '100%', whiteSpace: 'pre-wrap'}} /></>
   ),
   sectionParser: (_text) => (
     segmenter({ text: _text, regex: /(^|\\c +\d+)(\n|.)+?(\n|$)?(?=(\\c +\d+|$))/g })

@@ -100,9 +100,9 @@ SectionEditor.propTypes = {
 
 SectionEditor.defaultProps = {
   editable: true,
-  sectionComponent: ({children, dir, ...props}) => (<div class={ 'section ' + dir } dir={dir} {...props}>{children}</div>),
-  headingComponent: (props) => (<h2 class='heading' {...props}>{props.text}</h2>),
-  sectionBodyComponent: ({children, ...props}) => (<div class='body' {...props}>{children}</div>),
+  sectionComponent: ({children, dir, ...props}) => (<div className={ 'section ' + dir } dir={dir} {...props}>{children}</div>),
+  headingComponent: (props) => (<h2 className='heading' {...props}>{props.text}</h2>),
+  sectionBodyComponent: ({children, ...props}) => (<div className='body' {...props}>{children}</div>),
   onText: (text) => { console.warn('SectionEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',

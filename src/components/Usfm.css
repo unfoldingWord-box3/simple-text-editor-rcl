@@ -108,6 +108,14 @@
   white-space: normal;
 }
 
+.usfm .preview .pseudo-block.c ~ .s {
+  margin-top: 2em;
+}
+
+.usfm .preview .pseudo-block.s + .c {
+  margin-top: unset;
+}
+
 .usfm .preview .pseudo-block.c + .p {
   display: none;
 }

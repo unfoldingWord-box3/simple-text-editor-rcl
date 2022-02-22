@@ -119,3 +119,23 @@
 .usfm .preview .rtl .pseudo-block.c .number  {
   float: right;
 }
+
+.usfm .preview .header {
+  font-weight: bolder;
+  text-align: center;
+  display: block;
+}
+
+.usfm .preview .header.id, .usfm .preview .header.ide {
+  display: none;
+}
+
+.usfm .preview .header.h, .usfm .preview .header.toc1 {
+  font-size: 2em;
+  margin-top: 2em;
+}
+
+.usfm .preview .header.toc2, .usfm .preview .header.toc3 {
+  font-size: 1.5em;
+  margin-top: 1.5em;
+}

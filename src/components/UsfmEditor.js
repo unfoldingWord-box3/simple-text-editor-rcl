@@ -74,6 +74,7 @@ UsfmEditor.defaultProps = {
   blockJoiner: '',
   decorators: {
     embededHtml: [ /</g, "&lt;"], // same as default but overrideable
+    header: [ /(\\(id|ide|h|toc\d?|mt)(\n|.|$)+?)(?=(\\(id|ide|h|toc\d?|mt)|$))/g, "<span class='header $2'>$1</span>" ],
     psuedoBlock: [ /(\\([cspvr]\d?)(\n|.|$)+?)(?=(\\[cspvr]|$))/g, "<span class='pseudo-block $2'>$1</span>" ],
     footnotes: [ /(\\f (.|\n)+?(\\f\*))/g, "<span class='footnote'>$1</span>" ],
     endnotes: [ /(\\fe (.|\n)+?(\\fe\*))/g, "<span class='endnote'>$1</span>" ],

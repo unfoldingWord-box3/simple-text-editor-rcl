@@ -105,6 +105,11 @@
 
 .usfm .preview .pseudo-block.c {
   margin-top: 2em;
+  white-space: normal;
+}
+
+.usfm .preview .pseudo-block.c + .p {
+  display: none;
 }
 
 .usfm .preview .pseudo-block.c .number {

@@ -1,18 +1,18 @@
-.document {
+.usfm .document {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.section {
+.usfm .section {
   width: 100%;
 }
 
-.heading {
+.usfm .heading {
   border-bottom: gray 1px solid;
   padding: 0.5em;
   width: 100%;
 }
 
-.heading .text {
+.usfm .heading .text {
   display: inline-block;
   border: 1px solid gray;
   background-color: lightgray;
@@ -20,102 +20,102 @@
   padding: 0.1em 0.2em 0.01em 0.2em;
 }
 
-.marker {
+.usfm .marker {
   font-weight: bolder;
   font-size: 0.9em;
 }
 
-.c .number {
+.usfm .c .number {
   font-size: 2.2em;
   color: initial;
 }
 
-.c .marker, .v .marker {
+.usfm .c .marker, .usfm .v .marker {
   color: blue;
 }
 
-.v .marker, .v .number {
+.usfm .v .marker, .usfm .v .number {
   font-size: 0.9em;
   vertical-align: super
 }
 
-.v .number {
+.usfm .v .number {
   color: initial;
 }
 
-.p .marker, .s .marker, .s1 .marker, .s2 .marker, .s3 .marker, .s4 .marker, .s5 .marker, .ts .marker {
+.usfm .p .marker, .usfm .s .marker, .usfm .s1 .marker, .usfm .s2 .marker, .usfm .s3 .marker, .usfm .s4 .marker, .usfm .s5 .marker, .usfm .ts .marker {
   color: green;
 }
 
-.pseudo-block.s, .pseudo-block.s1, .pseudo-block.s2 {
+.usfm .pseudo-block.s, .usfm .pseudo-block.s1, .usfm .pseudo-block.s2 {
   font-size: 1.2em;
   font-weight: bolder;
   text-align: center;
   padding: 0.05em 0.2em;
 }
 
-.footnote, .endnote {
+.usfm .footnote, .usfm .endnote {
   font-weight: lighter;
   font-size: small;
   vertical-align: super;
 }
 
-.f {
+.usfm .f {
   color: orange;
 }
 
-.fe {
+.usfm .fe {
   color: coral;
 }
 
-.fk, .ft, .fr {
+.usfm .fk, .usfm .ft, .usfm .fr {
   color: orangered;
 }
 
-.w, .zaln-s, .zaln-e {
+.usfm .w, .usfm .zaln-s, .usfm .zaln-e {
   color: purple;
 }
 
-.pseudo-block {
+.usfm .pseudo-block {
   display: block;
 }
 
-.tr, .tl {
+.usfm .tr, .usfm .tl {
   color: red;
 }
 
-.attribute {
+.usfm .attribute {
   font-size: 0.8em;
   font-style: italic;
 }
 
-.block {
+.usfm .block {
   border-bottom: gray 1px solid;
   padding: 0.05em 0.2em;
 }
 
-.preview .block {
+.usfm .preview .block {
   border-bottom: none;
 }
 
-.preview .pseudo-block.v {
+.usfm .preview .pseudo-block.v {
   white-space: normal;
   display: inline;
 }
 
-.preview .pseudo-block.c {
+.usfm .preview .pseudo-block.c {
   margin-top: 2em;
 }
 
-.preview .pseudo-block.c .number {
+.usfm .preview .pseudo-block.c .number {
   margin: 0 0.2em;
   float: left;
 }
 
-.preview .marker, .preview .attribute {
+.usfm .preview .marker, .usfm .preview .attribute {
   display: none;
 }
 
-.preview .rtl .pseudo-block.c .number  {
+.usfm .preview .rtl .pseudo-block.c .number  {
   float: right;
 }

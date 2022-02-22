@@ -10,6 +10,7 @@ export default function SectionEditor ({
   onText,
   editable,
   sectionComponent,
+  sectionBodyComponent,
   headingComponent,
   blockComponent,
   blockable,
@@ -57,7 +58,7 @@ export default function SectionEditor ({
 
   const children = (<>
     {headingComponent({ dir, style: headingStyle, onClick: onShow, text })}
-    {blockComponents}
+    {sectionBodyComponent({ dir, children: blockComponents }) }
   </>);
   
   return (<>
@@ -74,6 +75,8 @@ SectionEditor.propTypes = {
   editable: PropTypes.bool,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
+  /** Component to be the section body */
+  sectionBodyComponent: PropTypes.func,
   /** Component to wrap the first line of a section */
   headingComponent: PropTypes.func,
   /** Component to be the block editor */
@@ -98,6 +101,7 @@ SectionEditor.defaultProps = {
   editable: true,
   sectionComponent: ({children, dir, ...props}) => (<div class={ 'section ' + dir } dir={dir} {...props}>{children}</div>),
   headingComponent: (props) => (<h2 class='heading' {...props}>{props.text}</h2>),
+  sectionBodyComponent: ({children, dir, ...props}) => (<div class='body' dir={dir} {...props}>{children}</div>),
   onText: (text) => { console.warn('SectionEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',

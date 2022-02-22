@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import DocumentEditor from './DocumentEditor';
 import { segmenter } from '../helpers/segmenter';
@@ -6,10 +7,53 @@ import { segmenter } from '../helpers/segmenter';
 import './Markdown.css';
 
 export default function MarkdownEditor (props) {
-  return <DocumentEditor {...props} />;
+  return (
+    <div class='markdown'>
+      <DocumentEditor {...props} />
+    </div>
+  );
 };
 
-MarkdownEditor.propTypes = DocumentEditor.propTypes;
+MarkdownEditor.propTypes = {
+  /** Text to be edited whether file, section or block */
+  text: PropTypes.string.isRequired,
+  /** Function triggered on edit */
+  onText: PropTypes.func,
+  /** Editable? */
+  editable: PropTypes.bool,
+  /** Preview? */
+  preview: PropTypes.bool,
+  /** Component to wrap all sections of the document */
+  documentComponent: PropTypes.func,
+  /** Component to wrap the first line of a section */
+  headingComponent: PropTypes.func,
+  /** Component to be the block editor */
+  blockComponent: PropTypes.func,
+  /** Function to parse the text into blocks */
+  blockParser: PropTypes.func,
+  /** Parse text by blocks using blockParser */
+  blockable: PropTypes.bool,
+  /** String to join the blocks to text */
+  blockJoiner: PropTypes.string,
+  /** Callback triggered on Block click, provides block text and index. */
+  onBlockClick: PropTypes.func,
+  /** Component to be the section wrapper */
+  sectionComponent: PropTypes.func,
+  /** Component to be the section body */
+  sectionBodyComponent: PropTypes.func,
+  /** Function to parse the text into sections */
+  sectionParser: PropTypes.func,
+  /** Parse text by sections using sectionParser */
+  sectionable: PropTypes.bool,
+  /** String to join the sections to text */
+  sectionJoiner: PropTypes.string,
+  /** Callback triggered on Section Heading click, provides section text and index. */
+  onSectionClick: PropTypes.func.isRequired,
+  /** Index of section to be show, for app to manage state. */
+  sectionIndex: PropTypes.number,
+  /** Object of replacers for html/css decoration of text, done at block level */
+  decorators: PropTypes.object,
+};
 
 MarkdownEditor.defaultProps = {
   headingComponent: ({ text, ...props }) => (

@@ -57,7 +57,7 @@ export default function DocumentEditor ({
     return <SectionEditor key={ section + index } {...sectionProps} />;
   });
 
-  let documentProps = { ...props };
+  let documentProps = { text, ...props };
   if (preview) documentProps.className = 'preview';
   
   return (
@@ -92,6 +92,8 @@ DocumentEditor.propTypes = {
   onBlockClick: PropTypes.func,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
+  /** Component to be the section body */
+  sectionBodyComponent: PropTypes.func,
   /** Function to parse the text into sections */
   sectionParser: PropTypes.func,
   /** Parse text by sections using sectionParser */
@@ -110,7 +112,7 @@ DocumentEditor.defaultProps = {
   text: '',
   editable: true,
   preview: false,
-  documentComponent: ({children, ...props}) => (<div class='document' {...props}>{children}</div>),
+  documentComponent: ({children, text, ...props}) => (<div class='document' {...props}>{children}</div>),
   onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
   blockable: true,
   blockJoiner: '\n',

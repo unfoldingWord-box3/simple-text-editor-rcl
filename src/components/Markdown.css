@@ -1,18 +1,18 @@
-.document {
+.markdown .document {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.section {
+.markdown .section {
   width: 100%;
 }
 
-.heading {
+.markdown .heading {
   border-bottom: gray 1px solid;
   padding: 0.5em;
   width: 100%;
 }
 
-.heading .text {
+.markdown .heading .text {
   display: inline-block;
   border: 1px solid gray;
   background-color: lightgray;
@@ -20,21 +20,21 @@
   padding: 0.1em 0.2em 0.01em 0.2em;
 }
 
-.block {
+.markdown .block {
   border-bottom: gray 1px solid;
   padding: 0.05em 0.2em;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
   display: inline-block;
   width: 100%;
   margin: 0em;
 }
 
-ul, ol, li {
+.markdown ul, .markdown ol, .markdown li {
   display: inline;
 }
 
-ul li::before {
+.markdown ul li::before {
   content: " • ";
 }

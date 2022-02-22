@@ -58,12 +58,12 @@ export default function SectionEditor ({
   };
 
   const children = (<>
-    {headingComponent({ dir, style: headingStyle, onClick: onShow, text, index })}
-    {sectionBodyComponent({ dir, children: blockComponents, index }) }
+    { headingComponent({ dir, style: headingStyle, onClick: onShow, text, index }) }
+    { sectionBodyComponent({ dir, children: blockComponents, index }) }
   </>);
   
   return (<>
-    {sectionComponent({ dir, children, index })}
+    { sectionComponent({ dir, children, index }) }
   </>);
 };
 

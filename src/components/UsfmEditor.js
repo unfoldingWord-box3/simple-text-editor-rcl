@@ -49,7 +49,7 @@ UsfmEditor.propTypes = {
   sectionJoiner: PropTypes.string,
   /** Callback triggered on Section Heading click, provides section text and index. */
   onSectionClick: PropTypes.func.isRequired,
-  /** Index of section to be show, for app to manage state. */
+  /** Index of section to be show, for app to manage state. -1 to show all. */
   sectionIndex: PropTypes.number,
   /** Object of replacers for html/css decoration of text, done at block level */
   decorators: PropTypes.object,

@@ -43,6 +43,7 @@ export default function DocumentEditor ({
       onText: (_section) => { onSectionEdit(_section, index); },
       show: (!sectionable || sectionIndex === -1 || index === sectionIndex),
       onShow: () => { onSectionClick({text: section, index}); },
+      index,
       sectionComponent,
       headingComponent,
       blockComponent,

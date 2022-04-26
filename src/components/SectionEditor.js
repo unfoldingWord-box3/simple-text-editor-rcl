@@ -12,6 +12,7 @@ export default function SectionEditor({
   text,
   onText,
   editable,
+  sectionable,
   index,
   sectionComponent,
   sectionBodyComponent,
@@ -63,7 +64,7 @@ export default function SectionEditor({
   };
 
   const children = (<>
-    {headingComponent({ dir, style: headingStyle, onClick: onShow, text, index })}
+    {sectionable && headingComponent({ dir, style: headingStyle, onClick: onShow, text, index })}
     {sectionBodyComponent({ dir, children: blockComponents, index })}
   </>);
 
@@ -79,6 +80,8 @@ SectionEditor.propTypes = {
   onText: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
+  /** Parse text by sections using sectionParser */
+  sectionable: PropTypes.bool,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
   /** Component to be the section body */

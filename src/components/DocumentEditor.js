@@ -56,6 +56,7 @@ export default function DocumentEditor({
       blockParser,
       blockJoiner,
       editable,
+      sectionable,
       onSectionClick,
       onBlockClick,
       decorators,

@@ -4,6 +4,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
+import md5 from 'md5';
 
 import { isRtl } from '../helpers/detectRTL';
 import BlockEditor from './BlockEditor';
@@ -53,7 +54,7 @@ export default function SectionEditor({
         onClick: () => { onBlockClick({ text: block, index }); },
         decorators,
       };
-      return <BlockEditor key={block + index} {...blockProps} />;
+      return <BlockEditor key={`block-${md5(index + block)}`} {...blockProps} />;
     });
   };
 
@@ -66,10 +67,10 @@ export default function SectionEditor({
   const children = [];
 
   if (sectionable) {
-    children.push(headingComponent({ dir, style: headingStyle, onClick: onShow, text, index }));
+    children.push(headingComponent({ dir, style: headingStyle, onClick: onShow, text, index, key: `heading-${md5(index + text)}` }));
   };
 
-  children.push(sectionBodyComponent({ dir, children: blockComponents, index }));
+  children.push(sectionBodyComponent({ dir, children: blockComponents, index, key: `body-${md5(index + text)}` }));
 
   return sectionComponent({ dir, children, index });
 };

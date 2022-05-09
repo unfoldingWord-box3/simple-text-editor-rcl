@@ -10,6 +10,7 @@
     "url": "https://github.com/unfoldingWord/simple-text-editor-rcl.git"
   },
   "dependencies": {
+    "md5": "^2.3.0",
     "use-deep-compare": "^1.1.0"
   },
   "scripts": {

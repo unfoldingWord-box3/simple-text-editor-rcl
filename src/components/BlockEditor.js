@@ -33,7 +33,7 @@ export default function BlockEditor({ text, decorators, style, onText, onClick, 
     ...props,
   };
 
-  return (<>{component(editorProps)}</>);
+  return component(editorProps);
 };
 
 BlockEditor.propTypes = {

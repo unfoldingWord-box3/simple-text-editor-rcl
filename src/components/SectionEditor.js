@@ -63,14 +63,15 @@ export default function SectionEditor({
     textOverflow: 'ellipsis',
   };
 
-  const children = (<>
-    {sectionable && headingComponent({ dir, style: headingStyle, onClick: onShow, text, index })}
-    {sectionBodyComponent({ dir, children: blockComponents, index })}
-  </>);
+  const children = [];
 
-  return (<>
-    {sectionComponent({ dir, children, index })}
-  </>);
+  if (sectionable) {
+    children.push(headingComponent({ dir, style: headingStyle, onClick: onShow, text, index }));
+  };
+
+  children.push(sectionBodyComponent({ dir, children: blockComponents, index }));
+
+  return sectionComponent({ dir, children, index });
 };
 
 SectionEditor.propTypes = {

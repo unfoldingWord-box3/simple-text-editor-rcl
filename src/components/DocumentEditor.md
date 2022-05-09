@@ -13,7 +13,7 @@ const [sectionIndex, setSectionIndex] = useState(0);
 console.log('DocumentEditor.md:\n\n', text);
 
 const titleComponent = (props) => (<h2>{title}</h2>);
-const headingComponent = (props) => (<h3 {...props}>{props.text.split('\n')[0]}</h3>);
+const headingComponent = (props) => (<h3 {...props}><hr/>{props.text.split('\n')[0]}<hr/></h3>);
 const blockComponent = (props) => (<p {...props} style={{ padding: '0 0.2em', whiteSpace: 'pre-wrap' }}></p>);
 
 const onSectionClick = ({text: _text, index}) => {

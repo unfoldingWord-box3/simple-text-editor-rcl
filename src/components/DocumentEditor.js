@@ -68,11 +68,7 @@ export default function DocumentEditor({
 
   if (preview) documentProps.className = 'preview';
 
-  return (
-    <>
-      {documentComponent({ ...documentProps, children: sectionComponents })}
-    </>
-  );
+  return documentComponent({ ...documentProps, children: sectionComponents });
 };
 
 DocumentEditor.propTypes = {

@@ -26,6 +26,10 @@
   width: 100%;
 }
 
+.perf .section .expand {
+  text-decoration: underline;
+}
+
 .perf .title, .perf .introduction {
   text-align: center;
 }

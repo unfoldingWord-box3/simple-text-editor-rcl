@@ -6,7 +6,7 @@ import {perfHtml} from '../data/perf-html.js';
 
 function Component () {
   const [content, setContent] = useState(perfHtml);
-  const [sectionIndex, setSectionIndex] = useState(1);
+  const [sectionIndex, setSectionIndex] = useState(0);
   const [sectionable, setSectionable] = useState(false);
   const [blockable, setBlockable] = useState(true);
   const [editable, setEditable] = useState(true);

@@ -5,11 +5,12 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback } from 'use-deep-compare';
 
-import SectionEditor from './SectionEditor';
+import EditableSection from './EditableSection';
 
-export default function DocumentEditor({
-  text,
-  onText,
+export default function EditableContent({
+  content,
+  onContent,
+  returnHtml,
   editable,
   preview,
   documentComponent,
@@ -30,23 +31,23 @@ export default function DocumentEditor({
   ...props
 }) {
   const sections = useMemo(() => (
-    sectionable ? sectionParser(text) : [text]
-  ), [sectionable, sectionParser, text]);
+    sectionable ? sectionParser(content) : [content]
+  ), [sectionable, sectionParser, content]);
 
   const onSectionEdit = useDeepCompareCallback((section, index) => {
     let _sections = [...sections];
     _sections[index] = section;
-    const _text = _sections.join(sectionJoiner);
-    onText(_text);
-  }, [onText, sections]);
+    const _content = _sections.join(sectionJoiner);
+    onContent(_content);
+  }, [onContent, sections]);
 
   const sectionComponents = sections.map((section, index) => {
     const sectionProps = {
-      text: section,
-      // component: sectionComponent,
-      onText: (_section) => { onSectionEdit(_section, index); },
+      content: section,
+      onContent: (_section) => { onSectionEdit(_section, index); },
+      returnHtml,
       show: (!sectionable || sectionIndex === -1 || index === sectionIndex),
-      onShow: () => { onSectionClick({ text: section, index }); },
+      onShow: () => { onSectionClick({ content: section, index }); },
       index,
       sectionComponent,
       sectionBodyComponent,
@@ -61,21 +62,27 @@ export default function DocumentEditor({
       onBlockClick,
       decorators,
     };
-    return <SectionEditor key={section + index} {...sectionProps} />;
+    return <EditableSection key={section + index} {...sectionProps} />;
   });
 
-  let documentProps = { text, ...props };
+  let documentProps = { content, ...props };
 
   if (preview) documentProps.className = 'preview';
 
-  return documentComponent({ ...documentProps, children: sectionComponents });
+  return (
+    <>
+      {documentComponent({ ...documentProps, children: sectionComponents })}
+    </>
+  );
 };
 
-DocumentEditor.propTypes = {
+EditableContent.propTypes = {
   /** Text to be edited whether file, section or block */
-  text: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
   /** Function triggered on edit */
-  onText: PropTypes.func,
+  onContent: PropTypes.func,
+  /** Return html instead of text */
+  returnHtml: PropTypes.bool,
   /** Editable? */
   editable: PropTypes.bool,
   /** Preview? */
@@ -86,46 +93,46 @@ DocumentEditor.propTypes = {
   headingComponent: PropTypes.func,
   /** Component to be the block editor */
   blockComponent: PropTypes.func,
-  /** Function to parse the text into blocks */
+  /** Function to parse the content into blocks */
   blockParser: PropTypes.func,
-  /** Parse text by blocks using blockParser */
+  /** Parse content by blocks using blockParser */
   blockable: PropTypes.bool,
-  /** String to join the blocks to text */
+  /** String to join the blocks to content */
   blockJoiner: PropTypes.string,
-  /** Callback triggered on Block click, provides block text and index. */
+  /** Callback triggered on Block click, provides block content and index. */
   onBlockClick: PropTypes.func,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
   /** Component to be the section body */
   sectionBodyComponent: PropTypes.func,
-  /** Function to parse the text into sections */
+  /** Function to parse the content into sections */
   sectionParser: PropTypes.func,
-  /** Parse text by sections using sectionParser */
+  /** Parse content by sections using sectionParser */
   sectionable: PropTypes.bool,
-  /** String to join the sections to text */
+  /** String to join the sections to content */
   sectionJoiner: PropTypes.string,
-  /** Callback triggered on Section Heading click, provides section text and index. */
+  /** Callback triggered on Section Heading click, provides section content and index. */
   onSectionClick: PropTypes.func.isRequired,
   /** Index of section to be show, for app to manage state. -1 to show all. */
   sectionIndex: PropTypes.number,
-  /** Object of replacers for html/css decoration of text, done at block level */
+  /** Object of replacers for html/css decoration of content, done at block level */
   decorators: PropTypes.object,
 };
 
-DocumentEditor.defaultProps = {
-  text: '',
+EditableContent.defaultProps = {
+  content: '',
   editable: true,
   preview: false,
-  documentComponent: ({ children, text, ...props }) => (<div className='document' {...props}>{children}</div>),
-  onText: (text) => { console.warn('DocumentEditor.onText() not provided:\n\n', text); },
+  documentComponent: ({ children, content, ...props }) => (<div className='document' {...props}>{children}</div>),
+  onContent: (content) => { console.warn('EditableContent.onContent() not provided:\n\n', content); },
   blockable: true,
   blockJoiner: '\n',
-  blockParser: (text) => (text.split('\n')),
-  onBlockClick: ({ text, index }) => { console.warn('DocumentEditor.onBlockClick({text, index}) not provided.\n\n', index); },
+  blockParser: (content) => (content.split('\n')),
+  onBlockClick: ({ content, index }) => { console.warn('EditableContent.onBlockClick({content, index}) not provided.\n\n', index); },
   sectionable: true,
   sectionJoiner: '\n\n',
-  sectionParser: (text) => (text.split('\n\n')),
-  onSectionClick: ({ text, index }) => { console.warn('DocumentEditor.onSectionClick({text, index}) not provided:\n\n', index); },
+  sectionParser: (content) => (content.split('\n\n')),
+  onSectionClick: ({ content, index }) => { console.warn('EditableContent.onSectionClick({content, index}) not provided:\n\n', index); },
   sectionIndex: 0,
 };
 

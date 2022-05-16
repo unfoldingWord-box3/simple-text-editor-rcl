@@ -12,7 +12,7 @@
   width: 100%;
 }
 
-.markdown .heading .text {
+.markdown .heading .content {
   display: inline-block;
   border: 1px solid gray;
   background-color: lightgray;

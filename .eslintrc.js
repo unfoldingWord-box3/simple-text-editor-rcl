@@ -11,9 +11,7 @@ module.exports = {
     'ecmaVersion': 12,
     'sourceType': 'module',
   },
-  'plugins': [
-    'react',
-  ],
+  'plugins': ['react'],
   'rules': {
     'react-hooks/rules-of-hooks': 'error',
     'react/jsx-tag-spacing': ['error'],

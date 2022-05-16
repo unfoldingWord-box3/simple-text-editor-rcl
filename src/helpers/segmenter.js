@@ -1,13 +1,13 @@
-export const segmenter = ({ text, regex }) => {
-  let segments = [text];
+export const segmenter = ({ content, regex }) => {
+  let segments = [content];
   segments = [];
-  var match = regex.exec(text);
+  var match = regex.exec(content);
 
   while (match !== null) {
     // console.log(`match(${regex}): `, match[0]);
     const segment = match[0];
     segments = [...segments, segment];
-    match = regex.exec(text);
+    match = regex.exec(content);
   };
   return segments;
 };

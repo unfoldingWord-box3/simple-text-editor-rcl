@@ -5,23 +5,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { segmenter } from '../helpers/segmenter';
-import DocumentEditor from './DocumentEditor';
+import EditableContent from './EditableContent';
 
 import './Markdown.css';
 
 export default function MarkdownEditor(props) {
   return (
     <div className='markdown'>
-      <DocumentEditor {...props} />
+      <EditableContent {...props} />
     </div>
   );
 };
 
 MarkdownEditor.propTypes = {
   /** Text to be edited whether file, section or block */
-  text: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
   /** Function triggered on edit */
-  onText: PropTypes.func,
+  onContent: PropTypes.func,
   /** Editable? */
   editable: PropTypes.bool,
   /** Preview? */
@@ -32,47 +32,47 @@ MarkdownEditor.propTypes = {
   headingComponent: PropTypes.func,
   /** Component to be the block editor */
   blockComponent: PropTypes.func,
-  /** Function to parse the text into blocks */
+  /** Function to parse the content into blocks */
   blockParser: PropTypes.func,
-  /** Parse text by blocks using blockParser */
+  /** Parse content by blocks using blockParser */
   blockable: PropTypes.bool,
-  /** String to join the blocks to text */
+  /** String to join the blocks to content */
   blockJoiner: PropTypes.string,
-  /** Callback triggered on Block click, provides block text and index. */
+  /** Callback triggered on Block click, provides block content and index. */
   onBlockClick: PropTypes.func,
   /** Component to be the section wrapper */
   sectionComponent: PropTypes.func,
   /** Component to be the section body */
   sectionBodyComponent: PropTypes.func,
-  /** Function to parse the text into sections */
+  /** Function to parse the content into sections */
   sectionParser: PropTypes.func,
-  /** Parse text by sections using sectionParser */
+  /** Parse content by sections using sectionParser */
   sectionable: PropTypes.bool,
-  /** String to join the sections to text */
+  /** String to join the sections to content */
   sectionJoiner: PropTypes.string,
-  /** Callback triggered on Section Heading click, provides section text and index. */
+  /** Callback triggered on Section Heading click, provides section content and index. */
   onSectionClick: PropTypes.func.isRequired,
   /** Index of section to be show, for app to manage state. -1 to show all. */
   sectionIndex: PropTypes.number,
-  /** Object of replacers for html/css decoration of text, done at block level */
+  /** Object of replacers for html/css decoration of content, done at block level */
   decorators: PropTypes.object,
 };
 
 MarkdownEditor.defaultProps = {
-  headingComponent: ({ text, ...props }) => (
+  headingComponent: ({ show, content, ...props }) => (
     <div className='heading' {...props}>
-      <span className='text'>{text.replace(/^\n+/, '').split('\n')[0]}</span>
+      <span className='content'>{content.replace(/^\n+/, '').split('\n')[0]}</span>
     </div>
   ),
   blockComponent: (_props) => (
     <><div className='block' {..._props} style={{ width: '100%', whiteSpace: 'pre-wrap' }} /></>
   ),
-  sectionParser: (_text) => (
-    segmenter({ text: _text, regex: /(\n|.)+?(\n|$)(?=(#{1,4} +.+\n*|$))/g })
+  sectionParser: (_content) => (
+    segmenter({ content: _content, regex: /(\n|.)+?(\n|$)(?=(#{1,4} +.+\n*|$))/g })
   ),
   sectionJoiner: '',
-  blockParser: (_text) => (
-    segmenter({ text: _text, regex: /(.+\n)+?(\n+|$)(?=(.+|$))/g })
+  blockParser: (_content) => (
+    segmenter({ content: _content, regex: /(.+\n)+?(\n+|$)(?=(.+|$))/g })
   ),
   blockJoiner: '',
   decorators: {

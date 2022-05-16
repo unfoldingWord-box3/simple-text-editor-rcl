@@ -1,6 +1,6 @@
 import { segmenter } from './segmenter';
 
-const text = `\\h Titus
+const content = `\\h Titus
 \\id TIT, Bhadrawahi_Bhadrawahi_ltr, EN_ULB, Sat Jul 15 2017 21:23:37 GMT-0400 (EDT)
 \\c 1
 \\p
@@ -18,14 +18,14 @@ const sections = [
   `\\h Titus
 \\id TIT, Bhadrawahi_Bhadrawahi_ltr, EN_ULB, Sat Jul 15 2017 21:23:37 GMT-0400 (EDT)
 `,
-`\\c 1
+  `\\c 1
 \\p
 \\v 1 पौलुसेरे|
 \\v 2 तैस हमेंशरी|
 \\s क्रेते
 \\v 5 मीं तू|
 `,
-`\\c 2
+  `\\c 2
 \\p
 \\v 1 पण तू एरी गल्लां ज़ो, ज़ैना रोड़ी तालीमारे काबलन|
 \\p
@@ -34,7 +34,7 @@ const sections = [
 
 test('segments chapters', () => {
   const regex = /(^|\\c +\d+)(\n|.)+?(?=(\\c +\d+|$))/g;
-  const result = segmenter({text, regex});
+  const result = segmenter({ content, regex });
   const expected = sections;
   expect(result).toEqual(expected);
 });

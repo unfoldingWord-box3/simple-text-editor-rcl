@@ -2,24 +2,12 @@
 import {useState} from 'react';
 import { loremIpsumBook } from 'lorem-ipsum-usfm';
 
-const usfm = loremIpsumBook({
-  bookCode: '1LI',
-  bookName: '1 Lorem Ipsum',
-  chapterMin: 1,
-  chapterMax: 20,
-  chapterBias: 5,
-  // chapterCount: 3,
-  paragraphChance: 0.3,
-  verseMin: 1,
-  verseMax: 100,
-  verseBias: 10,
-  // verbose: true,
-});
+import {perfHtml} from '../data/perf-html.js';
 
 function Component () {
-  const [content, setText] = useState(usfm);
+  const [content, setContent] = useState(perfHtml);
   const [sectionIndex, setSectionIndex] = useState(1);
-  const [sectionable, setSectionable] = useState(true);
+  const [sectionable, setSectionable] = useState(false);
   const [blockable, setBlockable] = useState(true);
   const [editable, setEditable] = useState(true);
   const [preview, setPreview] = useState(false);
@@ -29,40 +17,23 @@ function Component () {
   const onEditable = () => { setEditable(!editable); };
   const onPreview = () => { setPreview(!preview); };
 
-
-  const getSectionChapter = (_content) => {
-    const match = /\\c *(\d+)/.exec(_content);
-    const chapter = match && match[1];
-    return chapter;
-  };
-
   const onSectionClick = ({content: _content, index}) => {
     setSectionIndex(index);
-    const chapter = getSectionChapter(_content);
-    console.log('chapter: ', chapter);
   };
 
-  const getBlockVerse = (_content) => {
-    const match = /\\v *(\d+-?\d*)/.exec(_content);
-    const verse = match && match[1];
-    return verse;
-  };
-
-  const onBlockClick = ({content: _content, index}) => {
-    const verse = getBlockVerse(_content);
-    console.log('verse: ', verse);
+  const onContent = (_content) => {
+    setContent(_content);
   };
 
   const props = {
     content,
-    onContent: setText,
+    onContent,
     sectionable,
     blockable,
     editable,
     preview,
     sectionIndex,
-    onSectionClick,
-    onBlockClick,
+    onSectionClick
   };
 
   const buttons = (
@@ -76,7 +47,7 @@ function Component () {
 
   return (<>
     {buttons}
-    <UsfmEditor {...props} />
+    <PerfEditor {...props} />
     {buttons}
   </>);
 };

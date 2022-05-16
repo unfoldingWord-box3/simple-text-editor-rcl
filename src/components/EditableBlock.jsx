@@ -6,13 +6,30 @@ import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
-export default function BlockEditor({ text, decorators, style, onText, onClick, editable, component, ...props }) {
+export default function EditableBlock({
+  content,
+  decorators,
+  style,
+  onContent,
+  returnHtml,
+  onClick,
+  editable,
+  component,
+  ...props
+}) {
 
   let dir = '';
 
-  if (isRtl(text)) dir = 'rtl';
+  if (isRtl(content)) dir = 'rtl';
 
-  let __html = text;
+  let __html = content;
+
+  if (!returnHtml) {
+    decorators = {
+      embededHtml: [/</g, "&lt;"],
+      ...decorators
+    };
+  };
 
   if (Object.keys(decorators).length > 0) {
     Object.keys(decorators).forEach((name) => {
@@ -21,28 +38,44 @@ export default function BlockEditor({ text, decorators, style, onText, onClick, 
     });
   };
 
+  const onBlur = (event) => {
+    let _content;
+
+    if (returnHtml) _content = event.target.innerHTML;
+
+    if (!returnHtml) _content = event.target.textContent.replace(/&lt;/g, '<');
+
+    onContent(_content);
+  };
+
   const editorProps = {
     contentEditable: editable,
     style,
     onClick,
-    onBlur: (e) => { onText(e.target.textContent.replace(/&lt;/g, '<')) },
+    onBlur,
     dir,
     suppressContentEditableWarning: true,
     dangerouslySetInnerHTML: { __html },
-    text,
+    content,
     ...props,
   };
 
-  return component(editorProps);
+  return (
+    <>
+      {component(editorProps)}
+    </>
+  );
 };
 
-BlockEditor.propTypes = {
+EditableBlock.propTypes = {
   /** Text to be edited whether file, section or block */
-  text: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
   /** Callback triggered on Block click, provides block text and index. */
   onClick: PropTypes.func,
   /** Function triggered on edit */
-  onText: PropTypes.func,
+  onContent: PropTypes.func,
+  /** Return html instead of text */
+  returnHtml: PropTypes.bool,
   /** Editable? */
   editable: PropTypes.bool,
   /** Component to wrap the editor */
@@ -53,13 +86,11 @@ BlockEditor.propTypes = {
   decorators: PropTypes.object,
 };
 
-BlockEditor.defaultProps = {
-  text: '',
-  onText: (text) => { console.warn('BlockEditor.onText() not provided:\n\n', text); },
+EditableBlock.defaultProps = {
+  content: '',
+  onContent: (content) => { console.warn('EditableBlock.onContent() not provided:\n\n', content); },
   editable: true,
   style: { whiteSpace: 'pre-wrap', padding: '1em' },
-  component: ({ text, ...props }) => (<div {...props} />),
-  decorators: {
-    embededHtml: [/</g, "&lt;"],
-  },
+  component: ({ content, ...props }) => (<div className='block' {...props} />),
+  decorators: {},
 };

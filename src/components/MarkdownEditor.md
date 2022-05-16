@@ -1,7 +1,7 @@
 ```js
 import {useState} from 'react';
 
-const _text = `
+const _content = `
 # h1 Heading 8-)
 
 Content for the heading.
@@ -50,13 +50,13 @@ test.. test... test..... test?..... test!....
 
 ## Emphasis
 
-**This is bold text**
+**This is bold content**
 
-__This is bold text__
+__This is bold content__
 
-*This is italic text*
+*This is italic content*
 
-_This is italic text_
+_This is italic content_
 
 ~~Strikethrough~~
 
@@ -112,7 +112,7 @@ Indented code
 Block code "fences"
 
 \`\`\`
-Sample text here...
+Sample content here...
 \`\`\`
 
 Syntax highlighting
@@ -144,23 +144,23 @@ Right aligned columns
 
 ## Links
 
-[link text](http://dev.nodeca.com)
+[link content](http://dev.nodeca.com)
 
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
+[link with title](http://nodeca.github.io/pica/demo/ "title content!")
 
 Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
 `;
 
-const [text, setText] = useState(_text);
+const [content, setText] = useState(_content);
 const [sectionIndex, setSectionIndex] = useState(0);
 
-const onSectionClick = ({text: _text, index}) => {
+const onSectionClick = ({content: _content, index}) => {
   setSectionIndex(index);
 };
 
 const props = {
-  text,
-  onText: setText,
+  content,
+  onContent: setText,
   sectionable: true,
   blockable: true,
   sectionIndex,

@@ -58,7 +58,7 @@ export default function PerfEditor({
 
   const parsers = {
     section: (_content) => (
-      segmenter({ content: _content, regex: /(^|\s*<div class="block p"><span class="chapter">)(\n|.)+?(\n|$)?(?=(\s*<div class="block p"><span class="chapter">|$))/g })
+      segmenter({ content: _content, regex: /(^|(\s*<div class="graft heading.*?<\/div>\n)*?\s*<div class="block p"><span class="chapter">)(\n|.)+?(\n|$)?(?=((\s*<div class="graft heading.*?<\/div>\n)*?\s*<div class="block p"><span class="chapter">|$))/g })
     ),
     block: (_content) => (
       segmenter({ content: _content, regex: /(^|<div)(\n|.)+?(\n|$)?(?=(<div|$))/g })

@@ -51,7 +51,7 @@ export default function PerfEditor({
       </div>
     ),
     block: ({ content, style, ..._props }) => (
-      <div {..._props} contentEditable={content.includes(`class="block p"`)} />
+      <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/)} />
     ),
     ..._components
   };

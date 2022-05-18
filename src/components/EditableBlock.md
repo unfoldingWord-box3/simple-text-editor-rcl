@@ -19,12 +19,20 @@ const style = {
   border: '1px solid red',
 }
 ;
-const component = (props) => (<p {...props}></p>);
+const components = {
+  block: ({ content, ...props }) => (<p {...props}></p>),
+};
+
+const decorators = {
+  whitespace: [/(\s)/g, '<span style="border: 1px solid lightblue; background: lightblue">$1</span>'],
+  // words: [/>(\w+)</g, '<span style="border: 1px solid lightyellow; background: lightyellow">$1</span>'],
+}
 
 const props = {
   content,
   onContent: setContent,
-  component,
+  components,
+  decorators,
   style,
 };
 

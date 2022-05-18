@@ -11,10 +11,93 @@ import './Perf.css';
 
 const parser = new DOMParser();
 
-export default function PerfEditor(props) {
+export default function PerfEditor({
+  content: _content,
+  onContent: _onContent,
+  options: _options,
+  components: _components,
+  parsers: _parsers,
+  joiners: _joiners,
+  decorators: _decorators,
+  ...props
+}) {
+  const doc = parser.parseFromString(_content, 'text/html');
+  // parse the full content by divs for rendering
+  const divs = {
+    document: () => doc.getElementById("document"),
+    sequence: () => doc.getElementById("sequence"),
+    headers: () => doc.getElementById("headers"),
+    content: () => doc.getElementById("content"),
+  };
+
+  const content = divs.content().innerHTML;
+
+  const options = { returnHtml: true, ..._options };
+
+  const components = {
+    document: ({ children, _content, ...props }) => (
+      <div id="document" {...divs.document()?.dataset || {}}>
+        <div id="sequence" {...divs.sequence()?.dataset || {}}>
+          <div id="headers" dangerouslySetInnerHTML={{ __html: divs.headers().innerHTML }} />
+          <div id="content">
+            {children}
+          </div>
+        </div>
+      </div>
+    ),
+    sectionHeading: ({ content, show, index, ...props }) => (
+      <div className='sectionHeading' {...props}>
+        {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
+      </div>
+    ),
+    block: ({ content, style, ..._props }) => (
+      <div {..._props} contentEditable={content.includes(`class="block p"`)} />
+    ),
+    ..._components
+  };
+
+  const parsers = {
+    section: (_content) => (
+      segmenter({ content: _content, regex: /(^|\s*<div class="block p"><span class="chapter">)(\n|.)+?(\n|$)?(?=(\s*<div class="block p"><span class="chapter">|$))/g })
+    ),
+    block: (_content) => (
+      segmenter({ content: _content, regex: /(^|<div)(\n|.)+?(\n|$)?(?=(<div|$))/g })
+    ),
+    ..._parsers
+  };
+
+  const joiners = {
+    section: '',
+    block: '',
+    ..._joiners
+  };
+
+  const decorators = {
+    chapter: [/\\c\s+(\d*)/g, '<span class="chapter">$1</span>'],
+    verses: [/\\v\s+(\d*)/g, '<span class="verses">$1</span>'],
+    ..._decorators,
+  };
+
+  const onContent = (_content) => {
+    divs.content().innerHTML = _content;
+    const __content = divs.document().outerHTML;
+    _onContent(__content);
+  };
+
+  const perfProps = {
+    content,
+    onContent,
+    options,
+    components,
+    parsers,
+    joiners,
+    decorators,
+    ...props
+  };
+
   return (
     <div className='perf'>
-      <EditableContent {...props} />
+      <EditableContent {...perfProps} />
     </div>
   );
 };
@@ -24,80 +107,57 @@ PerfEditor.propTypes = {
   content: PropTypes.string.isRequired,
   /** Function triggered on edit */
   onContent: PropTypes.func,
-  /** Editable? */
-  editable: PropTypes.bool,
-  /** Preview? */
-  preview: PropTypes.bool,
-  /** Component to wrap all sections of the document */
-  documentComponent: PropTypes.func,
-  /** Component to wrap the first line of a section */
-  headingComponent: PropTypes.func,
-  /** Component to be the block editor */
-  blockComponent: PropTypes.func,
-  /** Function to parse the content into blocks */
-  blockParser: PropTypes.func,
-  /** Parse content by blocks using blockParser */
-  blockable: PropTypes.bool,
-  /** String to join the blocks to content */
-  blockJoiner: PropTypes.string,
-  /** Callback triggered on Block click, provides block content and index. */
-  onBlockClick: PropTypes.func,
-  /** Component to be the section wrapper */
-  sectionComponent: PropTypes.func,
-  /** Component to be the section body */
-  sectionBodyComponent: PropTypes.func,
-  /** Function to parse the content into sections */
-  sectionParser: PropTypes.func,
-  /** Parse content by sections using sectionParser */
-  sectionable: PropTypes.bool,
-  /** String to join the sections to content */
-  sectionJoiner: PropTypes.string,
-  /** Callback triggered on Section Heading click, provides section content and index. */
-  onSectionClick: PropTypes.func,
-  /** Index of section to be show, for app to manage state. -1 to show all. */
-  sectionIndex: PropTypes.number,
+  /** Options for the editor */
+  options: PropTypes.shape({
+    /** Parse content by sections using sectionParser */
+    sectionable: PropTypes.bool,
+    /** Parse content by blocks using blockParser */
+    blockable: PropTypes.bool,
+    /** Editable? */
+    editable: PropTypes.bool,
+    /** Preview? */
+    preview: PropTypes.bool,
+  }),
+  /** Components to wrap all sections of the document */
+  components: PropTypes.shape({
+    /** Component to wrap all sections of the document */
+    document: PropTypes.func,
+    /** Component to be the section wrapper */
+    section: PropTypes.func,
+    /** Component to wrap the first line of a section */
+    sectionHeading: PropTypes.func,
+    /** Component to be the section body */
+    sectionBody: PropTypes.func,
+    /** Component to be the block editor */
+    block: PropTypes.func,
+  }),
+  /** Functions to parse the content into sections and blocks */
+  parsers: PropTypes.shape({
+    /** Function to parse the content into sections */
+    section: PropTypes.func,
+    /** Function to parse the content into blocks */
+    block: PropTypes.func,
+  }),
+  /** Strings to join the blocks to content */
+  joiners: PropTypes.shape({
+    /** String to join the sections to content */
+    section: PropTypes.string,
+    /** String to join the blocks to content */
+    block: PropTypes.string,
+  }),
   /** Object of replacers for html/css decoration of content, done at block level */
   decorators: PropTypes.object,
+  /** Callback handlers such as block and section click */
+  handlers: PropTypes.shape({
+    /** Callback triggered on Section Heading click, provides section content and index. */
+    onSectionClick: PropTypes.func,
+    /** Callback triggered on Block click, provides block content and index. */
+    onBlockClick: PropTypes.func,
+  }),
+  /** Index of section to be show, for app to manage state. -1 to show all. */
+  sectionIndex: PropTypes.number,
 };
 
 PerfEditor.defaultProps = {
-  returnHtml: true,
-  documentComponent: ({ children, content, ...props }) => {
-    const doc = parser.parseFromString(content, 'text/html');
-    const sequenceDiv = doc.getElementById('sequence');
-    const dataset = sequenceDiv.dataset;
-    const headersDiv = doc.getElementById('headers');
-    const __html = headersDiv.innerHTML;
-    const headersComponent = <div id='headers' dangerouslySetInnerHTML={{ __html }}></div>;
 
-    return (
-      <div id="sequence" className='document' {...dataset} {...props}>
-        {/* {headersComponent} */}
-        {children}
-      </div>
-    );
-  },
-  headingComponent: ({ content, show, index, ...props }) => (
-    <div className='sectionHeading' {...props}>
-      {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
-    </div>
-  ),
-  blockComponent: ({ content, style, ..._props }) => (
-    <div {..._props} contentEditable={content.includes(`class="block p"`)} />
-  ),
-  sectionParser: (_content) => {
-    const doc = parser.parseFromString(_content, 'text/html');
-    const content = doc.getElementById('content').innerHTML;
-
-    return segmenter({ content, regex: /(^|<div class="block p"><span class="chapter">)(\n|.)+?(\n|$)?(?=(<div class="block p"><span class="chapter">|$))/g })
-  },
-  sectionJoiner: '',
-  blockParser: (_content) => (
-    segmenter({ content: _content, regex: /(^|<div)(\n|.)+?(\n|$)?(?=(<div|$))/g })
-  ),
-  blockJoiner: '',
-  decorators: {
-    chapter: [/\\c\s+(\d*)/g, '<span class="chapter">$1</span>'],
-    verses: [/\\v\s+(\d*)/g, '<span class="verses">$1</span>'],
-  },
 };

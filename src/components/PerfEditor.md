@@ -18,22 +18,28 @@ function Component () {
   const onPreview = () => { setPreview(!preview); };
 
   const onSectionClick = ({content: _content, index}) => {
+    console.log(index, _content);
     setSectionIndex(index);
   };
 
   const onContent = (_content) => {
+    console.log(_content);
     setContent(_content);
   };
 
   const props = {
     content,
     onContent,
-    sectionable,
-    blockable,
-    editable,
-    preview,
+    options: {
+      sectionable,
+      blockable,
+      editable,
+      preview,
+    },
+    handlers: {
+      onSectionClick,
+    },
     sectionIndex,
-    onSectionClick
   };
 
   const buttons = (

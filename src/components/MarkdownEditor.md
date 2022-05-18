@@ -151,7 +151,7 @@ Right aligned columns
 Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
 `;
 
-const [content, setText] = useState(_content);
+const [content, setContent] = useState(_content);
 const [sectionIndex, setSectionIndex] = useState(0);
 
 const onSectionClick = ({content: _content, index}) => {
@@ -160,11 +160,15 @@ const onSectionClick = ({content: _content, index}) => {
 
 const props = {
   content,
-  onContent: setText,
-  sectionable: true,
-  blockable: true,
+  onContent: setContent,
+  options: {
+    sectionable: true,
+    blockable: true,
+  },
+  handlers: {
+    onSectionClick,
+  },
   sectionIndex,
-  onSectionClick,
 };
 
 <MarkdownEditor {...props} />;

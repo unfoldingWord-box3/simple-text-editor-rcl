@@ -17,7 +17,7 @@ const usfm = loremIpsumBook({
 });
 
 function Component () {
-  const [content, setText] = useState(usfm);
+  const [content, setContent] = useState(usfm);
   const [sectionIndex, setSectionIndex] = useState(1);
   const [sectionable, setSectionable] = useState(true);
   const [blockable, setBlockable] = useState(true);
@@ -55,14 +55,18 @@ function Component () {
 
   const props = {
     content,
-    onContent: setText,
-    sectionable,
-    blockable,
-    editable,
-    preview,
+    onContent: setContent,
+    options: {
+      sectionable,
+      blockable,
+      editable,
+      preview,
+    },
+    handlers: {
+      onSectionClick,
+      onBlockClick,
+    },
     sectionIndex,
-    onSectionClick,
-    onBlockClick,
   };
 
   const buttons = (

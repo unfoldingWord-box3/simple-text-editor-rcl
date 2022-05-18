@@ -6,17 +6,31 @@ import PropTypes from 'prop-types';
 
 import { isRtl } from '../helpers/detectRTL';
 
+const DEFAULT_PROPS = {
+  content: '',
+  onContent: (content) => { console.warn('EditableBlock.onContent() not provided:\n\n', content); },
+  options: {
+    editable: true,
+  },
+  style: { whiteSpace: 'pre-wrap', padding: '1em' },
+  components: {
+    block: ({ content, ...props }) => (<div className='block' {...props} />),
+  },
+  decorators: {},
+};
+
 export default function EditableBlock({
   content,
+  onContent,
   decorators,
   style,
-  onContent,
-  returnHtml,
   onClick,
-  editable,
-  component,
+  components: _components,
+  options: _options,
   ...props
 }) {
+  const components = { ...DEFAULT_PROPS.components, ..._components };
+  const options = { ...DEFAULT_PROPS.options, ..._options };
 
   let dir = '';
 
@@ -24,7 +38,7 @@ export default function EditableBlock({
 
   let __html = content;
 
-  if (!returnHtml) {
+  if (!options.returnHtml) {
     decorators = {
       embededHtml: [/</g, "&lt;"],
       ...decorators
@@ -41,15 +55,15 @@ export default function EditableBlock({
   const onBlur = (event) => {
     let _content;
 
-    if (returnHtml) _content = event.target.innerHTML;
+    if (options.returnHtml) _content = event.target.innerHTML;
 
-    if (!returnHtml) _content = event.target.textContent.replace(/&lt;/g, '<');
+    if (!options.returnHtml) _content = event.target.textContent.replace(/&lt;/g, '<');
 
     onContent(_content);
   };
 
   const editorProps = {
-    contentEditable: editable,
+    contentEditable: options.editable,
     style,
     onClick,
     onBlur,
@@ -62,7 +76,7 @@ export default function EditableBlock({
 
   return (
     <>
-      {component(editorProps)}
+      {components.block(editorProps)}
     </>
   );
 };
@@ -70,27 +84,26 @@ export default function EditableBlock({
 EditableBlock.propTypes = {
   /** Text to be edited whether file, section or block */
   content: PropTypes.string.isRequired,
-  /** Callback triggered on Block click, provides block text and index. */
-  onClick: PropTypes.func,
   /** Function triggered on edit */
   onContent: PropTypes.func,
-  /** Return html instead of text */
-  returnHtml: PropTypes.bool,
-  /** Editable? */
-  editable: PropTypes.bool,
-  /** Component to wrap the editor */
-  component: PropTypes.func,
-  /** css styles for the editable component */
-  style: PropTypes.object,
+  /** Options for the editor */
+  options: PropTypes.shape({
+    /** Editable? */
+    editable: PropTypes.bool,
+    /** Return html instead of text */
+    returnHtml: PropTypes.bool,
+  }),
+  /** Components to wrap all sections of the document */
+  components: PropTypes.shape({
+    /** Component to be the block editor */
+    block: PropTypes.func,
+  }),
   /** Object of replacers for html/css decoration of text */
   decorators: PropTypes.object,
+  /** Callback triggered on Block click, provides block text and index. */
+  onClick: PropTypes.func,
+  /** css styles for the editable component */
+  style: PropTypes.object,
 };
 
-EditableBlock.defaultProps = {
-  content: '',
-  onContent: (content) => { console.warn('EditableBlock.onContent() not provided:\n\n', content); },
-  editable: true,
-  style: { whiteSpace: 'pre-wrap', padding: '1em' },
-  component: ({ content, ...props }) => (<div className='block' {...props} />),
-  decorators: {},
-};
+EditableBlock.defaultProps = DEFAULT_PROPS;

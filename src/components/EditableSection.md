@@ -19,13 +19,26 @@ console.log('EditableSection.md:\n\n', content);
 const [ show, setShow ] = useState(true);
 
 const onShow = () => { setShow(!show); };
-const headingComponent = (props) => (<h4 {...props}>{props.content.split('\n')[0]}</h4>);
 
-<EditableSection
-  content={content}
-  onContent={setContent}
-  show={show}
-  onShow={onShow}
-  headingComponent={headingComponent}
-/>;
+const components = {
+  sectionHeading: (props) => (<h4 {...props}>{props.content.split('\n')[0]}</h4>),
+};
+
+const handlers = {
+  onBlockClick: ({content: _content, index}) => {
+    console.log(index, _content);
+  },
+};
+
+const props = {
+  content,
+  onContent: setContent,
+  options: {},
+  components,
+  handlers,
+  show,
+  onShow
+};
+
+<EditableSection {...props} />;
 ```

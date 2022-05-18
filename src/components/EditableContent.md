@@ -14,26 +14,60 @@ It is a long established fact that a reader will be distracted by the readable c
 
 const [content, setText] = useState(_content);
 const [sectionIndex, setSectionIndex] = useState(0);
+const [sectionable, setSectionable] = useState(true);
+const [blockable, setBlockable] = useState(true);
+const [editable, setEditable] = useState(true);
+const [preview, setPreview] = useState(false);
+
+const onSectionable = () => { setSectionable(!sectionable); };
+const onBlockable = () => { setBlockable(!blockable); };
+const onEditable = () => { setEditable(!editable); };
+const onPreview = () => { setPreview(!preview); };
 
 console.log('EditableContent.md:\n\n', content);
 
-const headingComponent = ({ show, ...props}) => (<h3 {...props}><hr/>{props.content.split('\n')[0]}<hr/></h3>);
-const blockComponent = (props) => (<p {...props} style={{ padding: '0 0.2em', whiteSpace: 'pre-wrap' }}></p>);
+const components = {
+  sectionHeading: ({ show, ...props}) => (
+    <h3 {...props}><hr/>{props.content.split('\n')[0]}<hr/></h3>
+  ),
+  block: (props) => (
+    <p {...props} style={{ padding: '0 0.2em', whiteSpace: 'pre-wrap' }}></p>
+  ),
+};
 
-const onSectionClick = ({content: _content, index}) => {
-  setSectionIndex(index);
+const handlers = {
+  onSectionClick: ({content: _content, index}) => {
+    setSectionIndex(index);
+  },
 };
 
 const props = {
   content,
   onContent: setText,
-  headingComponent,
-  blockComponent,
-  sectionable: true,
-  blockable: true,
+  options: {
+    sectionable,
+    blockable,
+    editable,
+    preview,
+  },
+  components,
+  handlers,
   sectionIndex,
-  onSectionClick,
 };
 
-<EditableContent {...props} />;
+const buttons = (
+  <>
+    <button style={(sectionable ? {borderStyle: 'inset'} : {})} onClick={onSectionable}>Sectionable</button>
+    <button style={(blockable ? {borderStyle: 'inset'} : {})} onClick={onBlockable}>Blockable</button>
+    <button style={(editable ? {borderStyle: 'inset'} : {})} onClick={onEditable}>Editable</button>
+    <button style={(preview ? {borderStyle: 'inset'} : {})} onClick={onPreview}>Preview</button>
+  </>
+);
+
+<div>
+  {buttons}
+  <h2>{title}</h2>
+  <EditableContent {...props} />
+  {buttons}
+</div>;
 ```

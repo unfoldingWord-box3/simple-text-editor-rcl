@@ -96,7 +96,7 @@ export default function EditableSection({
 
   return (
     <>
-      {components.section({ dir, children, index })}
+      {components.section({ dir, show, children, index })}
     </>
   );
 };

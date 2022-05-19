@@ -22,6 +22,10 @@ function Component () {
     setSectionIndex(index);
   };
 
+  const onBlockClick = ({content: _content, index, element}) => {
+    console.log(element.dataset.target);
+  };
+
   const onContent = (_content) => {
     console.log(_content);
     setContent(_content);
@@ -38,6 +42,7 @@ function Component () {
     },
     handlers: {
       onSectionClick,
+      onBlockClick,
     },
     sectionIndex,
   };

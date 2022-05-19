@@ -73,7 +73,7 @@ export default function EditableSection({
         components,
         options,
         onContent: (_block) => { onBlockEdit(_block, index); },
-        onClick: () => { handlers.onBlockClick({ content: block, index }); },
+        onClick: (e) => { handlers.onBlockClick({ content: block, index, element: e.target }); },
         decorators,
       };
       return <EditableBlock key={`block-${md5(index + block)}`} {...blockProps} />;

@@ -100,6 +100,22 @@
   font-style: italic;
 }
 
+.perf .q {
+  padding: 0 1em;
+}
+
+.perf .q1 {
+  padding: 0 2em;
+}
+
+.perf .q3 {
+  padding: 0 3em;
+}
+
+.perf .q4 {
+  padding: 0 4em;
+}
+
 span.verses:after {
   content: ' ';
 }

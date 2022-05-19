@@ -17,7 +17,7 @@ const DEFAULT_PROPS = {
     editable: true,
   },
   components: {
-    section: ({ children, dir, ...props }) => (<div className={'section ' + dir} dir={dir} {...props}>{children}</div>),
+    section: ({ show, children, dir, ...props }) => (<div className={'section ' + dir} dir={dir} {...props}>{children}</div>),
     sectionHeading: ({ show, content, ...props }) => (<h2 className='sectionHeading' {...props}>{content}</h2>),
     sectionBody: ({ children, ...props }) => (<div className='sectionBody' {...props}>{children}</div>),
   },

@@ -83,6 +83,7 @@
   color: initial;
   float: left;
   margin-right: 0.1em;
+  line-height: 1.0em;
 }
 
 .perf .rtl .chapter {

@@ -35,8 +35,8 @@ export default function PerfEditor({
   const options = { returnHtml: true, ..._options };
 
   const components = {
-    document: ({ children, _content, ...props }) => (
-      <div id="document" {...divs.document()?.dataset || {}}>
+    document: ({ children, content: _content, className, ...props }) => (
+      <div id="document" {...divs.document()?.dataset || {}} className={className}>
         <div id="sequence" {...divs.sequence()?.dataset || {}}>
           <div id="headers" dangerouslySetInnerHTML={{ __html: divs.headers()?.innerHTML }} />
           <div id="content">

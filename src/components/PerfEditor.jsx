@@ -50,8 +50,8 @@ export default function PerfEditor({
         {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
       </div>
     ),
-    block: ({ content, style, ..._props }) => (
-      <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/)} />
+    block: ({ content, style, contentEditable, ..._props }) => (
+      <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable} />
     ),
     ..._components
   };

@@ -34,18 +34,18 @@
   text-align: center;
 }
 
-.perf .title {
+.perf .title, .perf div[sequencetype="title"] .block {
   font-weight: 700;
   font-size: 2.0em;
   margin: 2em 0 1em;
 }
 
-.perf .introduction {
+.perf .introduction, .perf div[sequencetype="introduction"] .block {
   font-size: 1.5em;
   margin: 0.5em 2em 2em;
 }
 
-.perf .heading {
+.perf .heading, .perf div[sequencetype="heading"] .block {
   font-size: 1.2em;
   font-weight: 700;
   text-align: center;

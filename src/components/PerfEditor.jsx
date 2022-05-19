@@ -38,7 +38,7 @@ export default function PerfEditor({
     document: ({ children, _content, ...props }) => (
       <div id="document" {...divs.document()?.dataset || {}}>
         <div id="sequence" {...divs.sequence()?.dataset || {}}>
-          <div id="headers" dangerouslySetInnerHTML={{ __html: divs.headers().innerHTML }} />
+          <div id="headers" dangerouslySetInnerHTML={{ __html: divs.headers()?.innerHTML }} />
           <div id="content">
             {children}
           </div>

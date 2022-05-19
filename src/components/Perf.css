@@ -97,3 +97,11 @@
 span.verses:after {
   content: ' ';
 }
+
+.perf .preview .graft:before{
+  content: ' '✝;
+}
+
+.perf .preview .headers {
+  display: none;
+}

@@ -95,7 +95,7 @@
   vertical-align: super;
 }
 
-.perf .q {
+.perf .q, .perf .q2, .perf .q3, .perf .q4 {
   font-style: italic;
 }
 

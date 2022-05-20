@@ -101,19 +101,19 @@
 }
 
 .perf .q {
-  padding: 0 1em;
+  padding: 0.1em 1em;
 }
 
-.perf .q1 {
-  padding: 0 2em;
+.perf .q2 {
+  padding: 0.1em 2em;
 }
 
 .perf .q3 {
-  padding: 0 3em;
+  padding: 0.1em 3em;
 }
 
 .perf .q4 {
-  padding: 0 4em;
+  padding: 0.1em 4em;
 }
 
 span.verses:after {

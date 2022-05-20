@@ -1,13 +1,18 @@
 # PerfEditor
 
-PerfEditor is and editor for the PERF (Proskomma Editor Ready Format) based on the EditableContent by overriding its default props.
+PerfEditor is and editor for the PERF (Proskomma Editor Ready Format) based on the EditableContent by overriding its default props. 
+
+No UI library (such as MaterialUI or TailwindCSS) is required but they are supported. React components are passed in to customize the UI to your needs. 
 
 ## Example 1 (Custom UI)
 To see a reference implementation Proof of Concept using MaterialUI see: 
 - Code: https://codesandbox.io/s/perf-html-editor-vkejn8
 - Demo: https://vkejn8.csb.app/
 
-## Exampe 2 (Bare Minimum)
+## Example 2 (Tailwind CSS)
+If you would like to contribute an example implementation using TailwindCSS please do so on codesandbox.io and submit a PR with links right here.
+
+## Exampe 3 (Bare Minimum)
 This example shows the bare minimum use case and uses default components to render the editor.
 
 ```js

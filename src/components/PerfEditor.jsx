@@ -96,6 +96,9 @@ export default function PerfEditor({
 
         queue = [...queue, block];
       });
+      sections = [...sections, queue];
+      queue = [];
+
       return sections.map(section => section.map(block => block.outerHTML).join('\n'));
     },
     block: (_content) => {

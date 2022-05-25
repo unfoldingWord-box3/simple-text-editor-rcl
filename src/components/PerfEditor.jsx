@@ -26,7 +26,6 @@ export default function PerfEditor({
   const divs = {
     document: () => doc.getElementById("document"),
     sequence: () => doc.getElementById("sequence"),
-    headers: () => doc.getElementById("headers"),
     content: () => doc.getElementById("content"),
   };
 
@@ -38,7 +37,6 @@ export default function PerfEditor({
     document: ({ children, content: _content, className, ...props }) => (
       <div id="document" {...divs.document()?.dataset || {}} className={className}>
         <div id="sequence" {...divs.sequence()?.dataset || {}}>
-          <div id="headers" dangerouslySetInnerHTML={{ __html: divs.headers()?.innerHTML }} />
           <div id="content">
             {children}
           </div>
@@ -57,12 +55,55 @@ export default function PerfEditor({
   };
 
   const parsers = {
-    section: (_content) => (
-      segmenter({ content: _content, regex: /(^|(\s*<div class="graft heading.*?<\/div>\n)*?\s*<div class="block p"><span class="chapter">)(\n|.)+?(\n|$)?(?=((\s*<div class="graft heading.*?<\/div>\n)*?\s*<div class="block p"><span class="chapter">|$))/g })
-    ),
-    block: (_content) => (
-      segmenter({ content: _content, regex: /(^|<div)(\n|.)+?(\n|$)?(?=(<div|$))/g })
-    ),
+    section: (_content) => {
+      let sections = [];
+      let queue = [];
+      const div = document.createElement("div");
+      div.innerHTML = _content;
+      [...div.children].forEach((block, index) => {
+        const { type } = block.dataset;
+        const isBlock = type === "block";
+
+        if (isBlock) {
+          const isChapter = block.firstChild?.dataset?.type === "chapter";
+
+          if (isChapter) {
+            // remove last grafts preceding chapter
+            let checkLastInQueue = true;
+            let headerQueue = [];
+
+            while (checkLastInQueue) {
+              if (queue.length > 0) {
+                const last = queue.pop();
+                const isGraft = last.dataset.type === "graft";
+                const isTitle = [...last.classList].includes("title");
+                const isIntro = [...last.classList].includes("introduction");
+
+                if (isGraft && !isTitle && !isIntro) {
+                  headerQueue = [...headerQueue, last];
+                } else {
+                  queue = [...queue, last];
+                  checkLastInQueue = false;
+                }
+              } else {
+                checkLastInQueue = false;
+              }
+            };
+            sections = [...sections, queue];
+            queue = [...headerQueue];
+          };
+        };
+
+        queue = [...queue, block];
+      });
+      return sections.map(section => section.map(block => block.outerHTML).join('\n'));
+    },
+    block: (_content) => {
+      const div = document.createElement("div");
+      div.innerHTML = _content;
+      const blocks = [...div.children].map(block => block.outerHTML);
+      return blocks;
+    },
     ..._parsers
   };
 

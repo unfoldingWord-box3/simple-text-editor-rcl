@@ -90,7 +90,7 @@ export default function PerfEditor({
               }
             };
             sections = [...sections, queue];
-            queue = [...headerQueue];
+            queue = [...headerQueue.reverse()];
           };
         };
 

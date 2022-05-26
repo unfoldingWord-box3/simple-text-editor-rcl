@@ -34,7 +34,7 @@ export default function PerfEditor({
 
   const components = {
     document: ({ children, content: _content, className, ...props }) => (
-      <div id="sequence" {...props} {...divs.sequence()?.dataset || {}}>
+      <div id="sequence" className={className} {...divs.sequence()?.dataset || {}}>
         <div id="content">
           {children}
         </div>

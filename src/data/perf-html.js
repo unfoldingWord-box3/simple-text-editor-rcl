@@ -1,5 +1,4 @@
-export const perfHtml = `<div id="document" data-docSetId="unfoldingWord/en_ult" data-bookCode="MRK">
-<div id="sequence" data-sequenceId="MGNiMzFmNTUt" data-sequenceType="main" class="main main_sequence">
+export const perfHtml = `<div id="sequence" data-sequenceId="MGNiMzFmNTUt" data-sequenceType="main" class="main main_sequence">
   <div id="content">
     <div  data-type="graft" class="graft title" data-subType="title" data-target="ZDk1MTU4ZGUt" data-nBlocks="1" data-previewText="TITLE: Mark"></div>
     <div data-type="block" class="block p"><span data-type="chapter" class="chapter">1</span><span data-type="verses" class="verses">1</span>The beginning of the gospel of Jesus Christ, the Son of God.</div>
@@ -151,5 +150,4 @@ export const perfHtml = `<div id="document" data-docSetId="unfoldingWord/en_ult"
     <div data-type="block" class="block p"><span data-type="verses" class="verses">14</span>Now later, he appeared to the eleven as they were reclining to eat, and he rebuked them for their unbelief and hardness of heart, because they did not believe those who saw him after he rose from the dead. <span data-type="verses" class="verses">15</span>And he said to them, “Going into all the world, preach the gospel to the entire creation. <span data-type="verses" class="verses">16</span>He who believes and is baptized will be saved, and he who does not believe will be condemned.  <span data-type="verses" class="verses">17</span>Now these signs will go with those who believe: In my name they will cast out demons. They will speak in new languages. <span data-type="verses" class="verses">18</span>They will pick up snakes, and if they drink anything deadly, it will not hurt them. They will lay hands on the sick, and they will get well.”</div>
     <div data-type="block" class="block p"><span data-type="verses" class="verses">19</span>After the Lord Jesus had spoken to them, he was taken up into heaven and sat down at the right hand of God. <span data-type="verses" class="verses">20</span>Now those, having gone out, preached everywhere, while the Lord worked with them {and} confirmed the word by the signs that went with them. Amen.]</div>
   </div>
-</div>
 </div>`;

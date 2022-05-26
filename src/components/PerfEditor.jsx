@@ -24,7 +24,6 @@ export default function PerfEditor({
   const doc = parser.parseFromString(_content, 'text/html');
   // parse the full content by divs for rendering
   const divs = {
-    document: () => doc.getElementById("document"),
     sequence: () => doc.getElementById("sequence"),
     content: () => doc.getElementById("content"),
   };
@@ -35,11 +34,9 @@ export default function PerfEditor({
 
   const components = {
     document: ({ children, content: _content, className, ...props }) => (
-      <div id="document" {...divs.document()?.dataset || {}} className={className}>
-        <div id="sequence" {...divs.sequence()?.dataset || {}}>
-          <div id="content">
-            {children}
-          </div>
+      <div id="sequence" {...props} {...divs.sequence()?.dataset || {}}>
+        <div id="content">
+          {children}
         </div>
       </div>
     ),
@@ -124,7 +121,7 @@ export default function PerfEditor({
 
   const onContent = (_content) => {
     divs.content().innerHTML = _content;
-    const __content = divs.document().outerHTML;
+    const __content = divs.sequence().outerHTML;
     _onContent(__content);
   };
 

@@ -28,30 +28,9 @@ export default function PerfEditor({
     content: () => doc.getElementById("content"),
   };
 
-  const content = divs.content().innerHTML;
-
   const options = { returnHtml: true, ..._options };
 
-  const components = {
-    document: ({ children, content: _content, className, ...props }) => (
-      <div id="sequence" className={className} {...divs.sequence()?.dataset || {}}>
-        <div id="content">
-          {children}
-        </div>
-      </div>
-    ),
-    sectionHeading: ({ content, show, index, ...props }) => (
-      <div className='sectionHeading' {...props}>
-        {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
-      </div>
-    ),
-    block: ({ content, style, contentEditable, ..._props }) => (
-      <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable} />
-    ),
-    ..._components
-  };
-
-  const parsers = {
+  const preParsers = {
     section: (_content) => {
       let sections = [];
       let queue = [];
@@ -108,6 +87,47 @@ export default function PerfEditor({
       return blocks;
     },
     ..._parsers
+  };
+
+  let sections;
+
+  if (options.sectionable) {
+    sections = preParsers.section(divs.content().innerHTML);
+  } else {
+    sections = [divs.content().innerHTML];
+  };
+
+  if (options.blockable) {
+    sections = sections.map((section) => {
+      const blocks = options.blockable && preParsers.block(section).join('😭');
+      return blocks || section;
+    });
+  };
+
+  const content = sections.join('💩');
+
+  const parsers = {
+    section: (text) => text.split('💩'),
+    block: (text) => text.split('😭'),
+  };
+
+  const components = {
+    document: ({ children, content: _content, className, ...props }) => (
+      <div id="sequence" className={className} {...divs.sequence()?.dataset || {}}>
+        <div id="content">
+          {children}
+        </div>
+      </div>
+    ),
+    sectionHeading: ({ content, show, index, ...props }) => (
+      <div className='sectionHeading' {...props}>
+        {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
+      </div>
+    ),
+    block: ({ content, style, contentEditable, ..._props }) => (
+      <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable} />
+    ),
+    ..._components
   };
 
   const joiners = {

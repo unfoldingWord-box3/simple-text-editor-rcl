@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
-import md5 from 'md5';
 
 import EditableSection from './EditableSection';
 
@@ -73,7 +72,7 @@ export default function EditableContent({
       handlers,
       decorators,
     };
-    return <EditableSection key={`section-${md5(index + section)}`} {...sectionProps} />;
+    return <EditableSection key={`section-${index}-${new Date().getTime()}`} {...sectionProps} />;
   });
 
   let documentProps = { content, ...props };

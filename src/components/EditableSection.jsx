@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
-import md5 from 'md5';
 
 import { isRtl } from '../helpers/detectRTL';
 import EditableBlock from './EditableBlock';
@@ -76,7 +75,7 @@ export default function EditableSection({
         onClick: (e) => { handlers.onBlockClick({ content: block, index, element: e.target }); },
         decorators,
       };
-      return <EditableBlock key={`block-${md5(index + block)}`} {...blockProps} />;
+      return <EditableBlock key={`block-${index}-${new Date().getTime()}`} {...blockProps} />;
     });
   };
 
@@ -89,10 +88,10 @@ export default function EditableSection({
   const children = [];
 
   if (options.sectionable) {
-    children.push(components.sectionHeading({ dir, style: headingStyle, show, onClick: onShow, content, index, key: `heading-${md5(index + content)}` }));
+    children.push(components.sectionHeading({ dir, style: headingStyle, show, onClick: onShow, content, index, key: `heading-${index}-${new Date().getTime()}` }));
   };
 
-  children.push(components.sectionBody({ dir, children: blockComponents, index, key: `body-${md5(index + content)}` }));
+  children.push(components.sectionBody({ dir, children: blockComponents, index, key: `body-${index}-${new Date().getTime()}` }));
 
   return (
     <>

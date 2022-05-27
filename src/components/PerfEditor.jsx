@@ -57,7 +57,8 @@ export default function PerfEditor({
       let queue = [];
       const div = document.createElement("div");
       div.innerHTML = _content;
-      [...div.children].forEach((block, index) => {
+
+      Array.from(div.children, (block) => {
         const { type } = block.dataset;
         const isBlock = type === "block";
 
@@ -92,6 +93,7 @@ export default function PerfEditor({
         };
 
         queue = [...queue, block];
+        return true;
       });
       sections = [...sections, queue];
       queue = [];
@@ -101,7 +103,8 @@ export default function PerfEditor({
     block: (_content) => {
       const div = document.createElement("div");
       div.innerHTML = _content;
-      const blocks = [...div.children].map(block => block.outerHTML);
+      // const blocks = [...div.children].map(block => block.outerHTML);
+      const blocks = Array.from(div.children, (block) => block.outerHTML);
       return blocks;
     },
     ..._parsers

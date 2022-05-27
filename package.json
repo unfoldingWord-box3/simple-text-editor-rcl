@@ -1,7 +1,7 @@
 {
   "name": "simple-text-editor-rcl",
   "description": "A React Component Library for simple text editing.",
-  "version": "6.8.3",
+  "version": "6.8.4",
   "private": false,
   "homepage": "https://simple-text-editor-rcl.netlify.app/",
   "license": "MIT",
@@ -10,7 +10,6 @@
     "url": "https://github.com/unfoldingWord-box3/simple-text-editor-rcl.git"
   },
   "dependencies": {
-    "md5": "^2.3.0",
     "use-deep-compare": "^1.1.0"
   },
   "scripts": {

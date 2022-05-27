@@ -88,10 +88,12 @@ export default function EditableSection({
   const children = [];
 
   if (options.sectionable) {
-    children.push(components.sectionHeading({ dir, style: headingStyle, show, onClick: onShow, content, index, key: `heading-${index}-${new Date().getTime()}` }));
+    children.push(components.sectionHeading({ show, dir, style: headingStyle, onClick: onShow, content, index, key: `heading-${index}-${new Date().getTime()}` }));
   };
 
-  children.push(components.sectionBody({ dir, children: blockComponents, index, key: `body-${index}-${new Date().getTime()}` }));
+  if (show) {
+    children.push(components.sectionBody({ show, dir, children: blockComponents, index, key: `body-${index}-${new Date().getTime()}` }));
+  };
 
   return (
     <>

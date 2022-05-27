@@ -3,9 +3,7 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
-import { isRtl } from '../helpers/detectRTL';
 import EditableBlock from './EditableBlock';
 
 const DEFAULT_PROPS = {
@@ -42,26 +40,21 @@ export default function EditableSection({
   index,
   onShow,
   show,
+  dir,
   ...props
 }) {
   const components = { ...DEFAULT_PROPS.components, ...props.components };
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
 
-  let dir = '';
+  const blocks = options.blockable ? parsers.block(content) : [content];
 
-  if (isRtl(content)) dir = 'rtl';
-
-  const blocks = useDeepCompareMemo(() => (
-    options.blockable ? parsers.block(content) : [content]
-  ), [options, parsers, content]);
-
-  const onBlockEdit = useDeepCompareCallback((block, index) => {
+  const onBlockEdit = (block, index) => {
     let _blocks = [...blocks];
     _blocks[index] = block;
     const _content = _blocks.join(joiners.block);
     onContent(_content);
-  }, [blocks, joiners, onContent]);
+  };
 
   let blockComponents = <></>;
 

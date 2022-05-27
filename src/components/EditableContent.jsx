@@ -3,8 +3,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
+import { isRtl } from '../helpers/detectRTL';
 import EditableSection from './EditableSection';
 
 const DEFAULT_PROPS = {
@@ -47,16 +47,16 @@ export default function EditableContent({
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
 
-  const sections = useDeepCompareMemo(() => (
-    options.sectionable ? parsers.section(content) : [content]
-  ), [options, parsers, content]);
+  const dir = isRtl(content) ? 'rtl' : '';
 
-  const onSectionEdit = useDeepCompareCallback((section, index) => {
+  const sections = options.sectionable ? parsers.section(content) : [content];
+
+  const onSectionEdit = (section, index) => {
     let _sections = [...sections];
     _sections[index] = section;
     const _content = _sections.join(joiners.section);
     onContent(_content);
-  }, [onContent, sections, joiners.section]);
+  };
 
   const sectionComponents = sections.map((section, index) => {
     const sectionProps = {
@@ -71,6 +71,7 @@ export default function EditableContent({
       joiners,
       handlers,
       decorators,
+      dir,
     };
     return <EditableSection key={`section-${index}-${new Date().getTime()}`} {...sectionProps} />;
   });

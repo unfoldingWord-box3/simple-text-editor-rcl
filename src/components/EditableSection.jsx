@@ -4,6 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useDeepCompareMemo } from 'use-deep-compare';
 import EditableBlock from './EditableBlock';
 
 const DEFAULT_PROPS = {
@@ -47,30 +48,34 @@ export default function EditableSection({
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
 
-  const blocks = options.blockable ? parsers.block(content) : [content];
+  const blockComponents = useDeepCompareMemo(() => {
+    let _blockComponents = <></>;
+    const blocks = options.blockable ? parsers.block(content) : [content];
 
-  const onBlockEdit = (block, index) => {
-    let _blocks = [...blocks];
-    _blocks[index] = block;
-    const _content = _blocks.join(joiners.block);
-    onContent(_content);
-  };
-
-  let blockComponents = <></>;
-
-  if (show) {
-    blockComponents = blocks.map((block, index) => {
-      const blockProps = {
-        content: block,
-        components,
-        options,
-        onContent: (_block) => { onBlockEdit(_block, index); },
-        onClick: (e) => { handlers.onBlockClick({ content: block, index, element: e.target }); },
-        decorators,
+    if (show) {
+      const onBlockEdit = (block, index) => {
+        let _blocks = [...blocks];
+        _blocks[index] = block;
+        const _content = _blocks.join(joiners.block);
+        onContent(_content);
       };
-      return <EditableBlock key={`block-${index}-${new Date().getTime()}`} {...blockProps} />;
-    });
-  };
+
+      _blockComponents = blocks.map((block, index) => {
+        const blockProps = {
+          content: block,
+          components,
+          options,
+          onContent: (_block) => { onBlockEdit(_block, index); },
+          onClick: (e) => { handlers.onBlockClick({ content: block, index, element: e.target }); },
+          decorators,
+        };
+        return <EditableBlock key={`block-${index}-${new Date().getTime()}`} {...blockProps} />;
+      });
+    };
+
+    return _blockComponents;
+  }, [options, parsers, content, onContent, joiners, handlers, decorators]);
+
 
   const headingStyle = {
     whiteSpace: 'nowrap',

@@ -3,6 +3,7 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDeepCompareMemo } from 'use-deep-compare';
 
 import { isRtl } from '../helpers/detectRTL';
 import EditableSection from './EditableSection';
@@ -47,34 +48,40 @@ export default function EditableContent({
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
 
-  const dir = isRtl(content) ? 'rtl' : '';
 
-  const sections = options.sectionable ? parsers.section(content) : [content];
+  const sectionsComponents = useDeepCompareMemo(() => {
+    let _sectionsComponents;
 
-  const onSectionEdit = (section, index) => {
-    let _sections = [...sections];
-    _sections[index] = section;
-    const _content = _sections.join(joiners.section);
-    onContent(_content);
-  };
+    const dir = isRtl(content) ? 'rtl' : '';
+    const sections = options.sectionable ? parsers.section(content) : [content];
 
-  const sectionComponents = sections.map((section, index) => {
-    const sectionProps = {
-      content: section,
-      onContent: (_section) => { onSectionEdit(_section, index); },
-      show: (!options.sectionable || sectionIndex === -1 || index === sectionIndex),
-      onShow: () => { handlers.onSectionClick({ content: section, index }); },
-      index,
-      components,
-      options,
-      parsers,
-      joiners,
-      handlers,
-      decorators,
-      dir,
+    const onSectionEdit = (section, index) => {
+      let _sections = [...sections];
+      _sections[index] = section;
+      const _content = _sections.join(joiners.section);
+      onContent(_content);
     };
-    return <EditableSection key={`section-${index}-${new Date().getTime()}`} {...sectionProps} />;
-  });
+
+    _sectionsComponents = sections.map((section, index) => {
+      const sectionProps = {
+        content: section,
+        onContent: (_section) => { onSectionEdit(_section, index); },
+        show: (!options.sectionable || sectionIndex === -1 || index === sectionIndex),
+        onShow: () => { handlers.onSectionClick({ content: section, index }); },
+        index,
+        components,
+        options,
+        parsers,
+        joiners,
+        handlers,
+        decorators,
+        dir,
+      };
+      return <EditableSection key={`section-${index}-${new Date().getTime()}`} {...sectionProps} />;
+    });
+
+    return _sectionsComponents;
+  }, [content, options, parsers, joiners, onContent, decorators, handlers, sectionIndex]);
 
   let documentProps = { content, ...props };
 
@@ -82,7 +89,7 @@ export default function EditableContent({
 
   return (
     <>
-      {components.document({ ...documentProps, children: sectionComponents })}
+      {components.document({ ...documentProps, children: sectionsComponents })}
     </>
   );
 };

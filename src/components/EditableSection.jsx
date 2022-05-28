@@ -77,21 +77,24 @@ export default function EditableSection({
   }, [options, parsers, content, onContent, joiners, handlers, decorators]);
 
 
-  const headingStyle = {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    contentOverflow: 'ellipsis',
-  };
 
-  const children = [];
+  const children = useDeepCompareMemo(() => {
+    let _children = [];
 
-  if (options.sectionable) {
-    children.push(components.sectionHeading({ show, dir, style: headingStyle, onClick: onShow, content, index, key: `heading-${index}-${new Date().getTime()}` }));
-  };
+    if (options.sectionable) {
+      const headingStyle = {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        contentOverflow: 'ellipsis',
+      };
+      _children.push(components.sectionHeading({ show, dir, style: headingStyle, onClick: onShow, content, index, key: `heading-${index}-${new Date().getTime()}` }));
+    };
 
-  if (show) {
-    children.push(components.sectionBody({ show, dir, children: blockComponents, index, key: `body-${index}-${new Date().getTime()}` }));
-  };
+    if (show) {
+      _children.push(components.sectionBody({ show, dir, children: blockComponents, index, key: `body-${index}-${new Date().getTime()}` }));
+    };
+    return _children;
+  }, [options, show, components, dir, onShow, content, index, blockComponents]);
 
   return (
     <>

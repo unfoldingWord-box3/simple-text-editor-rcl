@@ -3,15 +3,15 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
-import { useDeepCompareMemo } from 'use-deep-compare';
+import useParseBlocksContent from '../hooks/useParseBlocksContent';
 import EditableBlock from './EditableBlock';
 
 const DEFAULT_PROPS = {
   content: '',
   onContent: (content) => { console.warn('EditableSection.onContent() not provided:\n\n', content); },
   options: {
-    blockable: true,
     editable: true,
   },
   components: {
@@ -22,14 +22,17 @@ const DEFAULT_PROPS = {
   handlers: {
     onBlockClick: ({ content, index }) => { console.warn('EditableSection.onBlockClick({content, index}) not provided.\n\n', index); },
   },
-  parsers: {
-    block: (content) => (content.split('\n')),
-  },
   joiners: {
     block: '\n',
   },
   show: true,
   onShow: () => { console.warn('EditableSection.onShow() not provided.'); },
+};
+
+const headingStyle = {
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  contentOverflow: 'ellipsis',
 };
 
 export default function EditableSection({
@@ -45,61 +48,52 @@ export default function EditableSection({
   ...props
 }) {
   const components = { ...DEFAULT_PROPS.components, ...props.components };
+  const { section: Section, sectionHeading: SectionHeading, sectionBody: SectionBody } = components || {};
   const options = { ...DEFAULT_PROPS.options, ...props.options };
-  const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
+  const { onBlockClick } = { ...DEFAULT_PROPS.handlers, ...props.handlers };
+
+  const blocksContent = useParseBlocksContent({ content, parsers, options, show });
+
+  const onBlockEdit = useDeepCompareCallback((block, _index) => {
+    let _blocks = [...blocksContent];
+    _blocks[_index] = block;
+    const _content = _blocks.join(joiners.block);
+    onContent(_content);
+  }, [blocksContent]);
 
   const blockComponents = useDeepCompareMemo(() => {
     let _blockComponents = <></>;
-    const blocks = options.blockable ? parsers.block(content) : [content];
 
     if (show) {
-      const onBlockEdit = (block, index) => {
-        let _blocks = [...blocks];
-        _blocks[index] = block;
-        const _content = _blocks.join(joiners.block);
-        onContent(_content);
-      };
-
-      _blockComponents = blocks.map((block, index) => {
+      _blockComponents = blocksContent.map((blockContent, _index) => {
         const blockProps = {
-          content: block,
+          content: blockContent,
           components,
           options,
-          onContent: (_block) => { onBlockEdit(_block, index); },
-          onClick: (e) => { handlers.onBlockClick({ content: block, index, element: e.target }); },
+          onContent: (_block) => { onBlockEdit(_block, _index); },
+          onClick: (event) => { onBlockClick({ content: blockContent, index: _index, element: event.target }); },
           decorators,
         };
-        return <EditableBlock key={`block-${index}-${new Date().getTime()}`} {...blockProps} />;
+        return <EditableBlock key={_index} {...blockProps} />;
       });
     };
 
     return _blockComponents;
-  }, [options, parsers, content, onContent, joiners, handlers, decorators]);
+  }, [blocksContent, components, options, onBlockClick, onBlockEdit, decorators]);
 
-
-
-  const children = useDeepCompareMemo(() => {
-    let _children = [];
-
-    if (options.sectionable) {
-      const headingStyle = {
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        contentOverflow: 'ellipsis',
-      };
-      _children.push(components.sectionHeading({ show, dir, style: headingStyle, onClick: onShow, content, index, key: `heading-${index}-${new Date().getTime()}` }));
-    };
-
-    if (show) {
-      _children.push(components.sectionBody({ show, dir, children: blockComponents, index, key: `body-${index}-${new Date().getTime()}` }));
-    };
-    return _children;
-  }, [options, show, components, dir, onShow, content, index, blockComponents]);
+  const component = useDeepCompareMemo(() => (
+    <Section {...{ dir, show, index }}>
+      {options.sectionable && (
+        <SectionHeading {...{ show, dir, style: headingStyle, onClick: onShow, content, index }} data-test-id='sectionHeading' />
+      )}
+      <SectionBody {...{ show, dir, index }}>
+        {blockComponents}
+      </SectionBody>
+    </Section>
+  ), [dir, show, options.sectionable, blockComponents, onShow, content, index]);
 
   return (
-    <>
-      {components.section({ dir, show, children, index })}
-    </>
+    <>{component}</>
   );
 };
 

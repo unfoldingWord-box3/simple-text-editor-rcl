@@ -3,8 +3,9 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDeepCompareMemo } from 'use-deep-compare';
+import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
+import useParseSectionsContent from '../hooks/useParseSectionsContent';
 import { isRtl } from '../helpers/detectRTL';
 import EditableSection from './EditableSection';
 
@@ -45,29 +46,29 @@ export default function EditableContent({
   ...props
 }) {
   const components = { ...DEFAULT_PROPS.components, ...props.components };
+  const { document: Document } = components;
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
 
+  const sectionsContent = useParseSectionsContent({ content, parsers, options })
+
+  const onSectionEdit = useDeepCompareCallback((section, index) => {
+    let _sections = [...sectionsContent];
+    _sections[index] = section;
+    const _content = _sections.join(joiners.section);
+    onContent(_content);
+  }, [sectionsContent, onContent]);
 
   const sectionsComponents = useDeepCompareMemo(() => {
     let _sectionsComponents;
-
     const dir = isRtl(content) ? 'rtl' : '';
-    const sections = options.sectionable ? parsers.section(content) : [content];
 
-    const onSectionEdit = (section, index) => {
-      let _sections = [...sections];
-      _sections[index] = section;
-      const _content = _sections.join(joiners.section);
-      onContent(_content);
-    };
-
-    _sectionsComponents = sections.map((section, index) => {
+    _sectionsComponents = sectionsContent.map((sectionContent, index) => {
       const sectionProps = {
-        content: section,
+        content: sectionContent,
         onContent: (_section) => { onSectionEdit(_section, index); },
         show: (!options.sectionable || sectionIndex === -1 || index === sectionIndex),
-        onShow: () => { handlers.onSectionClick({ content: section, index }); },
+        onShow: () => { handlers.onSectionClick({ content: sectionContent, index }); },
         index,
         components,
         options,
@@ -77,20 +78,20 @@ export default function EditableContent({
         decorators,
         dir,
       };
-      return <EditableSection key={`section-${index}-${new Date().getTime()}`} {...sectionProps} />;
+      return <EditableSection key={index} {...sectionProps} />;
     });
 
     return _sectionsComponents;
-  }, [content, options, parsers, joiners, onContent, decorators, handlers, sectionIndex]);
+  }, [sectionsContent, options, parsers, joiners, decorators, handlers, sectionIndex]);
 
   let documentProps = { content, ...props };
 
-  if (options.preview) documentProps.className = 'preview';
-
   return (
-    <>
-      {components.document({ ...documentProps, children: sectionsComponents })}
-    </>
+    <div className={options.preview ? 'preview' : ''}>
+      <Document {...documentProps}>
+        {sectionsComponents}
+      </Document>
+    </div>
   );
 };
 

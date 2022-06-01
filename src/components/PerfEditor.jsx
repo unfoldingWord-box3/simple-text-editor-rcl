@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { segmenter } from '../helpers/segmenter';
 import EditableContent from './EditableContent';
 
 import './Perf.css';
@@ -31,13 +30,11 @@ export default function PerfEditor({
   const options = { returnHtml: true, ..._options };
 
   const parsers = {
-    section: (_content) => {
+    section: () => {
       let sections = [];
       let queue = [];
-      const div = document.createElement("div");
-      div.innerHTML = _content;
 
-      Array.from(div.children, (block) => {
+      Array.from(divs.content().children, (block) => {
         const { type } = block.dataset;
         const isBlock = type === "block";
 

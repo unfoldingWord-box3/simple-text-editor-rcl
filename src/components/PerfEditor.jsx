@@ -12,7 +12,7 @@ import './Perf.css';
 const parser = new DOMParser();
 
 export default function PerfEditor({
-  content: _content,
+  content,
   onContent: _onContent,
   options: _options,
   components: _components,
@@ -21,7 +21,7 @@ export default function PerfEditor({
   decorators: _decorators,
   ...props
 }) {
-  const doc = parser.parseFromString(_content, 'text/html');
+  const doc = parser.parseFromString(content, 'text/html');
   // parse the full content by divs for rendering
   const divs = {
     sequence: () => doc.getElementById("sequence"),
@@ -30,7 +30,7 @@ export default function PerfEditor({
 
   const options = { returnHtml: true, ..._options };
 
-  const preParsers = {
+  const parsers = {
     section: (_content) => {
       let sections = [];
       let queue = [];
@@ -82,33 +82,10 @@ export default function PerfEditor({
     block: (_content) => {
       const div = document.createElement("div");
       div.innerHTML = _content;
-      // const blocks = [...div.children].map(block => block.outerHTML);
       const blocks = Array.from(div.children, (block) => block.outerHTML);
       return blocks;
     },
     ..._parsers
-  };
-
-  let sections;
-
-  if (options.sectionable) {
-    sections = preParsers.section(divs.content().innerHTML);
-  } else {
-    sections = [divs.content().innerHTML];
-  };
-
-  if (options.blockable) {
-    sections = sections.map((section) => {
-      const blocks = options.blockable && preParsers.block(section).join('😭');
-      return blocks || section;
-    });
-  };
-
-  const content = sections.join('💩');
-
-  const parsers = {
-    section: (text) => text.split('💩'),
-    block: (text) => text.split('😭'),
   };
 
   const components = {
@@ -149,7 +126,7 @@ export default function PerfEditor({
   };
 
   const perfProps = {
-    content,
+    content: divs.content().innerHTML,
     onContent,
     options,
     components,

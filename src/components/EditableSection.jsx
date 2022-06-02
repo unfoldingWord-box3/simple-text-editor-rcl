@@ -17,7 +17,7 @@ const DEFAULT_PROPS = {
   components: {
     section: ({ show, children, dir, ...props }) => (<div className={'section ' + dir} dir={dir} {...props}>{children}</div>),
     sectionHeading: ({ show, content, ...props }) => (<h2 className='sectionHeading' {...props}>{content}</h2>),
-    sectionBody: ({ children, ...props }) => (<div className='sectionBody' {...props}>{children}</div>),
+    sectionBody: ({ children, show, ...props }) => (<div className='sectionBody' {...props}>{children}</div>),
   },
   handlers: {
     onBlockClick: ({ content, index }) => { console.warn('EditableSection.onBlockClick({content, index}) not provided.\n\n', index); },
@@ -73,6 +73,7 @@ export default function EditableSection({
           onContent: (_block) => { onBlockEdit(_block, _index); },
           onClick: (event) => { onBlockClick({ content: blockContent, index: _index, element: event.target }); },
           decorators,
+          index: _index,
         };
         return <EditableBlock key={_index} {...blockProps} />;
       });
@@ -81,19 +82,15 @@ export default function EditableSection({
     return _blockComponents;
   }, [blocksContent, components, options, onBlockClick, onBlockEdit, decorators]);
 
-  const component = useDeepCompareMemo(() => (
-    <Section {...{ dir, show, index }}>
+  return (
+    <Section key={index} {...{ dir, show, index }}>
       {options.sectionable && (
-        <SectionHeading {...{ show, dir, style: headingStyle, onClick: onShow, content, index }} data-test-id='sectionHeading' />
+        <SectionHeading key="0" {...{ show, dir, style: headingStyle, onClick: onShow, content, index }} data-test-id='sectionHeading' />
       )}
-      <SectionBody {...{ show, dir, index }}>
+      <SectionBody key="1" {...{ show, dir, index }}>
         {blockComponents}
       </SectionBody>
     </Section>
-  ), [dir, show, options.sectionable, blockComponents, onShow, content, index]);
-
-  return (
-    <>{component}</>
   );
 };
 

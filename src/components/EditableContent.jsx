@@ -87,8 +87,8 @@ export default function EditableContent({
   let documentProps = { content, ...props };
 
   return (
-    <div className={options.preview ? 'preview' : ''}>
-      <Document {...documentProps}>
+    <div key="1" className={options.preview ? 'preview' : ''}>
+      <Document key="1" {...documentProps}>
         {sectionsComponents}
       </Document>
     </div>

@@ -134,8 +134,8 @@ export default function PerfEditor({
   };
 
   return (
-    <div className='perf'>
-      <EditableContent {...perfProps} />
+    <div className='perf' key="1">
+      <EditableContent key="1" {...perfProps} />
     </div>
   );
 };

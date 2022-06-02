@@ -16,8 +16,7 @@ If you would like to contribute an example implementation using TailwindCSS plea
 This example shows the bare minimum use case and uses default components to render the editor.
 
 ```js
-import {useState} from 'react';
-import { loremIpsumBook } from 'lorem-ipsum-usfm';
+import {useState, useEffect} from 'react';
 
 import {perfHtml} from '../data/perf-html.js';
 
@@ -35,16 +34,16 @@ function Component () {
   const onPreview = () => { setPreview(!preview); };
 
   const onSectionClick = ({content: _content, index}) => {
-    console.log(index, _content);
+    // console.log(index, _content);
     setSectionIndex(index);
   };
 
   const onBlockClick = ({content: _content, index, element}) => {
-    console.log(element.dataset.target);
+    // console.log(element.dataset.target);
   };
 
   const onContent = (_content) => {
-    console.log(_content);
+    console.log('content changed!');
     setContent(_content);
   };
 
@@ -65,20 +64,22 @@ function Component () {
   };
 
   const buttons = (
-    <>
+    <div className="buttons">
       <button style={(sectionable ? {borderStyle: 'inset'} : {})} onClick={onSectionable}>Sectionable</button>
       <button style={(blockable ? {borderStyle: 'inset'} : {})} onClick={onBlockable}>Blockable</button>
       <button style={(editable ? {borderStyle: 'inset'} : {})} onClick={onEditable}>Editable</button>
       <button style={(preview ? {borderStyle: 'inset'} : {})} onClick={onPreview}>Preview</button>
-    </>
+    </div>
   );
 
-  return (<>
-    {buttons}
-    <PerfEditor {...props} />
-    {buttons}
-  </>);
+  return (
+    <div key="1">
+      {buttons}
+      <PerfEditor key="1" {...props} />
+      {buttons}
+    </div>
+  );
 };
 
-<Component />;
+<Component key="1" />;
 ```

@@ -22,9 +22,11 @@ export default function EditableBlock({
   onClick,
   components: _components,
   options,
+  index,
   ...props
 }) {
   const components = { ...DEFAULT_PROPS.components, ..._components };
+  const { block: Block } = components || {};
 
   const editableBlockProps = useEditableBlockProps({ content, onContent, decorators, options })
 
@@ -37,9 +39,7 @@ export default function EditableBlock({
   };
 
   return (
-    <>
-      {components.block(editorProps)}
-    </>
+    <Block key={index} {...editorProps} />
   );
 };
 

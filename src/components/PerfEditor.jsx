@@ -10,6 +10,19 @@ import './Perf.css';
 
 const parser = new DOMParser();
 
+const DEFAULT_PROPS = {
+  decorators: {
+    header: [/\\([sr])((\n|.|$)+?)(?=\\[cspvr]|$)/g, '<div data-type="graft" data-new="true" class="block heading $1">$2</div>'],
+    chapter: [/\\c\s+(\d*)/g, '<span class="chapter">$1</span>'],
+    verses: [/\\v\s+(\d*)/g, '<span class="verses">$1</span>'],
+    padding: [/<\/span>/g, "</span>\u200B"],
+  },
+  joiners: {
+    section: '',
+    block: '',
+  },
+};
+
 export default function PerfEditor({
   content,
   onContent: _onContent,
@@ -20,6 +33,9 @@ export default function PerfEditor({
   decorators: _decorators,
   ...props
 }) {
+  const decorators = { ...DEFAULT_PROPS.decorators, ..._decorators };
+  const joiners = { ...DEFAULT_PROPS.joiners, ..._joiners };
+
   const doc = parser.parseFromString(content, 'text/html');
   // parse the full content by divs for rendering
   const divs = {
@@ -104,22 +120,13 @@ export default function PerfEditor({
     ..._components
   };
 
-  const joiners = {
-    section: '',
-    block: '',
-    ..._joiners
-  };
-
-  const decorators = {
-    chapter: [/\\c\s+(\d*)/g, '<span class="chapter">$1</span>'],
-    verses: [/\\v\s+(\d*)/g, '<span class="verses">$1</span>'],
-    ..._decorators,
-  };
-
   const onContent = (_content) => {
-    divs.content().innerHTML = _content;
-    const __content = divs.sequence().outerHTML;
-    _onContent(__content);
+    let newContent = _content.replaceAll('\u200B', '').replaceAll('\n', '\n    ');
+    const openSequenceTag = divs.sequence().outerHTML.slice(0, divs.sequence().outerHTML.indexOf(divs.sequence().innerHTML));
+    const openContentTag = divs.content().outerHTML.slice(0, divs.content().outerHTML.indexOf(divs.content().innerHTML));
+    newContent = `${openSequenceTag}\n  ${openContentTag}\n    ${_content}\n  </div>\n</div>`;
+
+    _onContent(newContent);
   };
 
   const perfProps = {

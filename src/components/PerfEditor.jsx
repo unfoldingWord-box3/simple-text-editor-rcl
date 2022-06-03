@@ -124,7 +124,7 @@ export default function PerfEditor({
     let newContent = _content.replaceAll('\u200B', '').replaceAll('\n', '\n    ');
     const openSequenceTag = divs.sequence().outerHTML.slice(0, divs.sequence().outerHTML.indexOf(divs.sequence().innerHTML));
     const openContentTag = divs.content().outerHTML.slice(0, divs.content().outerHTML.indexOf(divs.content().innerHTML));
-    newContent = `${openSequenceTag}\n  ${openContentTag}\n    ${_content}\n  </div>\n</div>`;
+    newContent = `${openSequenceTag}\n  ${openContentTag}\n    ${newContent}\n  </div>\n</div>`;
 
     _onContent(newContent);
   };

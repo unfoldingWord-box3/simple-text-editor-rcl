@@ -61,6 +61,7 @@ function Component () {
       onBlockClick,
     },
     sectionIndex,
+    verbose: true,
   };
 
   const buttons = (

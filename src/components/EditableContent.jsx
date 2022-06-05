@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
@@ -43,12 +43,17 @@ export default function EditableContent({
   joiners,
   decorators,
   sectionIndex,
+  verbose = false,
   ...props
 }) {
-  const components = { ...DEFAULT_PROPS.components, ...props.components };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const components = useMemo(() => ({ ...DEFAULT_PROPS.components, ...props.components }), []); // without empty dep for useMemo, components rerender from scratch every time.
   const { document: Document } = components;
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (verbose) console.log('EditableContent First Render'); }, []);
 
   const sectionsContent = useParseSectionsContent({ content, parsers, options })
 
@@ -77,6 +82,7 @@ export default function EditableContent({
         handlers,
         decorators,
         dir,
+        verbose,
       };
       return <EditableSection key={index} {...sectionProps} />;
     });
@@ -84,14 +90,12 @@ export default function EditableContent({
     return _sectionsComponents;
   }, [sectionsContent, options, parsers, joiners, decorators, handlers, sectionIndex]);
 
-  let documentProps = { content, ...props };
+  const documentProps = { content, className: (options.preview ? 'preview' : ''), ...props };
 
   return (
-    <div key="1" className={options.preview ? 'preview' : ''}>
-      <Document key="1" {...documentProps}>
-        {sectionsComponents}
-      </Document>
-    </div>
+    <Document key="1" {...documentProps}>
+      {sectionsComponents}
+    </Document>
   );
 };
 

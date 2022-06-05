@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDeepCompareCallback, useDeepCompareMemo } from 'use-deep-compare';
 
@@ -45,12 +45,16 @@ export default function EditableSection({
   onShow,
   show,
   dir,
+  verbose = false,
   ...props
 }) {
   const components = { ...DEFAULT_PROPS.components, ...props.components };
   const { section: Section, sectionHeading: SectionHeading, sectionBody: SectionBody } = components || {};
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const { onBlockClick } = { ...DEFAULT_PROPS.handlers, ...props.handlers };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (verbose) console.log('EditableSection First Render'); }, []);
 
   const blocksContent = useParseBlocksContent({ content, parsers, options, show });
 
@@ -74,6 +78,7 @@ export default function EditableSection({
           onClick: (event) => { onBlockClick({ content: blockContent, index: _index, element: event.target }); },
           decorators,
           index: _index,
+          verbose,
         };
         return <EditableBlock key={_index} {...blockProps} />;
       });

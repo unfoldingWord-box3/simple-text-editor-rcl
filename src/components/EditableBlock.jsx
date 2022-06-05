@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import useEditableBlockProps from '../hooks/useEditableBlockProps';
@@ -23,10 +23,14 @@ export default function EditableBlock({
   components: _components,
   options,
   index,
+  verbose = false,
   ...props
 }) {
   const components = { ...DEFAULT_PROPS.components, ..._components };
   const { block: Block } = components || {};
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (verbose) console.log('EditableBlock First Render'); }, []);
 
   const editableBlockProps = useEditableBlockProps({ content, onContent, decorators, options })
 

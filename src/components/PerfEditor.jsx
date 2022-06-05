@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import EditableContent from './EditableContent';
@@ -23,6 +23,42 @@ const DEFAULT_PROPS = {
   },
 };
 
+function Document({ dataset = {}, children, content: _content, className, ...props }) {
+  useEffect(() => {
+    console.log('Document First Render');
+  }, []);
+
+  return (
+    <div id="sequence" className={className} {...dataset}>
+      <div id="content">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+function SectionHeading({ content, show, index, ...props }) {
+  useEffect(() => {
+    console.log('SectionHeading First Render');
+  }, []);
+
+  return (
+    <div className='sectionHeading' {...props}>
+      {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
+    </div>
+  );
+};
+
+function Block({ content, style, contentEditable, ..._props }) {
+  useEffect(() => {
+    console.log('Block First Render');
+  }, []);
+
+  return (
+    <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable} />
+  );
+};
+
 export default function PerfEditor({
   content,
   onContent: _onContent,
@@ -31,10 +67,14 @@ export default function PerfEditor({
   parsers: _parsers,
   joiners: _joiners,
   decorators: _decorators,
+  verbose = false,
   ...props
 }) {
   const decorators = { ...DEFAULT_PROPS.decorators, ..._decorators };
   const joiners = { ...DEFAULT_PROPS.joiners, ..._joiners };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (verbose) console.log('EditableBlock First Render'); }, []);
 
   const doc = parser.parseFromString(content, 'text/html');
   // parse the full content by divs for rendering
@@ -101,22 +141,12 @@ export default function PerfEditor({
     ..._parsers
   };
 
+  const sequenceDataset = divs.sequence()?.dataset;
+
   const components = {
-    document: ({ children, content: _content, className, ...props }) => (
-      <div id="sequence" className={className} {...divs.sequence()?.dataset || {}}>
-        <div id="content">
-          {children}
-        </div>
-      </div>
-    ),
-    sectionHeading: ({ content, show, index, ...props }) => (
-      <div className='sectionHeading' {...props}>
-        {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
-      </div>
-    ),
-    block: ({ content, style, contentEditable, ..._props }) => (
-      <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable} />
-    ),
+    document: (props) => Document({ dataset: sequenceDataset, ...props }),
+    sectionHeading: SectionHeading,
+    block: Block,
     ..._components
   };
 
@@ -135,6 +165,7 @@ export default function PerfEditor({
     parsers,
     joiners,
     decorators,
+    verbose,
     ...props
   };
 

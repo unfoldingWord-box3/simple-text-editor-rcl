@@ -24,6 +24,7 @@ const DEFAULT_PROPS = {
 };
 
 function Document({ dataset = {}, children, content: _content, className, verbose, ...props }) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (verbose) console.log('Document First Render'); }, []);
 
   return (

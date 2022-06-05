@@ -23,10 +23,8 @@ const DEFAULT_PROPS = {
   },
 };
 
-function Document({ dataset = {}, children, content: _content, className, ...props }) {
-  useEffect(() => {
-    console.log('Document First Render');
-  }, []);
+function Document({ dataset = {}, children, content: _content, className, verbose, ...props }) {
+  useEffect(() => { if (verbose) console.log('Document First Render'); }, []);
 
   return (
     <div id="sequence" className={className} {...dataset}>
@@ -144,7 +142,7 @@ export default function PerfEditor({
   const sequenceDataset = divs.sequence()?.dataset;
 
   const components = {
-    document: (props) => Document({ dataset: sequenceDataset, ...props }),
+    document: (props) => Document({ dataset: sequenceDataset, verbose, ...props }),
     sectionHeading: SectionHeading,
     block: Block,
     ..._components

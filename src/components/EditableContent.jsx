@@ -39,6 +39,7 @@ const DEFAULT_PROPS = {
 export default function EditableContent({
   content,
   onContent,
+  components: _components,
   parsers,
   joiners,
   decorators,
@@ -47,7 +48,7 @@ export default function EditableContent({
   ...props
 }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const components = useMemo(() => ({ ...DEFAULT_PROPS.components, ...props.components }), []); // without empty dep for useMemo, components rerender from scratch every time.
+  const components = useMemo(() => ({ ...DEFAULT_PROPS.components, ..._components }), []); // without empty dep for useMemo, components rerender from scratch every time.
   const { document: Document } = components;
   const options = { ...DEFAULT_PROPS.options, ...props.options };
   const handlers = { ...DEFAULT_PROPS.handlers, ...props.handlers };

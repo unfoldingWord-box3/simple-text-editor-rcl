@@ -27,7 +27,7 @@ export default function useEditableBlockProps({
     let ___html = content;
     const decorators = !returnHtml ?
       { embededHtml: [/</g, "&lt;"], ..._decorators } :
-      _decorators;
+      { spanPadding: [/<\/span>/g, "</span>\u200B"], ..._decorators };
 
     if (Object.keys(decorators).length > 0) {
       Object.keys(decorators).forEach((name) => {
@@ -40,8 +40,9 @@ export default function useEditableBlockProps({
 
   const onBlur = useCallback((event) => {
     const _content = returnHtml ?
-      event.target.innerHTML :
-      event.target.textContent.replace(/&lt;/g, '<');
+      event.target.innerHTML.replaceAll('\u200B', '') :
+      event.target.textContent.replaceAll(/&lt;/g, '<');
+    ;
 
     if (content !== _content) onContent(_content);
   }, [returnHtml, content, onContent]);

@@ -15,7 +15,6 @@ const DEFAULT_PROPS = {
     header: [/\\([sr])((\n|.|$)+?)(?=\\[cspvr]|$)/g, '<div data-type="graft" data-new="true" class="block heading $1">$2</div>'],
     chapter: [/\\c\s+(\d*)/g, '<span class="chapter">$1</span>'],
     verses: [/\\v\s+(\d*)/g, '<span class="verses">$1</span>'],
-    padding: [/<\/span>/g, "</span>\u200B"],
   },
   joiners: {
     section: '',
@@ -24,8 +23,13 @@ const DEFAULT_PROPS = {
 };
 
 function Document({ dataset = {}, children, content: _content, className, verbose, ...props }) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { if (verbose) console.log('Document First Render'); }, []);
+  useEffect(() => {
+    if (verbose) console.log('Document First Render');
+    return (() => {
+      if (verbose) console.log('Document Unmount');
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div id="sequence" className={className} {...dataset}>
@@ -72,8 +76,13 @@ export default function PerfEditor({
   const decorators = { ...DEFAULT_PROPS.decorators, ..._decorators };
   const joiners = { ...DEFAULT_PROPS.joiners, ..._joiners };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { if (verbose) console.log('EditableBlock First Render'); }, []);
+  useEffect(() => {
+    if (verbose) console.log('PerfEditor First Render');
+    return (() => {
+      if (verbose) console.log('PerfEditor Unmount');
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const doc = parser.parseFromString(content, 'text/html');
   // parse the full content by divs for rendering
@@ -150,9 +159,7 @@ export default function PerfEditor({
   };
 
   const onContent = (_content) => {
-    let newContent = _content.replaceAll('\u200B', '');
-    divs.content().innerHTML = newContent;
-
+    divs.content().innerHTML = _content;
     _onContent(divs.sequence().outerHTML);
   };
 

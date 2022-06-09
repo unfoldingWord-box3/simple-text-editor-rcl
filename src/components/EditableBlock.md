@@ -20,11 +20,11 @@ const style = {
 }
 ;
 const components = {
-  block: ({ content, ...props }) => (<p {...props}></p>),
+  block: ({ content, verbose, ...props }) => (<p {...props}></p>),
 };
 
 const decorators = {
-  whitespace: [/(\s)/g, '<span style="border: 1px solid lightblue; background: lightblue">$1</span>'],
+  // whitespace: [/(\s)/g, '<span style="border: 1px solid lightblue; background: lightblue">$1</span>'],
   // words: [/>(\w+)</g, '<span style="border: 1px solid lightyellow; background: lightyellow">$1</span>'],
 }
 

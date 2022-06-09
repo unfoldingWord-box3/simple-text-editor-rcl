@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-.perf .title,
+.perf .title, .perf .block.mt, .perf .graft.title,
 .perf div[sequencetype="title"] .block {
   font-weight: 700;
   font-size: 2em;

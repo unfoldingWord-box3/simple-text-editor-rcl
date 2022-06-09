@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDeepCompareMemo } from 'use-deep-compare';
@@ -23,6 +23,8 @@ export default function useEditableBlockProps({
 }) {
   const { returnHtml, editable } = { ...DEFAULT_PROPS.options, ..._options };
 
+  const [editIndex, setEditIndex] = useState(0);
+
   const __html = useDeepCompareMemo(() => {
     let ___html = content;
     const decorators = !returnHtml ?
@@ -39,20 +41,27 @@ export default function useEditableBlockProps({
   }, [content, returnHtml, _decorators]);
 
   const onBlur = useCallback((event) => {
-    const _content = returnHtml ?
-      event.target.innerHTML.replaceAll('\u200B', '') :
-      event.target.textContent.replaceAll(/&lt;/g, '<');
-    ;
+    let _content;
+
+    if (returnHtml) {
+      _content = event.target.innerHTML.replaceAll('\u200B', '');
+    } else {
+      const div = document.createElement('div');
+      div.innerHTML = event.target.innerHTML.replaceAll('<div', '\n<div');
+      _content = div.textContent.replaceAll(/&lt;/g, '<');
+    };
 
     if (content !== _content) onContent(_content);
-  }, [returnHtml, content, onContent]);
+    setEditIndex(editIndex + 1)
+  }, [returnHtml, content, onContent, editIndex]);
 
   const props = useDeepCompareMemo(() => ({
+    editIndex,
     contentEditable: editable,
     dangerouslySetInnerHTML: { __html },
     suppressContentEditableWarning: true,
     onBlur,
-  }), [editable, __html, onBlur]);
+  }), [editable, __html, onBlur, editIndex]);
 
   return props;
 };

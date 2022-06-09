@@ -85,7 +85,7 @@ UsfmEditor.defaultProps = {
         )}
       </div>
     ),
-    block: ({ content, ..._props }) => (
+    block: ({ content, verbose, ..._props }) => (
       <><div className='block' {..._props} style={{ width: '100%', whiteSpace: 'pre-wrap' }} /></>
     ),
   },

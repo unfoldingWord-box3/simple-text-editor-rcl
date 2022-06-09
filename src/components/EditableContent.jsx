@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
@@ -154,6 +153,8 @@ EditableContent.propTypes = {
   }),
   /** Index of section to be show, for app to manage state. -1 to show all. */
   sectionIndex: PropTypes.number,
+  /** Flag to enable logging  */
+  verbose: PropTypes.bool,
 };
 
 EditableContent.defaultProps = DEFAULT_PROPS;

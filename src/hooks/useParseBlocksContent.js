@@ -24,7 +24,6 @@ export default function useParseBlocksContent({
   const blocksContent = useMemo(() => {
     let _blocksContent = [];
     _blocksContent = show && (blockable ? blockParser(content) : [content]);
-
     return _blocksContent;
   }, [show, blockable, blockParser, content]);
 

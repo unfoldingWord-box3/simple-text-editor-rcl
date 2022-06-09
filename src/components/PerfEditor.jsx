@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -12,7 +11,6 @@ const parser = new DOMParser();
 
 const DEFAULT_PROPS = {
   decorators: {
-    header: [/\\([sr])((\n|.|$)+?)(?=\\[cspvr]|$)/g, '<div data-type="graft" data-new="true" class="block heading $1">$2</div>'],
     chapter: [/\\c\s+(\d*)/g, '<span class="chapter">$1</span>'],
     verses: [/\\v\s+(\d*)/g, '<span class="verses">$1</span>'],
   },
@@ -22,11 +20,12 @@ const DEFAULT_PROPS = {
   },
 };
 
+// eslint-disable-next-line react/prop-types
 function Document({ dataset = {}, children, content: _content, className, verbose, ...props }) {
   useEffect(() => {
-    if (verbose) console.log('Document First Render');
+    if (verbose) console.log('Document: Mount/First Render');
     return (() => {
-      if (verbose) console.log('Document Unmount');
+      if (verbose) console.log('Document: UnMount/Destroyed');
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -40,9 +39,14 @@ function Document({ dataset = {}, children, content: _content, className, verbos
   );
 };
 
-function SectionHeading({ content, show, index, ...props }) {
+// eslint-disable-next-line react/prop-types
+function SectionHeading({ content, show, index, verbose, ...props }) {
   useEffect(() => {
-    console.log('SectionHeading First Render');
+    if (verbose) console.log('SectionHeading: Mount/First Render', index);
+    return (() => {
+      if (verbose) console.log('SectionHeading: UnMount/Destroyed', index);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -52,13 +56,21 @@ function SectionHeading({ content, show, index, ...props }) {
   );
 };
 
-function Block({ content, style, contentEditable, ..._props }) {
+// eslint-disable-next-line react/prop-types
+function Block({ content, style, contentEditable, index, verbose, ..._props }) {
   useEffect(() => {
-    console.log('Block First Render');
+    if (verbose) console.log('Block: Mount/First Render', index);
+    return (() => {
+      if (verbose) console.log('Block: UnMount/Destroyed', index);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react/prop-types
+  const editable = !!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable;
+
   return (
-    <div {..._props} contentEditable={!!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable} />
+    <div {..._props} contentEditable={editable} />
   );
 };
 
@@ -236,8 +248,8 @@ PerfEditor.propTypes = {
   }),
   /** Index of section to be show, for app to manage state. -1 to show all. */
   sectionIndex: PropTypes.number,
+  /** Flag to enable logging  */
+  verbose: PropTypes.bool,
 };
 
-PerfEditor.defaultProps = {
-
-};
+PerfEditor.defaultProps = DEFAULT_PROPS;

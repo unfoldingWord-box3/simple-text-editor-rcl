@@ -80,8 +80,8 @@ MarkdownEditor.defaultProps = {
         <span className='content'>{content.replace(/^\n+/, '').split('\n')[0]}</span>
       </div>
     ),
-    block: (_props) => (
-      <div className='block' {..._props} style={{ width: '100%', whiteSpace: 'pre-wrap' }} />
+    block: ({ verbose, ...props }) => (
+      <div className='block' {...props} style={{ width: '100%', whiteSpace: 'pre-wrap' }} />
     ),
   },
   parsers: {

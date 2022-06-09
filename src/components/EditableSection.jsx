@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -74,13 +73,13 @@ export default function EditableSection({
           content: blockContent,
           components,
           options,
-          onContent: (_block) => { onBlockEdit(_block, _index); },
+          onContent: (_blockContent) => { onBlockEdit(_blockContent, _index); },
           onClick: (event) => { onBlockClick({ content: blockContent, index: _index, element: event.target }); },
           decorators,
           index: _index,
           verbose,
         };
-        return <EditableBlock key={_index} {...blockProps} />;
+        return <EditableBlock key={_index + blockContent} {...blockProps} />;
       });
     };
 
@@ -88,11 +87,11 @@ export default function EditableSection({
   }, [blocksContent, components, options, onBlockClick, onBlockEdit, decorators]);
 
   return (
-    <Section key={index} {...{ dir, show, index }}>
+    <Section {...{ dir, show, index }}>
       {options.sectionable && (
-        <SectionHeading key="0" {...{ show, dir, style: headingStyle, onClick: onShow, content, index }} data-test-id='sectionHeading' />
+        <SectionHeading {...{ show, dir, style: headingStyle, onClick: onShow, content, index }} data-test-id='sectionHeading' />
       )}
-      <SectionBody key="1" {...{ show, dir, index }}>
+      <SectionBody {...{ show, dir, index }}>
         {blockComponents}
       </SectionBody>
     </Section>
@@ -143,6 +142,16 @@ EditableSection.propTypes = {
     /** Callback triggered on Block click, provides block content and index. */
     onBlockClick: PropTypes.func,
   }),
+  /** Index to use and reference for rendering */
+  index: PropTypes.number,
+  /** Flag to enable logging  */
+  verbose: PropTypes.bool,
+  /** Flag to render section or not */
+  show: PropTypes.bool,
+  /** Callback to change show value */
+  onShow: PropTypes.func,
+  /** Override text direction */
+  dir: PropTypes.string,
 };
 
 EditableSection.defaultProps = DEFAULT_PROPS;

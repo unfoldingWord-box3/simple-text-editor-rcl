@@ -3,7 +3,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import EditableContent from './EditableContent';
+import { EditableContent } from 'ste-react-core';
+
+import blockParser from '../helpers/blockParser';
+import sectionParser from '../helpers/sectionParser';
+
+import Document from './Document';
+import SectionHeading from './SectionHeading';
+import Block from './Block';
 
 import './Perf.css';
 
@@ -20,61 +27,7 @@ const DEFAULT_PROPS = {
   },
 };
 
-// eslint-disable-next-line react/prop-types
-function Document({ dataset = {}, children, content: _content, className, verbose, ...props }) {
-  useEffect(() => {
-    if (verbose) console.log('Document: Mount/First Render');
-    return (() => {
-      if (verbose) console.log('Document: UnMount/Destroyed');
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <div id="sequence" className={className} {...dataset}>
-      <div id="content">
-        {children}
-      </div>
-    </div>
-  );
-};
-
-// eslint-disable-next-line react/prop-types
-function SectionHeading({ content, show, index, verbose, ...props }) {
-  useEffect(() => {
-    if (verbose) console.log('SectionHeading: Mount/First Render', index);
-    return (() => {
-      if (verbose) console.log('SectionHeading: UnMount/Destroyed', index);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <div className='sectionHeading' {...props}>
-      {show ? '' : <span className='expand'>...{index ? `Chapter ${index}` : 'Title & Introduction'}...</span>}
-    </div>
-  );
-};
-
-// eslint-disable-next-line react/prop-types
-function Block({ content, style, contentEditable, index, verbose, ..._props }) {
-  useEffect(() => {
-    if (verbose) console.log('Block: Mount/First Render', index);
-    return (() => {
-      if (verbose) console.log('Block: UnMount/Destroyed', index);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // eslint-disable-next-line react/prop-types
-  const editable = !!content.match(/class="[\w\s]*block[\w\s]*"/) && contentEditable;
-
-  return (
-    <div {..._props} contentEditable={editable} />
-  );
-};
-
-export default function PerfEditor({
+export default function PerfHtmlEditor({
   content,
   onContent: _onContent,
   options: _options,
@@ -106,58 +59,8 @@ export default function PerfEditor({
   const options = { returnHtml: true, ..._options };
 
   const parsers = {
-    section: () => {
-      let sections = [];
-      let queue = [];
-
-      Array.from(divs.content().children, (block) => {
-        const { type } = block.dataset;
-        const isBlock = type === "block";
-
-        if (isBlock) {
-          const isChapter = block.firstChild?.dataset?.type === "chapter";
-
-          if (isChapter) {
-            // remove last grafts preceding chapter
-            let checkLastInQueue = true;
-            let headerQueue = [];
-
-            while (checkLastInQueue) {
-              if (queue.length > 0) {
-                const last = queue.pop();
-                const isGraft = last.dataset.type === "graft";
-                const isTitle = [...last.classList].includes("title");
-                const isIntro = [...last.classList].includes("introduction");
-
-                if (isGraft && !isTitle && !isIntro) {
-                  headerQueue = [...headerQueue, last];
-                } else {
-                  queue = [...queue, last];
-                  checkLastInQueue = false;
-                }
-              } else {
-                checkLastInQueue = false;
-              }
-            };
-            sections = [...sections, queue];
-            queue = [...headerQueue.reverse()];
-          };
-        };
-
-        queue = [...queue, block];
-        return true;
-      });
-      sections = [...sections, queue];
-      queue = [];
-
-      return sections.map(section => section.map(block => block.outerHTML).join('\n'));
-    },
-    block: (_content) => {
-      const div = document.createElement("div");
-      div.innerHTML = _content;
-      const blocks = Array.from(div.children, (block) => block.outerHTML);
-      return blocks;
-    },
+    section: sectionParser({ divs }),
+    block: blockParser,
     ..._parsers
   };
 
@@ -194,7 +97,7 @@ export default function PerfEditor({
   );
 };
 
-PerfEditor.propTypes = {
+PerfHtmlEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   content: PropTypes.string.isRequired,
   /** Function triggered on edit */
@@ -252,4 +155,4 @@ PerfEditor.propTypes = {
   verbose: PropTypes.bool,
 };
 
-PerfEditor.defaultProps = DEFAULT_PROPS;
+PerfHtmlEditor.defaultProps = DEFAULT_PROPS;

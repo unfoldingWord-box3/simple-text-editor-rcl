@@ -9,10 +9,10 @@ const {
 module.exports = {
   usageMode: 'expand',
   exampleMode: 'expand',
-  moduleAliases: { 'simple-text-editor-rcl': path.resolve(__dirname, 'src') },
+  moduleAliases: { 'ste-react-perf-html': path.resolve(__dirname, 'src') },
   getComponentPathLine: componentPath => {
-    const name = path.basename(componentPath, '.js');
-    return `import { ${name} } from 'simple-text-editor-rcl';`;
+    const name = path.basename(componentPath, '.jsx');
+    return `import { ${name} } from 'ste-react-perf-html';`;
   },
   title: `${upperFirst(camelCase(name))} v${version}`,
   ribbon: {

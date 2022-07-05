@@ -11383,6 +11383,13 @@ statuses@2.0.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
+ste-react-core@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ste-react-core/-/ste-react-core-7.0.0.tgz#0d93908d68dc2b43553cefbd230bbb780b4b2aa0"
+  integrity sha512-ebPwY8Pit/RC2Ou52izZJ1WbkDHAvK768mkStJOSxwLs5Jm85g9iiP0XCYlC4f/YCHa9LVfhbOun+OuCT3ec6A==
+  dependencies:
+    use-deep-compare "^1.1.0"
+
 stream-browserify@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-2.0.2.tgz#87521d38a44aa7ee91ce1cd2a47df0cb49dd660b"

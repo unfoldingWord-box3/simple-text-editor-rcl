@@ -1,16 +1,16 @@
 {
-  "name": "simple-text-editor-rcl",
+  "name": "ste-react-perf-html",
   "description": "A React Component Library for simple text editing.",
-  "version": "6.16.0",
+  "version": "7.0.0",
   "private": false,
-  "homepage": "https://simple-text-editor-rcl.netlify.app/",
+  "homepage": "https://ste-react-perf-html.netlify.app/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unfoldingWord-box3/simple-text-editor-rcl.git"
+    "url": "https://github.com/unfoldingWord-box3/ste-react-perf-html.git"
   },
   "dependencies": {
-    "use-deep-compare": "^1.1.0"
+    "ste-react-core": "^7.0.0"
   },
   "scripts": {
     "start": "yarn && styleguidist server",

@@ -1,4 +1,4 @@
-# PerfEditor
+# PerfHTMLEditor
 
 PerfEditor is and editor for the PERF (Proskomma Editor Ready Format) based on the EditableContent by overriding its default props. 
 
@@ -12,7 +12,7 @@ To see a reference implementation Proof of Concept using MaterialUI see:
 ## Example 2 (Tailwind CSS)
 If you would like to contribute an example implementation using TailwindCSS please do so on codesandbox.io and submit a PR with links right here.
 
-## Exampe 3 (Bare Minimum)
+## Example 3 (Bare Minimum)
 This example shows the bare minimum use case and uses default components to render the editor.
 
 ```js
@@ -76,7 +76,7 @@ function Component () {
   return (
     <div key="1">
       {buttons}
-      <PerfEditor key="1" {...props} />
+      <PerfHtmlEditor key="1" {...props} />
       {buttons}
     </div>
   );

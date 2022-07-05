@@ -32,7 +32,7 @@ export default function EditableBlock({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (verbose) console.log('EditableBlock First Render'); }, []);
 
-  const { editIndex, ...editableBlockProps } = useEditableBlockProps({ content, onContent, decorators, options });
+  const { editIndex, save, ...editableBlockProps } = useEditableBlockProps({ content, onContent, decorators, options });
 
   const blockProps = {
     content,
@@ -45,7 +45,7 @@ export default function EditableBlock({
   };
 
   return (
-    <EditableContextMenu>
+    <EditableContextMenu components={components} save={save}>
       <Block key={editIndex + content} {...blockProps} />
     </EditableContextMenu>
   );

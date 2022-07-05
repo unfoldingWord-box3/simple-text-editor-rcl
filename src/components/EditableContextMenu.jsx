@@ -35,7 +35,11 @@ const DEFAULT_PROPS = {
   ],
 };
 
-export default function EditableContextMenu({ children }) {
+export default function EditableContextMenu({
+  components: _components,
+  save,
+  children,
+}) {
   const defaultState = useMemo(() => ({
     menuPosition: undefined,
     selection: undefined,
@@ -47,7 +51,7 @@ export default function EditableContextMenu({ children }) {
   const open = !!state.menuPosition;
 
   const actions = [...DEFAULT_PROPS.actions];
-  const components = { ...DEFAULT_PROPS.components };
+  const components = { ...DEFAULT_PROPS.components, _components };
   const { contextMenu: ContextMenu, contextMenuItem: ContextMenuItem } = components;
 
   const handleContextMenu = (event) => {
@@ -97,6 +101,8 @@ export default function EditableContextMenu({ children }) {
             element.classList.remove(element.dataset.subtype);
             element.dataset.subtype = action.subtype;
             element.classList.add(action.subtype);
+            const _element = element.closest('div[contenteditable]');
+            save(_element);
           };
         }
 
@@ -139,5 +145,15 @@ export default function EditableContextMenu({ children }) {
 };
 
 EditableContextMenu.propTypes = {
+  /** Components to wrap all sections of the document */
+  components: PropTypes.shape({
+    /** Component to render the contextMenu */
+    contextMenu: PropTypes.func,
+    /** Component to render the contextMenuItems */
+    contextMenuItem: PropTypes.func,
+  }),
+  save: PropTypes.func.isRequired,
   children: PropTypes.any.isRequired,
 };
+
+EditableContextMenu.defaultProps = DEFAULT_PROPS;

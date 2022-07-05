@@ -1,5 +1,5 @@
-import PerfHtmlEditor from "./components/PerfHtmlEditor";
+import SequenceEditor from "./components/SequenceEditor";
 
 export {
-  PerfHtmlEditor,
+  SequenceEditor,
 };

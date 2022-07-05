@@ -27,7 +27,7 @@ const DEFAULT_PROPS = {
   },
 };
 
-export default function PerfHtmlEditor({
+export default function SequenceEditor({
   content,
   onContent: _onContent,
   options: _options,
@@ -97,7 +97,7 @@ export default function PerfHtmlEditor({
   );
 };
 
-PerfHtmlEditor.propTypes = {
+SequenceEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   content: PropTypes.string.isRequired,
   /** Function triggered on edit */
@@ -155,4 +155,4 @@ PerfHtmlEditor.propTypes = {
   verbose: PropTypes.bool,
 };
 
-PerfHtmlEditor.defaultProps = DEFAULT_PROPS;
+SequenceEditor.defaultProps = DEFAULT_PROPS;

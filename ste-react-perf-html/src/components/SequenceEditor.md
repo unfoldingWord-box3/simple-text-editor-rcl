@@ -1,4 +1,4 @@
-# PerfHTMLEditor
+# SequenceEditor
 
 PerfEditor is and editor for the PERF (Proskomma Editor Ready Format) based on the EditableContent by overriding its default props. 
 
@@ -76,7 +76,7 @@ function Component () {
   return (
     <div key="1">
       {buttons}
-      <PerfHtmlEditor key="1" {...props} />
+      <SequenceEditor key="1" {...props} />
       {buttons}
     </div>
   );

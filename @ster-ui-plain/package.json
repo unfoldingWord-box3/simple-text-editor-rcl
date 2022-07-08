@@ -1,17 +1,15 @@
 {
-  "name": "simple-text-editor-markdown",
-  "description": "A React Component Library for simple markdown editing.",
-  "version": "6.16.0",
+  "name": "@ster/ui-plain",
+  "description": "A React Component Library for simple text editing.",
+  "version": "7.0.0",
   "private": false,
-  "homepage": "https://simple-text-editor-markdown.netlify.app/",
+  "homepage": "https://ster-ui-plain.netlify.app/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unfoldingWord-box3/simple-text-editor-markdown.git"
+    "url": "https://github.com/unfoldingWord-box3/ster.git"
   },
-  "dependencies": {
-    "use-deep-compare": "^1.1.0"
-  },
+  "dependencies": {},
   "scripts": {
     "start": "yarn && styleguidist server",
     "build-dev": "styleguidist build",

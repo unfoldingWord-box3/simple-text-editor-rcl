@@ -9,10 +9,10 @@ const {
 module.exports = {
   usageMode: 'expand',
   exampleMode: 'expand',
-  moduleAliases: { 'ste-react-core': path.resolve(__dirname, 'src') },
+  moduleAliases: { 'ster-core': path.resolve(__dirname, 'src') },
   getComponentPathLine: componentPath => {
     const name = path.basename(componentPath, '.js');
-    return `import { ${name} } from 'ste-react-core';`;
+    return `import { ${name} } from 'ster-core';`;
   },
   title: `${upperFirst(camelCase(name))} v${version}`,
   ribbon: {

@@ -1,13 +1,13 @@
 {
-  "name": "ste-react-core",
-  "description": "A React Library for simple text editing.",
-  "version": "7.0.0",
+  "name": "@ster/usfm",
+  "description": "A React Component Library for simple USFM editing.",
+  "version": "6.16.0",
   "private": false,
-  "homepage": "https://ste-react-core.netlify.app/",
+  "homepage": "https://ster-usfm.netlify.app/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unfoldingWord-box3/simple-text-editor-react.git"
+    "url": "https://github.com/unfoldingWord-box3/ster.git"
   },
   "dependencies": {
     "use-deep-compare": "^1.1.0"
@@ -15,7 +15,7 @@
   "scripts": {
     "start": "yarn && styleguidist server",
     "build-dev": "styleguidist build",
-    "build": "./node_modules/.bin/babel src --out-dir build",
+    "build": "./node_modules/.bin/babel src --out-dir build && cp ./src/components/*.css ./build/components",
     "test": "react-scripts test",
     "prepublishOnly": "rm -fr ./build && yarn build"
   },
@@ -59,7 +59,6 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-test-selectors": "^2.0.3",
-    "lodash": "^4.17.21",
     "lorem-ipsum-usfm": "^0.3.1",
     "prettier": "^2.5.1",
     "react": "^17.0.2",

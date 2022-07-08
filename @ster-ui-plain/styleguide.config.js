@@ -9,10 +9,10 @@ const {
 module.exports = {
   usageMode: 'expand',
   exampleMode: 'expand',
-  moduleAliases: { 'ste-react-perf-html': path.resolve(__dirname, 'src') },
+  moduleAliases: { 'ster-perf-html': path.resolve(__dirname, 'src') },
   getComponentPathLine: componentPath => {
     const name = path.basename(componentPath, '.jsx');
-    return `import { ${name} } from 'ste-react-perf-html';`;
+    return `import { ${name} } from 'ster-perf-html';`;
   },
   title: `${upperFirst(camelCase(name))} v${version}`,
   ribbon: {

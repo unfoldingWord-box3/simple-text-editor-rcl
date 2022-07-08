@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 import { EditableContent } from 'ste-react-core';
 
-import blockParser from '../helpers/blockParser';
-import sectionParser from '../helpers/sectionParser';
+import blockParser from '../core/blockParser';
+import sectionParser from '../core/sectionParser';
 
 import Document from './Document';
 import SectionHeading from './SectionHeading';

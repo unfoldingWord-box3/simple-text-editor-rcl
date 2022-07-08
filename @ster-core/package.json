@@ -1,21 +1,21 @@
 {
-  "name": "ste-react-perf-html",
-  "description": "A React Component Library for simple text editing.",
+  "name": "@ster/core",
+  "description": "A React Library for simple text editing.",
   "version": "7.0.0",
   "private": false,
-  "homepage": "https://ste-react-perf-html.netlify.app/",
+  "homepage": "https://ster-core.netlify.app/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unfoldingWord-box3/simple-text-editor-react.git"
+    "url": "https://github.com/unfoldingWord-box3/ster.git"
   },
   "dependencies": {
-    "ste-react-core": "^7.0.0"
+    "use-deep-compare": "^1.1.0"
   },
   "scripts": {
     "start": "yarn && styleguidist server",
     "build-dev": "styleguidist build",
-    "build": "./node_modules/.bin/babel src --out-dir build && cp ./src/components/*.css ./build/components",
+    "build": "./node_modules/.bin/babel src --out-dir build",
     "test": "react-scripts test",
     "prepublishOnly": "rm -fr ./build && yarn build"
   },

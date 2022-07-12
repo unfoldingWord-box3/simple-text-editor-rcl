@@ -1,22 +1,44 @@
 const path = require('path');
+const webpack = require('webpack');
 const upperFirst = require('lodash/upperFirst');
 const camelCase = require('lodash/camelCase');
 
 const {
-  name, version, repository,
+  name: packageName, version, repository,
 } = require('./package.json');
 
 module.exports = {
   usageMode: 'expand',
   exampleMode: 'expand',
-  moduleAliases: { 'ster-perf-html': path.resolve(__dirname, 'src') },
+  moduleAliases: {},
   getComponentPathLine: componentPath => {
     const name = path.basename(componentPath, '.jsx');
-    return `import { ${name} } from 'ster-perf-html';`;
+    return `import { ${name} } from '${packageName}';`;
   },
-  title: `${upperFirst(camelCase(name))} v${version}`,
+  title: `${upperFirst(camelCase(packageName))} v${version}`,
   ribbon: {
     url: repository.url,
     text: 'View on GitHub',
   },
+  dangerouslyUpdateWebpackConfig(config) {
+    config.module.rules.push({
+      test: /.\.md$/,
+      type: "javascript/auto"
+    });
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /react-styleguidist\/lib\/loaders\/utils\/client\/requireInRuntime$/,
+        "react-styleguidist/lib/loaders/utils/client/requireInRuntime"
+      )
+    );
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /react-styleguidist\/lib\/loaders\/utils\/client\/evalInContext$/,
+        "react-styleguidist/lib/loaders/utils/client/evalInContext"
+      )
+    );
+    return config;
+  },
 };
+
+module.exports.moduleAliases[packageName] = path.resolve(__dirname, 'src');

@@ -3,6 +3,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    '@unfoldingword',
     'prettier',
   ],
   'parserOptions': {
@@ -10,6 +11,7 @@ module.exports = {
     'ecmaVersion': 12,
     'sourceType': 'module',
   },
+  'plugins': ['react'],
   'rules': {
     'react-hooks/rules-of-hooks': 'error',
     'react/jsx-tag-spacing': ['error'],

@@ -1,5 +1,5 @@
 {
-  "name": "ster-type-perf-html",
+  "name": "@ster/type-perf-html",
   "description": "A React Component Library for simple text editing.",
   "version": "7.0.0",
   "private": false,

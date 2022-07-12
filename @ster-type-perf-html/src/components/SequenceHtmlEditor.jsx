@@ -12,7 +12,7 @@ import Document from './Document';
 import SectionHeading from './SectionHeading';
 import Block from './Block';
 
-import './Perf.css';
+import './SequenceHtmlEditor.css';
 
 const parser = new DOMParser();
 
@@ -27,7 +27,7 @@ const DEFAULT_PROPS = {
   },
 };
 
-export default function SequenceEditor({
+export default function SequenceHtmlEditor({
   content,
   onContent: _onContent,
   options: _options,
@@ -97,7 +97,7 @@ export default function SequenceEditor({
   );
 };
 
-SequenceEditor.propTypes = {
+SequenceHtmlEditor.propTypes = {
   /** Text to be edited whether file, section or block */
   content: PropTypes.string.isRequired,
   /** Function triggered on edit */
@@ -155,4 +155,4 @@ SequenceEditor.propTypes = {
   verbose: PropTypes.bool,
 };
 
-SequenceEditor.defaultProps = DEFAULT_PROPS;
+SequenceHtmlEditor.defaultProps = DEFAULT_PROPS;

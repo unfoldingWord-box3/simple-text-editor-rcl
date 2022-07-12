@@ -5,12 +5,19 @@ The PerfHtml Editor expects input of a json structure that holds Html representa
 It navigates the Sequences and initiates a SequenceHtml editor for the main sequenceId.
 
 ```js
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
-import 
+import { SectionHeading } from '@ster/type-perf-html';
+
+import _perfHtml from '../data/jonah.perf.html.json';
+
+const components = {
+  sectionHeading: SectionHeading,
+}
 
 function Component () {
-  const [content, setContent] = useState(perfHtml);
+  const [perfHtml, setPerfHtml] = useState(_perfHtml);
+  const [sequenceIds, setSequenceIds] = useState([perfHtml.mainSequenceId]);
   const [sectionIndex, setSectionIndex] = useState(0);
   const [sectionable, setSectionable] = useState(true);
   const [blockable, setBlockable] = useState(true);
@@ -21,6 +28,9 @@ function Component () {
   const onBlockable = () => { setBlockable(!blockable); };
   const onEditable = () => { setEditable(!editable); };
   const onPreview = () => { setPreview(!preview); };
+  const addSequenceId = (sequenceId) => {
+    setSequenceIds( _sequenceIds => [...sequenceIds, sequenceId]);
+  };
 
   const onSectionClick = ({content: _content, index}) => {
     // console.log(index, _content);
@@ -37,8 +47,11 @@ function Component () {
   };
 
   const props = {
-    content,
-    onContent,
+    sequenceId: sequenceIds[0],
+    addSequenceId,
+    perfHtml,
+    onPerfHtml: setPerfHtml,
+    components,
     options: {
       sectionable,
       blockable,

@@ -1,7 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const upperFirst = require('lodash/upperFirst');
-const camelCase = require('lodash/camelCase');
 
 const {
   name: packageName, version, repository,
@@ -15,7 +13,7 @@ module.exports = {
     const name = path.basename(componentPath, '.jsx');
     return `import { ${name} } from '${packageName}';`;
   },
-  title: `${upperFirst(camelCase(packageName))} v${version}`,
+  title: `${packageName} v${version}`,
   ribbon: {
     url: repository.url,
     text: 'View on GitHub',

@@ -85,9 +85,9 @@ export default function PerfHtmlEditor({
 
 PerfHtmlEditor.propTypes = {
   /** Text to be edited whether file, section or block */
-  content: PropTypes.string.isRequired,
+  perfHtml: PropTypes.string.isRequired,
   /** Function triggered on edit */
-  onContent: PropTypes.func,
+  onPerfHtml: PropTypes.func,
   /** Options for the editor */
   options: PropTypes.shape({
     /** Parse content by sections using sectionParser */

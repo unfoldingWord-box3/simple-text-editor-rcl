@@ -1,7 +1,7 @@
 {
   "name": "@ster/type-perf-html",
   "description": "A React Component Library for simple text editing.",
-  "version": "7.0.0",
+  "version": "1.0.0-alpha.1",
   "private": false,
   "homepage": "https://ster-type-perf-html.netlify.app/",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "url": "https://github.com/unfoldingWord-box3/ster.git"
   },
   "dependencies": {
-    "ste-react-core": "^7.0.0"
+    "@ster/core": "^1.0.0-alpha"
   },
   "scripts": {
     "start": "yarn && styleguidist server",
@@ -60,7 +60,6 @@
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-test-selectors": "^2.0.3",
-    "lodash": "^4.17.21",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
